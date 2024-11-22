@@ -6,6 +6,6 @@ package com.group9.model;
  * idk
  */
 
-public interface iModel {
+public class Model {
 
 }
