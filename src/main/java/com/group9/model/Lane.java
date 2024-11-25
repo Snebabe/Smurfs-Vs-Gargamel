@@ -12,7 +12,7 @@ public class Lane {
     private int laneIndex;
 
     // Constructor
-    public Lane(int celldimension) {
+    public Lane(int laneSize, int cellSize) {
         this.attackEntities = new ArrayList<>();
         this.gridCells = new ArrayList<>();
         this.cellSize = cellSize;

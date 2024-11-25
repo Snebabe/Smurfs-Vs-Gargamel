@@ -20,7 +20,7 @@ public class View extends JFrame {
 
         // Initialize components
         gamePanel = new GamePanel(WIDTH, HEIGHT);
-        gamePanel.startGameThread();
+        gamePanel.startRendering();
 
         // Add components to the JFrame
         this.add(gamePanel);

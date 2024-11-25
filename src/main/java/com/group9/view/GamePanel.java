@@ -5,7 +5,7 @@ import java.awt.*;
 
 public class GamePanel extends JPanel implements Runnable {
 
-    Thread gameThread;
+    Thread renderThread;
 
     public GamePanel(int WIDTH, int HEIGHT) {
         this.setPreferredSize(new Dimension(WIDTH, HEIGHT));
@@ -13,14 +13,14 @@ public class GamePanel extends JPanel implements Runnable {
         this.setDoubleBuffered(true);
     }
 
-    public void startGameThread() {
-        gameThread = new Thread(this);
-        gameThread.start();
+    public void startRendering() {
+        renderThread = new Thread(this);
+        renderThread.start();
     }
 
     @Override
     public void run() {
-        while (gameThread != null) {
+        while (renderThread != null) {
             System.out.println("Running!");
 
             // UPDATE (in our case fetch player position
@@ -39,10 +39,15 @@ public class GamePanel extends JPanel implements Runnable {
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
 
-        Graphics2D g2 = (Graphics2D) g;
+        /*Graphics2D g2 = (Graphics2D) g;
 
         g2.setColor(Color.RED);
         g2.fillRect(100, 100, 100, 100);
-        g2.dispose();
+        g2.dispose();*/
+        // Render the entities from the model
+        List<Entity> entities = model.getEntities();
+        for (Entity entity : entities) {
+            g.fillOval(entity.getXPosition(), entity.getY(), 20, 20); // Draw entities as circles
+        }
     }
 }
