@@ -7,13 +7,24 @@ public abstract class Entity {
     private Lane lane;
     private boolean isDead;
 
-    Entity(int health, int attack, Lane lane, int xPosition) {
+    private int range;
+
+    Entity(int health, int attack,int range, Lane lane, int xPosition) {
         this.health = health;
         this.attack = attack;
         this.xPosition = xPosition;
         this.lane = lane;
         this.isDead = false;
     }
+
+    public int getRange() {
+        return range;
+    }
+
+    public int getAttack() {
+        return attack;
+    }
+
 
     public int getHealth() {
         return this.health;

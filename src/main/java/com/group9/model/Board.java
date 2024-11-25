@@ -5,16 +5,15 @@ import java.util.List;
 public class Board {
     private List<Lane> lanes;
     private int laneAmount;
-    private int columnAmount;
-    private int cellDimension;
+    private int cellSize;
 
-    Board(int laneAmount, int columnAmount, int cellDimension) {
+    Board(int laneAmount, int laneSize, int cellSize) {
         this.laneAmount = laneAmount;
-        this.columnAmount = columnAmount;
-        this.cellDimension = cellDimension;
+        this.laneSize = laneSize;
+        this.cellSize = cellSize;
 
         for (int i = 0; i < laneAmount; i++) {
-            this.lanes.add(new Lane(cellDimension));
+            this.lanes.add(new Lane(laneSize, cellSize));
         }
     }
 
@@ -23,14 +22,16 @@ public class Board {
     }
 
     public int getCellDimension() {
-        return cellDimension;
+        return cellSize;
     }
 
-    public int getColumnAmount() {
-        return columnAmount;
+    public int getlaneSize() {
+        return laneSize;
     }
 
     public int getLaneAmount() {
         return laneAmount;
     }
+
+
 }

@@ -6,15 +6,20 @@ import java.util.List;
 public class Lane {
     // List to store attackers, sorted by their xPosition
     private List<AttackEntity> attackEntities;
-    // List to store defenders
-    private List<DefenceEntity> defenceEntities;
-    private int celldimension;
+    // List to store gridcells
+    private List<GridCell> gridCells;
+    private int cellSize;
+    private int laneIndex;
 
     // Constructor
     public Lane(int celldimension) {
         this.attackEntities = new ArrayList<>();
-        this.defenceEntities = new ArrayList<>();
-        this.celldimension = celldimension;
+        this.gridCells = new ArrayList<>();
+        this.cellSize = cellSize;
+
+        for (int cellIndex = 0; cellIndex < laneSize; cellIndex++) {
+            this.gridCells.add(new GridCell(cellSize,laneIndex,cellIndex));
+        }
     }
 
     // Add an Attacker to the lane
@@ -43,6 +48,19 @@ public class Lane {
         insertionSort();
         // Remove dead attackers
         attackEntities.removeIf(AttackEntity::isDead);
+    }
+
+    public void updateDefenders(){
+        // animation (optional)
+        // find closest enemy in lane
+        // if enemy in range -> attack
+        for(DefenceEntity defender: defenceEntities) {
+            int x = defender.getXPosition();
+            AttackEntity closest = getClosestAttacker(x);
+            if (x - closest.getXPosition() <= defender.getRange()) {
+                defender.useAttack(closest);
+            }
+        }
     }
 
     // Get the closest attacker to a specific position (e.g., for defenders)
