@@ -3,7 +3,13 @@ package com.group9.model;
 import java.util.List;
 
 public class Board {
+
+    // Board har X lanes.
+    // Lane har Y rutor.
+    // Borde det vara 🤓☝️
+
     private List<Lane> lanes;
+    private int laneSize;
     private int laneAmount;
     private int cellSize;
 

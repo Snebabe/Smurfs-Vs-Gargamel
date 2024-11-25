@@ -30,11 +30,19 @@ public class Lane {
     // Add a defender to the lane
     public boolean addDefender(DefenceEntity defenceEntity, int index) {
         if (defenceEntities.get(index)==null) {
-            defenceEntity.setXPosition((celldimension/2)+celldimension*index);
+            defenceEntity.setXPosition((cellSize/2)+cellSize*index);
             defenceEntities.add(index, defenceEntity);
             return true;
         }
         return false;
+    }
+
+    public int getCellSize() {
+        return this.cellSize;
+    }
+
+    public int getNumberOfCells(){
+        return this.gridCells.length
     }
 
     // Update all attackers in the lane (e.g., movement)

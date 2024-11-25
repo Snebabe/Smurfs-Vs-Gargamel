@@ -1,6 +1,6 @@
 package com.group9.model;
 
-public abstract class Entity {
+public abstract class Entity implements hasAttack {
     private int health;
     private int attack;
     private int xPosition;
@@ -32,6 +32,11 @@ public abstract class Entity {
 
     public boolean isDead() {
         return this.isDead;
+    }
+
+    public Position getPosition() {
+        // TODO
+        return new Position(1, 1);
     }
 
     public int getXPosition() {
