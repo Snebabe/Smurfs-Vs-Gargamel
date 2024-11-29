@@ -17,7 +17,7 @@ public class Lane {
         this.cellSize = cellSize;
 
         for (int cellIndex = 0; cellIndex < laneSize; cellIndex++) {
-            this.gridCells.add(new GridCell(cellSize,laneIndex,cellIndex));
+            this.gridCells.add(new GridCell(laneIndex,cellIndex));
         }
     }
 
@@ -34,10 +34,6 @@ public class Lane {
             return true;
         }
         return false;
-    }
-
-    public int getCellSize() {
-        return this.cellSize;
     }
 
     public int getNumberOfCells(){

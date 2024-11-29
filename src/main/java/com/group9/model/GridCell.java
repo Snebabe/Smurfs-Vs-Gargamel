@@ -7,8 +7,7 @@ public class GridCell {
     private int laneIndex;
     private int positionInLane;
 
-    GridCell(int size, int laneIndex, int positionInLane) {
-        this.size = size;
+    GridCell(int laneIndex, int positionInLane) {
         this.laneIndex = laneIndex;
         this.positionInLane = positionInLane;
 
