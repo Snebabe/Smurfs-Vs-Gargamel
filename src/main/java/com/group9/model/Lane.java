@@ -26,15 +26,15 @@ public class Lane {
         attackEntities.add(attackEntity);
     }
 
-    // Add a defender to the lane
-    public boolean addDefender(DefenderType defenderType, int index) {
-        GridCell gridCell = gridCells.get(index);
-        if (!gridCell.hasDefender()) {
-            DefenceEntity defenceEntity = DefenceEntityFactory.createDefender(defenderType);
-            gridCell.setDefender(defenceEntity);
-            return true;
-        }
-        return false;
+    public AttackEntity getAttacker(int index) {
+        return this.attackEntities.get(index);
+    }
+    public List<AttackEntity> getAttackers() {
+        return this.attackEntities;
+    }
+
+    public DefenceEntity getDefender(int cellIndex) {
+        return this.gridCells.get(cellIndex).getDefender();
     }
 
     public int getNumberOfCells(){
@@ -42,21 +42,13 @@ public class Lane {
     }
 
     // Update all attackers in the lane (e.g., movement)
-    public void updateAttackers() {
-        // Remove dead attackers
-        attackEntities.removeIf(AttackEntity::isDead);
 
-        for (AttackEntity attacker : attackEntities) {
-            if (hasAttackerReachedDefender(attacker)) {
-                attacker.move();
-            }
-        }
-        // Sort again after movement
-        sortAttackers();
+    public float getAttackerCellPosition(AttackEntity attacker) {
+        return (1 - attacker.getLaneProgress()) * this.getNumberOfCells();
     }
 
     private boolean hasAttackerReachedDefender(AttackEntity attacker) {
-        int attackerCellIndex = (int) Math.floor(1 - attacker.getLaneProgress()) * this.getNumberOfCells();
+        int attackerCellIndex = (int) this.getAttackerCellPosition(attacker);
 
         // Check if there's a defender at the same cell index
         return gridCells.get(attackerCellIndex).hasDefender();
@@ -77,12 +69,7 @@ public class Lane {
     }
 
     // Get the closest attacker to a specific position (e.g., for defenders)
-    public AttackEntity getClosestAttacker(int xPosition) {
-        return attackEntities.stream()
-                .filter(attacker -> attacker.getLaneProgress() > xPosition)
-                .findFirst()
-                .orElse(null);
-    }
+
 
     // Sort the attackers by lane progress using Insertion Sort
     public void sortAttackers() {
@@ -99,15 +86,44 @@ public class Lane {
         }
     }
 
+
+
+    public void updateAttackers() {
+        // Remove dead attackers
+        attackEntities.removeIf(AttackEntity::isDead);
+
+        for (AttackEntity attacker : attackEntities) {
+            if (hasAttackerReachedDefender(attacker)) {
+                attacker.move();
+            }
+        }
+        // Sort again after movement
+        sortAttackers();
+    }
+
+    public AttackEntity getClosestAttacker(int xPosition) {
+        return attackEntities.stream()
+                .filter(attacker -> attacker.getLaneProgress() > xPosition)
+                .findFirst()
+                .orElse(null);
+    }
+
+    // Add a defender to the lane
+    public boolean addDefender(DefenderType defenderType, int index) {
+        GridCell gridCell = gridCells.get(index);
+        if (!gridCell.hasDefender()) {
+            DefenceEntity defenceEntity = DefenceEntityFactory.createDefender(defenderType);
+            gridCell.setDefender(defenceEntity);
+            return true;
+        }
+        return false;
+    }
+
     // For debugging: Print the state of attacker in the lane
     public void printAttacker() {
         System.out.println("Attacker in the lane:");
         for (AttackEntity attacker : attackEntities) {
             System.out.println("Attacker at position: " + attacker.getLaneProgress());
         }
-    }
-
-    public List<AttackEntity> getAttackers() {
-        return this.attackEntities;
     }
 }

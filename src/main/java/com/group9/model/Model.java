@@ -17,7 +17,6 @@ public class Model {
     // getters som: getBoard
 
     private Board board;
-    private List<Entity> entities;
 
     public Model() {
         this.board = new Board(5, 8, 100);
@@ -46,9 +45,9 @@ public class Model {
                 if (defender == null) {
                     continue;
                 }
-                AttackEntity firstAttacker = attackers.getFirst();
-                float targetLaneProgress = firstAttacker.getLaneProgress(); // Lane progress as a value between 0 and 1
-                float targetCellIndex = (1 - targetLaneProgress) * lane.getNumberOfCells(); // Convert progress to grid index
+
+                AttackEntity firstAttacker = attackers.get(0);
+                float targetCellIndex = lane.getAttackerCellPosition(firstAttacker); // Convert progress to grid index
 
                 // If the attacker is within the defender's attack range
                 float distance = targetCellIndex - cellIndex;
@@ -59,7 +58,7 @@ public class Model {
 
             // Handle melee attackers (stop moving and attack defenders in the same position)
             for (AttackEntity attacker : attackers) {
-                int attackerCellIndex = Math.floor(1 - attacker.getLaneProgress()) * lane.getSize());
+                int attackerCellIndex = (int) lane.getAttackerCellPosition(attacker);
 
                 // Check if there's a defender at the same cell index
                 DefenceEntity defender = lane.getDefender(attackerCellIndex);
@@ -76,11 +75,36 @@ public class Model {
     }
 
     public Map<Entity, Position> getAllEntityPositions() {
-        Map<Entity, Position> map = new HashMap<Entity, Position>();
-        for(Entity entity: entities) {
-            map.put(entity, entity.getPosition());
+        Map<Entity, Position> entityPositions = new HashMap<>();
+
+        // Iterate through each lane in the board
+        for (Lane lane : board.getLanes()) {
+            // Get the Y-coordinate of the lane based on its position and the board's cell size
+            int laneIndex = lane.getLaneIndex(); // Assuming lanes have an index
+            int laneY = /*board.getStartingPosition().getY()*/ 0 + laneIndex * board.getCellSize();
+
+            // Process attackers in the lane
+            for (AttackEntity attacker : lane.getAttackers()) {
+                // Calculate X-coordinate based on lane progress
+                int attackerX = (int) (/*board.getStartingPosition().getX()*/ + lane.getAttackerCellPosition(attacker) * board.getCellSize());
+
+                // Add attacker and its position to the map
+                entityPositions.put(attacker, new Position(attackerX, laneY));
+            }
+
+            // Process defenders in the lane
+            for (int cellIndex = 0; cellIndex < lane.getNumberOfCells(); cellIndex++) {
+                DefenceEntity defender = lane.getDefender(cellIndex);
+                if (defender != null) {
+                    // Calculate X-coordinate based on cell index
+                    int defenderX = /*board.getStartingPosition().getX()*/ 0 + cellIndex * board.getCellSize();
+
+                    // Add defender and its position to the map
+                    entityPositions.put(defender, new Position(defenderX, laneY));
+                }
+            }
         }
 
-        return map;
+        return entityPositions;
     }
 }
