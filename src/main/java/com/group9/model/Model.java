@@ -37,7 +37,7 @@ public class Model {
             lane.sortAttackers();
 
             // Get the sorted list of attackers
-            List<Attacker> attackers = lane.getAttackers();
+            List<AttackEntity> attackers = lane.getAttackers();
             for (int cellIndex = 0; cellIndex < lane.getNumberOfCells(); cellIndex++) {
                 // Get the defender at the current cell index
                 DefenceEntity defender = lane.getDefender(cellIndex);
@@ -46,14 +46,14 @@ public class Model {
                 if (defender == null) {
                     continue;
                 }
-
-                int targetLaneProgress = attacker[0].getLaneProgress(); // Lane progress as a value between 0 and 1
-                int targetCellIndex = (1 - targetLaneProgress) * lane.getNumberOfCells(); // Convert progress to grid index
+                AttackEntity firstAttacker = attackers.getFirst();
+                float targetLaneProgress = firstAttacker.getLaneProgress(); // Lane progress as a value between 0 and 1
+                float targetCellIndex = (1 - targetLaneProgress) * lane.getNumberOfCells(); // Convert progress to grid index
 
                 // If the attacker is within the defender's attack range
-                int distance = targetCellIndex - cellIndex;
+                float distance = targetCellIndex - cellIndex;
                 if (distance > 0 && distance <= defender.getAttackRange()) {
-                    defender.useAttack(attacker[0]);
+                    defender.useAttack(firstAttacker);
                 }
             }
 
@@ -66,7 +66,7 @@ public class Model {
 
                 if (defender != null) {
                     // Stop the attacker's movement and attack the defender
-                    attacker.attack(defender);
+                    attacker.useAttack(defender);
                 } else {
                     attacker.move();
                 }

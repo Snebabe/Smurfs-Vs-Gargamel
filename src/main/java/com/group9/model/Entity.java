@@ -7,14 +7,15 @@ public abstract class Entity implements hasAttack {
 
     private int range;
 
-    Entity(int health, int attack, int range) {
+    Entity(int health, int attackDamage, int attackRange) {
         this.health = health;
-        this.attackDamage = attack;
+        this.attackDamage = attackDamage;
+        this.attackRange = attackRange;
         this.isDead = false;
     }
 
-    public int getRange() {
-        return range;
+    public int getAttackRange() {
+        return attackRange;
     }
 
     public int getAttackDamage() {

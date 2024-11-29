@@ -27,17 +27,16 @@ public class Board {
         return lanes;
     }
 
-    public int getCellDimension() {
-        return cellSize;
+    public int getLaneSize() {
+        return laneSize;
     }
 
-    public int getlaneSize() {
-        return laneSize;
+    public int getCellSize() {
+        return cellSize;
     }
 
     public int getLaneAmount() {
         return laneAmount;
     }
-
 
 }
