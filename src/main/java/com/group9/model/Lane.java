@@ -8,7 +8,6 @@ public class Lane {
     private List<AttackEntity> attackEntities;
     // List to store gridcells
     private List<GridCell> gridCells;
-    private int cellSize;
     private int laneIndex;
 
     // Constructor
@@ -42,7 +41,7 @@ public class Lane {
     }
 
     public int getNumberOfCells(){
-        return this.gridCells.length
+        return this.gridCells.size();
     }
 
     // Update all attackers in the lane (e.g., movement)
@@ -100,5 +99,9 @@ public class Lane {
         for (AttackEntity attacker : attackEntities) {
             System.out.println("Attacker at position: " + attacker.getXPosition());
         }
+    }
+
+    public List<AttackEntity> getAttackers() {
+        return this.attackEntities;
     }
 }

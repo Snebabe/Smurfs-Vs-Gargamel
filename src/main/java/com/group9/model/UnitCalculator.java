@@ -13,6 +13,6 @@ public class UnitCalculator {
 
     public Position getPositionFromLaneAndX(Lane lane, int x) {
 
-        int x = lane.getCellSize()*lane.get
+        int x = lane.getCellSize()*lane.get();
     }
 }

@@ -23,7 +23,7 @@ public class Board {
         }
     }
 
-    public List getLanes() {
+    public List<Lane> getLanes() {
         return lanes;
     }
 
