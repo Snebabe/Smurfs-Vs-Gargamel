@@ -19,7 +19,7 @@ public class Board {
         this.cellSize = cellSize;
 
         for (int i = 0; i < laneAmount; i++) {
-            this.lanes.add(new Lane(laneSize, cellSize));
+            this.lanes.add(new Lane(laneSize, i));
         }
     }
 

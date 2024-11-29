@@ -41,6 +41,9 @@ public class Lane {
         return this.gridCells.size();
     }
 
+    public int getLaneIndex() {
+        return this.laneIndex;
+    }
     // Update all attackers in the lane (e.g., movement)
 
     public float getAttackerCellPosition(AttackEntity attacker) {
