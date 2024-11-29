@@ -11,10 +11,10 @@ public class Lane {
     private int laneIndex;
 
     // Constructor
-    public Lane(int laneSize, int cellSize) {
+    public Lane(int laneSize, int laneIndex) {
         this.attackEntities = new ArrayList<>();
         this.gridCells = new ArrayList<>();
-        this.cellSize = cellSize;
+        this.laneIndex = laneIndex;
 
         for (int cellIndex = 0; cellIndex < laneSize; cellIndex++) {
             this.gridCells.add(new GridCell(laneIndex,cellIndex));
@@ -27,10 +27,11 @@ public class Lane {
     }
 
     // Add a defender to the lane
-    public boolean addDefender(DefenceEntity defenceEntity, int index) {
-        if (defenceEntities.get(index)==null) {
-            defenceEntity.setXPosition((cellSize/2)+cellSize*index);
-            defenceEntities.add(index, defenceEntity);
+    public boolean addDefender(String defenderType, int index) {
+        GridCell gridCell = gridCells.get(index);
+        if (!gridCell.hasDefender()) {
+            DefenceEntity defenceEntity = DefenceEntityFactory.createDefender(defenderType);
+            gridCell.setDefender(defenceEntity);
             return true;
         }
         return false;
@@ -42,22 +43,31 @@ public class Lane {
 
     // Update all attackers in the lane (e.g., movement)
     public void updateAttackers() {
+        // Remove dead attackers
+        attackEntities.removeIf(AttackEntity::isDead);
+
         for (AttackEntity attacker : attackEntities) {
-            if (!attacker.hasReachedTarget()) {
+            if (hasAttackerReachedDefender(attacker)) {
                 attacker.move();
             }
         }
         // Sort again after movement
-        insertionSort();
-        // Remove dead attackers
-        attackEntities.removeIf(AttackEntity::isDead);
+        sortAttackers();
+    }
+
+    private boolean hasAttackerReachedDefender(AttackEntity attacker) {
+        int attackerCellIndex = (int) Math.floor(1 - attacker.getLaneProgress()) * this.getNumberOfCells();
+
+        // Check if there's a defender at the same cell index
+        return gridCells.get(attackerCellIndex).hasDefender();
     }
 
     public void updateDefenders(){
         // animation (optional)
         // find closest enemy in lane
         // if enemy in range -> attack
-        for(DefenceEntity defender: defenceEntities) {
+        for(GridCell cell: gridCells) {
+            DefenceEntity defender = cell.getDefender();
             int x = defender.getXPosition();
             AttackEntity closest = getClosestAttacker(x);
             if (x - closest.getXPosition() <= defender.getRange()) {
@@ -69,19 +79,19 @@ public class Lane {
     // Get the closest attacker to a specific position (e.g., for defenders)
     public AttackEntity getClosestAttacker(int xPosition) {
         return attackEntities.stream()
-                .filter(attacker -> attacker.getXPosition() > xPosition)
+                .filter(attacker -> attacker.getLaneProgress() > xPosition)
                 .findFirst()
                 .orElse(null);
     }
 
-    // Sort the attackers by xPosition using Insertion Sort
-    private void insertionSort() {
+    // Sort the attackers by lane progress using Insertion Sort
+    private void sortAttackers() {
         for (int i = 1; i < attackEntities.size(); i++) {
             AttackEntity key = attackEntities.get(i);
             int j = i - 1;
 
             // Move attackers that are ahead of the key back by one position
-            while (j >= 0 && attackEntities.get(j).getXPosition() > key.getXPosition()) {
+            while (j >= 0 && attackEntities.get(j).getLaneProgress() > key.getLaneProgress()) {
                 attackEntities.set(j + 1, attackEntities.get(j));
                 j--;
             }
@@ -93,7 +103,7 @@ public class Lane {
     public void printAttacker() {
         System.out.println("Attacker in the lane:");
         for (AttackEntity attacker : attackEntities) {
-            System.out.println("Attacker at position: " + attacker.getXPosition());
+            System.out.println("Attacker at position: " + attacker.getLaneProgress());
         }
     }
 

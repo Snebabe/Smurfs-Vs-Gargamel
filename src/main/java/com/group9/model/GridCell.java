@@ -33,6 +33,10 @@ public class GridCell {
         this.defender = null;
     }
 
+    public boolean hasDefender() {
+        return this.defender!=null;
+    }
+
     public DefenceEntity getDefender() {
         return this.defender;
     }
