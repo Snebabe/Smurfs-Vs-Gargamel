@@ -27,7 +27,7 @@ public class Lane {
     }
 
     // Add a defender to the lane
-    public boolean addDefender(String defenderType, int index) {
+    public boolean addDefender(DefenderType defenderType, int index) {
         GridCell gridCell = gridCells.get(index);
         if (!gridCell.hasDefender()) {
             DefenceEntity defenceEntity = DefenceEntityFactory.createDefender(defenderType);
@@ -66,14 +66,14 @@ public class Lane {
         // animation (optional)
         // find closest enemy in lane
         // if enemy in range -> attack
-        for(GridCell cell: gridCells) {
-            DefenceEntity defender = cell.getDefender();
-            int x = defender.getXPosition();
-            AttackEntity closest = getClosestAttacker(x);
-            if (x - closest.getXPosition() <= defender.getRange()) {
-                defender.useAttack(closest);
-            }
-        }
+//        for(GridCell cell: gridCells) {
+//            DefenceEntity defender = cell.getDefender();
+//            int x = defender.getXPosition();
+//            AttackEntity closest = getClosestAttacker(x);
+//            if (x - closest.getXPosition() <= defender.getRange()) {
+//                defender.useAttack(closest);
+//            }
+//        }
     }
 
     // Get the closest attacker to a specific position (e.g., for defenders)
@@ -85,7 +85,7 @@ public class Lane {
     }
 
     // Sort the attackers by lane progress using Insertion Sort
-    private void sortAttackers() {
+    public void sortAttackers() {
         for (int i = 1; i < attackEntities.size(); i++) {
             AttackEntity key = attackEntities.get(i);
             int j = i - 1;

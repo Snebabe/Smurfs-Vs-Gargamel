@@ -4,8 +4,7 @@ public abstract class Entity implements hasAttack {
     private int health;
     private int attackDamage;
     private boolean isDead;
-
-    private int range;
+    private int attackRange;
 
     Entity(int health, int attackDamage, int attackRange) {
         this.health = health;
@@ -33,6 +32,7 @@ public abstract class Entity implements hasAttack {
 
 
     public void useAttack(Entity entity) {
+        // setAnimationState("attacking")
         entity.takeDamage(this.getAttackDamage());
     }
 
