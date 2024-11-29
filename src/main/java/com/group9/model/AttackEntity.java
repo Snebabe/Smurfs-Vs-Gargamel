@@ -4,19 +4,20 @@ import jdk.jshell.spi.ExecutionControl;
 
 public abstract class AttackEntity extends Entity{
     private int speed;
+    private float laneProgress;
 
-    AttackEntity(int health, int attack, int range, Lane lane, int speed) {
-        super(health, attack,range, lane, 0);
+    AttackEntity(int health, int attackDamage, int range, int speed) {
+        super(health, attackDamage,range);
         this.speed = speed;
+        this.laneProgress = 0;
     }
 
-    //TODO
-    public boolean hasReachedTarget() {
-        return false;
+    public float getLaneProgress() {
+        return this.laneProgress;
     }
 
     //TODO
     public void move() {
-
+        this.laneProgress += speed;
     }
 }

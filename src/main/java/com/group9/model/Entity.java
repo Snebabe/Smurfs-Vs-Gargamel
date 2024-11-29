@@ -2,18 +2,14 @@ package com.group9.model;
 
 public abstract class Entity implements hasAttack {
     private int health;
-    private int attack;
-    private int xPosition;
-    private Lane lane;
+    private int attackDamage;
     private boolean isDead;
 
     private int range;
 
-    Entity(int health, int attack,int range, Lane lane, int xPosition) {
+    Entity(int health, int attack, int range) {
         this.health = health;
-        this.attack = attack;
-        this.xPosition = xPosition;
-        this.lane = lane;
+        this.attackDamage = attack;
         this.isDead = false;
     }
 
@@ -21,8 +17,8 @@ public abstract class Entity implements hasAttack {
         return range;
     }
 
-    public int getAttack() {
-        return attack;
+    public int getAttackDamage() {
+        return attackDamage;
     }
 
 
@@ -34,22 +30,10 @@ public abstract class Entity implements hasAttack {
         return this.isDead;
     }
 
-    public Position getPosition() {
-        // TODO
-        return new Position(1, 1);
-    }
 
-    public int getXPosition() {
-        return this.xPosition;
+    public void useAttack(Entity entity) {
+        entity.takeDamage(this.getAttackDamage());
     }
-    public void setXPosition(int x) {
-        this.xPosition = x;
-    }
-    public Lane getLane() {
-        return this.lane;
-    }
-
-    public void performAction() {}
 
     public void takeDamage(int damage) {
         this.health -= damage;
