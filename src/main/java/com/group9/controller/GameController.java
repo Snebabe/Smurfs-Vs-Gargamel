@@ -12,8 +12,11 @@ public class GameController implements iController {
         this.model = model;
     }
 
-    public void handleCellClick(int row, int col) {
+    public boolean handleCellClick(int row, int col) {
+        if(chosenDefender == null) {return false;}
         model.setDefender(this.chosenDefender, row, col);
+        System.out.println("placed defender");
+        return true;
     }
 
     public void handleDefenderClick(DefenderType defender) {

@@ -106,6 +106,10 @@ public class Lane {
         }
     }
 
+    public List<GridCell> getGridCells() {
+        return gridCells;
+    }
+
     public List<AttackEntity> getAttackers() {
         return this.attackEntities;
     }

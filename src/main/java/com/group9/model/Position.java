@@ -13,4 +13,12 @@ public class Position {
         this.x = x + progress;
         this.y = y;
     }
+
+    public int getX() {
+        return x;
+    }
+
+    public int getY() {
+        return y;
+    }
 }

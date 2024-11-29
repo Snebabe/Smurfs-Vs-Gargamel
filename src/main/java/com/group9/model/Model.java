@@ -23,6 +23,20 @@ public class Model {
         this.board = new Board(5, 8, 100);
     }
 
+    public Map<String, Position> getAllDefendersPosition() {
+        Map<String, Position> map = new HashMap<>();
+        for (int row = 0; row < board.getLaneAmount(); row++) {
+            Lane lane = board.getLanes().get(row);
+            for (int col = 0; col < lane.getNumberOfCells(); col++) {
+                GridCell cell = lane.getGridCells().get(col);
+                if (cell.hasDefender()) {
+                    map.put("shroom", new Position(row, col));
+                }
+            }
+        }
+        return map;
+    }
+
     public void update() {
         for(Lane lane: board.getLanes()) {
             lane.updateAttackers();

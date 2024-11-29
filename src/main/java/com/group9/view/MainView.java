@@ -2,23 +2,27 @@ package com.group9.view;
 
 import com.group9.controller.GameController;
 import com.group9.controller.Observer;
+import com.group9.model.DefenderType;
 import com.group9.model.Model;
+import com.group9.model.Position;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.util.Map;
 
-public class MainView implements iView, Observer {
+public class MainView extends JPanel implements iView, Observer {
 
     private JPanel[][] cells;
-    private GameController controller;
+    private static GameController controller;
     private Model model;
 
-    public MainView(int WIDTH, int HEIGHT, Model model, GameController controller) {
+    public MainView(int WIDTH, int HEIGHT, Model model) {
         this.model = model;
-        this.controller = controller;
-
+        this.controller = new GameController(model);
         JFrame frame = new JFrame("Smurfs VS Gargamel");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setSize(800, 600);
@@ -72,7 +76,7 @@ public class MainView implements iView, Observer {
     }
 
     private void addEntityToCell(int row, int col, String imagePath) {
-        JLabel entityLabel = new JLabel("Plant");
+        JLabel entityLabel = new JLabel("Shroom");
         cells[row][col].add(entityLabel); // Add entity to the specific cell
         cells[row][col].revalidate();    // Re-layout the cell
         cells[row][col].repaint();
@@ -82,12 +86,19 @@ public class MainView implements iView, Observer {
         JPanel controlPanel = new JPanel(new FlowLayout(FlowLayout.CENTER, 10, 10));
         controlPanel.setBorder(BorderFactory.createTitledBorder("Controls"));
 
-        JButton addSmurfButton = new JButton("Add Smurf");
+        JButton addShroomButton = new JButton("Add Shroom");
         JButton addZombieButton = new JButton("Add Zombie");
         JButton startGameButton = new JButton("Start Game");
         JButton resetGameButton = new JButton("Reset Game");
 
-        controlPanel.add(addSmurfButton);
+        addShroomButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                controller.handleDefenderClick(DefenderType.SHROOM);
+            }
+        });
+
+        controlPanel.add(addShroomButton);
         controlPanel.add(addZombieButton);
         controlPanel.add(startGameButton);
         controlPanel.add(resetGameButton);
@@ -96,6 +107,17 @@ public class MainView implements iView, Observer {
     }
     @Override
     public void update() {
-        this.addEntityToCell(5, 4, "lit");
+        for (int row = 0; row < cells.length; row++) {
+            for (int col = 0; col < cells[row].length; col++) {
+                cells[row][col].removeAll(); // Remove all components from the cell
+            }
+        }
+
+        for (Map.Entry<String, Position> entry: model.getAllDefendersPosition().entrySet()) {
+            String s = entry.getKey();
+            Position p = entry.getValue();
+            addEntityToCell(p.getX(), p.getY(), s);
+        }
+        repaint();
     }
 }

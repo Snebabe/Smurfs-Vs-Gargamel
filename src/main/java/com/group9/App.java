@@ -14,10 +14,9 @@ public class App {
 
         // Initialize the MVC components
         Model model = new Model();
-        GameController controller = new GameController(model);
-        iView view = new MainView(800, 480, model, controller);
+        MainView view = new MainView(800, 480, model);
 
-        GameManager gameManager = new GameManager(model);
+        GameManager gameManager = new GameManager(model, view);
         gameManager.start();
     }
 }
