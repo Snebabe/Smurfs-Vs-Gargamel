@@ -38,15 +38,17 @@ public class Model {
 
             // Get the sorted list of attackers
             List<AttackEntity> attackers = lane.getAttackers();
+            if(attackers.isEmpty()) {continue;}
             for (int cellIndex = 0; cellIndex < lane.getNumberOfCells(); cellIndex++) {
                 // Get the defender at the current cell index
-                DefenceEntity defender = lane.getDefender(cellIndex);
+                DefenceEntity defender = lane.getDefenderAtIndex(cellIndex);
 
                 // Skip if there's no defender in this cell
                 if (defender == null) {
                     continue;
                 }
-                AttackEntity firstAttacker = attackers.getFirst();
+
+                AttackEntity firstAttacker = attackers.get(0);
                 float targetLaneProgress = firstAttacker.getLaneProgress(); // Lane progress as a value between 0 and 1
                 float targetCellIndex = (1 - targetLaneProgress) * lane.getNumberOfCells(); // Convert progress to grid index
 
@@ -59,10 +61,10 @@ public class Model {
 
             // Handle melee attackers (stop moving and attack defenders in the same position)
             for (AttackEntity attacker : attackers) {
-                int attackerCellIndex = Math.floor(1 - attacker.getLaneProgress()) * lane.getSize());
+                int attackerCellIndex = (int) Math.floor(1 - attacker.getLaneProgress()) * lane.getNumberOfCells();
 
                 // Check if there's a defender at the same cell index
-                DefenceEntity defender = lane.getDefender(attackerCellIndex);
+                DefenceEntity defender = lane.getDefenderAtIndex(attackerCellIndex);
 
                 if (defender != null) {
                     // Stop the attacker's movement and attack the defender
@@ -72,15 +74,9 @@ public class Model {
                 }
             }
         }
-
     }
 
-    public Map<Entity, Position> getAllEntityPositions() {
-        Map<Entity, Position> map = new HashMap<Entity, Position>();
-        for(Entity entity: entities) {
-            map.put(entity, entity.getPosition());
-        }
-
-        return map;
+    public void setDefender(DefenderType defender, int row, int col) {
+        board.setDefender(new DefenceEntityFactory().createDefender(defender), row, col);
     }
 }

@@ -1,5 +1,6 @@
 package com.group9.model;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class Board {
@@ -17,12 +18,17 @@ public class Board {
         this.laneAmount = laneAmount;
         this.laneSize = laneSize;
         this.cellSize = cellSize;
+        this.lanes = new ArrayList<>();
 
         for (int i = 0; i < laneAmount; i++) {
             this.lanes.add(new Lane(laneSize, cellSize));
         }
     }
 
+    public void setDefender(DefenceEntity defender, int row, int col) {
+        Lane lane = this.lanes.get(row);
+        lane.setDefender(defender, col);
+    }
     public List<Lane> getLanes() {
         return lanes;
     }

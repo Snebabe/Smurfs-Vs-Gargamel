@@ -27,14 +27,9 @@ public class Lane {
     }
 
     // Add a defender to the lane
-    public boolean addDefender(DefenderType defenderType, int index) {
-        GridCell gridCell = gridCells.get(index);
-        if (!gridCell.hasDefender()) {
-            DefenceEntity defenceEntity = DefenceEntityFactory.createDefender(defenderType);
-            gridCell.setDefender(defenceEntity);
-            return true;
-        }
-        return false;
+    public void setDefender(DefenceEntity defender, int col) {
+        GridCell cell = this.gridCells.get(col);
+        cell.setDefender(defender);
     }
 
     public int getNumberOfCells(){
@@ -82,6 +77,10 @@ public class Lane {
                 .filter(attacker -> attacker.getLaneProgress() > xPosition)
                 .findFirst()
                 .orElse(null);
+    }
+
+    public DefenceEntity getDefenderAtIndex(int index) {
+        return gridCells.get(index).getDefender();
     }
 
     // Sort the attackers by lane progress using Insertion Sort

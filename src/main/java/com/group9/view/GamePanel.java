@@ -1,5 +1,7 @@
 package com.group9.view;
 
+import com.group9.model.Entity;
+
 import javax.swing.*;
 import java.awt.*;
 
@@ -45,9 +47,5 @@ public class GamePanel extends JPanel implements Runnable {
         g2.fillRect(100, 100, 100, 100);
         g2.dispose();*/
         // Render the entities from the model
-        List<Entity> entities = model.getEntities();
-        for (Entity entity : entities) {
-            g.fillOval(entity.getXPosition(), entity.getY(), 20, 20); // Draw entities as circles
-        }
     }
 }

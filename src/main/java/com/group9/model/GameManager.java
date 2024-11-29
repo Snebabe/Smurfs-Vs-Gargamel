@@ -1,11 +1,19 @@
 package com.group9.model;
 
+import com.group9.controller.Observer;
+
+import java.util.HashSet;
+import java.util.Set;
+
 public class GameManager {
     private Model model;
     private boolean running = true;
-
+    private final Set<Observer> observers;
     public GameManager(Model model) {
         this.model = model;
+        observers = new HashSet<>();
+        add
+
     }
 
     public void start() {

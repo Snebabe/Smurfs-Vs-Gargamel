@@ -2,15 +2,16 @@ package com.group9.controller;
 
 import com.group9.model.Model;
 import com.group9.view.View;
+import com.group9.view.iView;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 public class Controller {
     private Model model;
-    private View view;
+    private iView view;
 
-    public Controller(Model model, View view) {
+    public Controller(Model model, iView view) {
         this.model = model;
         this.view = view;
 
@@ -24,16 +25,13 @@ public class Controller {
 
     class IncrementListener implements ActionListener {
         @Override
-        public void actionPerformed(ActionEvent e) {
-            model.incrementCount();
-            //view.setCount(model.getCount());
+        public void actionPerformed(ActionEvent e) {;
         }
     }
 
     class DecrementListener implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent e) {
-            model.decrementCount();
             //view.setCount(model.getCount());
         }
     }
