@@ -2,6 +2,7 @@ package com.group9.view;
 
 import com.group9.controller.GameController;
 import com.group9.controller.Observer;
+import com.group9.model.AttackGargamel;
 import com.group9.model.DefenderType;
 import com.group9.model.Model;
 import com.group9.model.Position;
@@ -18,24 +19,22 @@ public class MainView extends JPanel implements iView, Observer {
 
     private JPanel[][] cells;
     private static GameController controller;
-    private Model model;
+    private static Model model;
 
     public MainView(int WIDTH, int HEIGHT, Model model) {
         this.model = model;
         this.controller = new GameController(model);
+
+        // Set up JFrame
         JFrame frame = new JFrame("Smurfs VS Gargamel");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setSize(800, 600);
         frame.setLayout(new BorderLayout());
 
+        // Create and add main panels
         JPanel parentView = new JPanel(new BorderLayout());
-
-        JPanel gameGrid = createGameGrid();
-        JPanel controlPanel = createControlPanel();
-
-        parentView.add(gameGrid, BorderLayout.CENTER);
-        parentView.add(controlPanel, BorderLayout.SOUTH);
-
+        parentView.add(createGameGrid(), BorderLayout.CENTER);
+        parentView.add(createControlPanel(), BorderLayout.SOUTH);
         frame.add(parentView, BorderLayout.CENTER);
 
         frame.setVisible(true);
@@ -98,6 +97,13 @@ public class MainView extends JPanel implements iView, Observer {
             }
         });
 
+        addZombieButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                model.spawnAttackerRandomly();
+            }
+        });
+
         controlPanel.add(addShroomButton);
         controlPanel.add(addZombieButton);
         controlPanel.add(startGameButton);
@@ -118,6 +124,7 @@ public class MainView extends JPanel implements iView, Observer {
             Position p = entry.getValue();
             addEntityToCell(p.getX(), p.getY(), s);
         }
+        System.out.println("Updating");
         repaint();
     }
 }

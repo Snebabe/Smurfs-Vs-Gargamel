@@ -6,10 +6,7 @@ package com.group9.model;
  * idk
  */
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public class Model {
     // Ha ett board
@@ -20,7 +17,33 @@ public class Model {
     private List<Entity> entities;
 
     public Model() {
-        this.board = new Board(5, 8, 100);
+        this.board = new Board(5, 9, 100);
+    }
+
+    // Temporary function to spawn random attacker
+    public void spawnAttackerRandomly() {
+        Random random = new Random();
+        List<Lane> lanes = board.getLanes();
+        // Choose a random lane from the list of lanes
+        int randomLaneIndex = random.nextInt(lanes.size());
+        Lane selectedLane = lanes.get(randomLaneIndex);
+
+        // Add the attacker to the list of attackers in the chosen lane
+        selectedLane.addAttacker(new AttackGargamel(100,10,1, 1));
+    }
+
+    public Map<String, Position> getAllAttackersPosition() {
+        Map<String, Position> map = new HashMap<>();
+        for (int row = 0; row < board.getLaneAmount(); row++) {
+            Lane lane = board.getLanes().get(row);
+            for (AttackEntity attacker : lane.getAttackers()) {
+                float colPosition = (1 - attacker.getLaneProgress()) * lane.getNumberOfCells();
+                int xPos = (int) (colPosition * board.getCellSize());
+                int yPos = row * board.getCellSize();
+                map.put("Attacker", new Position(xPos, yPos));
+            }
+        }
+        return map;
     }
 
     public Map<String, Position> getAllDefendersPosition() {
@@ -38,13 +61,26 @@ public class Model {
     }
 
     public void update() {
-        for(Lane lane: board.getLanes()) {
+        //attackCycle();
+        moveCycle();
+        /*for(Lane lane: board.getLanes()) {
             lane.updateAttackers();
-        }
-
+        }*/
     }
 
-    public void attackLoop() {
+    public void moveCycle() {
+        for (Lane lane : board.getLanes()) {
+            for (AttackEntity attacker : lane.getAttackers()) {
+                // If attacker has not reached defender and it has not surpassed the goal
+                boolean attackerInsideGridSpace = (1 - attacker.getLaneProgress()) * lane.getNumberOfCells() > 0;
+                if (attackerInsideGridSpace && !lane.hasAttackerReachedDefender(attacker)) {
+                    attacker.move();
+                }
+            }
+        }
+    }
+
+    public void attackCycle() {
         // Iterate over each lane in the board
         for (Lane lane : board.getLanes()) {
             // Sort attackers in the lane by laneProgress
@@ -77,14 +113,15 @@ public class Model {
             for (AttackEntity attacker : attackers) {
                 int attackerCellIndex = (int) Math.floor(1 - attacker.getLaneProgress()) * lane.getNumberOfCells();
 
+                // Check if attacker is inside grid space
+                if (attackerCellIndex > lane.getNumberOfCells()-1) { continue; }
+
                 // Check if there's a defender at the same cell index
                 DefenceEntity defender = lane.getDefenderAtIndex(attackerCellIndex);
 
                 if (defender != null) {
                     // Stop the attacker's movement and attack the defender
                     attacker.useAttack(defender);
-                } else {
-                    attacker.move();
                 }
             }
         }

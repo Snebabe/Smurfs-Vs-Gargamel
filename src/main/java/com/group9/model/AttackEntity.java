@@ -18,6 +18,6 @@ public abstract class AttackEntity extends Entity{
 
     //TODO
     public void move() {
-        this.laneProgress += speed;
+        this.laneProgress += (float) speed / 100;
     }
 }

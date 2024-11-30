@@ -50,8 +50,10 @@ public class Lane {
         sortAttackers();
     }
 
-    private boolean hasAttackerReachedDefender(AttackEntity attacker) {
+    public boolean hasAttackerReachedDefender(AttackEntity attacker) {
         int attackerCellIndex = (int) Math.floor(1 - attacker.getLaneProgress()) * this.getNumberOfCells();
+
+        if (attackerCellIndex > this.getNumberOfCells()-1) { return false; }
 
         // Check if there's a defender at the same cell index
         return gridCells.get(attackerCellIndex).hasDefender();
@@ -71,16 +73,12 @@ public class Lane {
 //        }
     }
 
-    // Get the closest attacker to a specific position (e.g., for defenders)
-    public AttackEntity getClosestAttacker(int xPosition) {
-        return attackEntities.stream()
-                .filter(attacker -> attacker.getLaneProgress() > xPosition)
-                .findFirst()
-                .orElse(null);
-    }
-
     public DefenceEntity getDefenderAtIndex(int index) {
-        return gridCells.get(index).getDefender();
+        GridCell gridcell = gridCells.get(index);
+        if (gridcell != null) {
+            return gridCells.get(index).getDefender();
+        }
+        return null;
     }
 
     // Sort the attackers by lane progress using Insertion Sort

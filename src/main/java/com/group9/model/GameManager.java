@@ -3,6 +3,7 @@ package com.group9.model;
 import com.group9.controller.Clock;
 import com.group9.controller.Observer;
 import com.group9.view.MainView;
+import com.group9.view.View;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -12,7 +13,7 @@ public class GameManager {
     private boolean running = true;
     private final Set<Observer> observers;
     private final Clock clock;
-    public GameManager(Model model, MainView view) {
+    public GameManager(Model model, View view) {
         this.model = model;
         this.clock = new Clock();
         observers = new HashSet<>();
@@ -29,6 +30,8 @@ public class GameManager {
                 for(Observer o: observers) {
                     o.update();
                 }
+
+                model.update();
 
                 // Wait to maintain consistent update rate
                 long elapsedTime = System.currentTimeMillis() - startTime;
