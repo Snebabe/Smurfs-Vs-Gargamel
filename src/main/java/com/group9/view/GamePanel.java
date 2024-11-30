@@ -106,7 +106,6 @@ public class GamePanel extends JPanel implements Observer/*implements Runnable*/
 
         // Render attackers based on their positions
         for (Map.Entry<String, Position> entry : model.getAllAttackersPosition().entrySet()) {
-            System.out.println(entry);
             String s = entry.getKey();
             Position p = entry.getValue();
 

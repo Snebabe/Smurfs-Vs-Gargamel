@@ -16,8 +16,8 @@ public class ControlPanel extends JPanel {
     private JButton startGameButton;
     private JButton resetGameButton;
 
-    private static Model model;
-    private static GameController controller;
+    private Model model;
+    private GameController controller;
 
     public ControlPanel(Model model, GameController controller) {
         this.controller = controller;
@@ -43,6 +43,7 @@ public class ControlPanel extends JPanel {
         addZombieButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                System.out.println("Spawning attacker");
                 model.spawnAttackerRandomly();
             }
         });
