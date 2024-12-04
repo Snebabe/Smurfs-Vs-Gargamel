@@ -15,22 +15,31 @@ public class Model {
 
     private Board board;
     private List<Entity> entities;
+    private WaveManager waveManager;
+    private List<WaveCompleteListener> listeners;
 
     public Model() {
         this.board = new Board(5, 9, 100);
+        this.waveManager = new WaveManager(new AttackEntityFactory(), board);
+        listeners = new ArrayList<>();
     }
 
-    // Temporary function to spawn random attacker
-    public void spawnAttackerRandomly() {
-        Random random = new Random();
-        List<Lane> lanes = board.getLanes();
-        // Choose a random lane from the list of lanes
-        int randomLaneIndex = random.nextInt(lanes.size());
-        Lane selectedLane = lanes.get(randomLaneIndex);
-
-        // Add the attacker to the list of attackers in the chosen lane
-        selectedLane.addAttacker(new AttackGargamel(100,10,1, 1));
+    // Observer management
+    public void addWaveCompleteListener(WaveCompleteListener listener) {
+        listeners.add(listener);
     }
+
+    public void removeWaveCompleteListener(WaveCompleteListener listener) {
+        listeners.remove(listener);
+    }
+
+    // Notify observers when a wave is complete
+    private void notifyWaveComplete() {
+        for (WaveCompleteListener listener : listeners) {
+            listener.onWaveComplete();
+        }
+    }
+
 
     public Map<String, Position> getAllAttackersPosition() {
         Map<String, Position> map = new HashMap<>();
@@ -62,10 +71,35 @@ public class Model {
 
     public void update() {
         //attackCycle();
+
+        // Checks if attacker needs to be spawned
+        waveManager.update();
         moveCycle();
+        checkWaveCleared();
         /*for(Lane lane: board.getLanes()) {
             lane.updateAttackers();
         }*/
+    }
+
+    private void checkWaveCleared() {
+        boolean allAttackersCleared = true;
+        for (Lane lane : board.getLanes()) {
+            if (!lane.getAttackers().isEmpty()) {
+                allAttackersCleared = false;
+                break;
+            }
+        }
+        if (allAttackersCleared) {
+            notifyWaveComplete();
+        }
+    }
+
+    public WaveManager getWaveManager() {
+        return waveManager;
+    }
+
+    public void startWave() {
+        waveManager.startWave();
     }
 
     public void moveCycle() {

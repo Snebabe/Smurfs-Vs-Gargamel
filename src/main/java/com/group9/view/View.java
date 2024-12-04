@@ -16,6 +16,7 @@ import java.util.Map;
 public class View extends JFrame implements Observer {
     private static Model model;
     private static GameController controller;
+    private InfoPanel infoPanel;
 
     private GamePanel gamePanel;
     private ControlPanel controlPanel;
@@ -32,9 +33,12 @@ public class View extends JFrame implements Observer {
         // Initialize components
         gamePanel = new GamePanel(model, controller, WIDTH, HEIGHT);
         controlPanel = new ControlPanel(model, controller);
+        infoPanel = new InfoPanel(model);
+
 
         this.add(controlPanel, BorderLayout.SOUTH);
         this.add(gamePanel, BorderLayout.CENTER);
+        this.add(infoPanel, BorderLayout.EAST);
 
         this.setVisible(true);
     }
@@ -42,6 +46,7 @@ public class View extends JFrame implements Observer {
     @Override
     public void update() {
         gamePanel.update();
+        infoPanel.update();
     }
 
 

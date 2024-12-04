@@ -4,15 +4,17 @@ import com.group9.controller.Controller;
 import com.group9.controller.GameController;
 import com.group9.model.DefenderType;
 import com.group9.model.Model;
+import com.group9.model.WaveCompleteListener;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-public class ControlPanel extends JPanel {
+
+public class ControlPanel extends JPanel implements WaveCompleteListener {
     private JButton addShroomButton;
-    private JButton addZombieButton;
+    private JButton startWaveButton;
     private JButton startGameButton;
     private JButton resetGameButton;
 
@@ -22,13 +24,15 @@ public class ControlPanel extends JPanel {
     public ControlPanel(Model model, GameController controller) {
         this.controller = controller;
         this.model = model;
+        this.model.addWaveCompleteListener(this);
+
         // Set up the layout for the control panel
         setLayout(new FlowLayout(FlowLayout.CENTER, 10, 10));
         setBorder(BorderFactory.createTitledBorder("Controls"));
 
         // Initialize the buttons
         addShroomButton = new JButton("Add Shroom");
-        addZombieButton = new JButton("Add Zombie");
+        startWaveButton = new JButton("Start Wave");
         startGameButton = new JButton("Start Game");
         resetGameButton = new JButton("Reset Game");
 
@@ -40,11 +44,12 @@ public class ControlPanel extends JPanel {
             }
         });
 
-        addZombieButton.addActionListener(new ActionListener() {
+        startWaveButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                System.out.println("Spawning attacker");
-                model.spawnAttackerRandomly();
+                System.out.println("Spawning Wave");
+                model.startWave();
+                setStartWaveButtonEnabled(false); // Disable the button after starting the wave
             }
         });
 
@@ -66,8 +71,19 @@ public class ControlPanel extends JPanel {
 
         // Add the buttons to the control panel
         add(addShroomButton);
-        add(addZombieButton);
+        add(startWaveButton);
         add(startGameButton);
         add(resetGameButton);
+
+        // Initially disable the start wave button
+        setStartWaveButtonEnabled(true);
+    }
+    public void setStartWaveButtonEnabled(boolean enabled) {
+        startWaveButton.setEnabled(enabled);
+    }
+
+    @Override
+    public void onWaveComplete() {
+        setStartWaveButtonEnabled(true);
     }
 }

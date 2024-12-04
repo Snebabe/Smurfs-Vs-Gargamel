@@ -81,12 +81,13 @@ public class MainView extends JPanel implements iView, Observer {
         cells[row][col].repaint();
     }
 
+
     private static JPanel createControlPanel() {
         JPanel controlPanel = new JPanel(new FlowLayout(FlowLayout.CENTER, 10, 10));
         controlPanel.setBorder(BorderFactory.createTitledBorder("Controls"));
 
         JButton addShroomButton = new JButton("Add Shroom");
-        JButton addZombieButton = new JButton("Add Zombie");
+        JButton startWaveButton = new JButton("Start Wave");
         JButton startGameButton = new JButton("Start Game");
         JButton resetGameButton = new JButton("Reset Game");
 
@@ -97,15 +98,15 @@ public class MainView extends JPanel implements iView, Observer {
             }
         });
 
-        addZombieButton.addActionListener(new ActionListener() {
+        startWaveButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                model.spawnAttackerRandomly();
+                model.startWave();
             }
         });
 
         controlPanel.add(addShroomButton);
-        controlPanel.add(addZombieButton);
+        controlPanel.add(startWaveButton);
         controlPanel.add(startGameButton);
         controlPanel.add(resetGameButton);
 
@@ -124,6 +125,8 @@ public class MainView extends JPanel implements iView, Observer {
             Position p = entry.getValue();
             addEntityToCell(p.getX(), p.getY(), s);
         }
+
+
         System.out.println("Updating");
         repaint();
     }
