@@ -1,6 +1,9 @@
 package com.group9.model.entities.defenders;
 
 public class DefenceEntityFactory {
+
+
+
     public static DefenceEntity createDefender(DefenderType type) {
         switch (type.getName()) {
             case "Shroom":

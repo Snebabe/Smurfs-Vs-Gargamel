@@ -17,14 +17,15 @@ public class GameController implements iController {
         Position clickedPosition = new Position(row, col);
 
         // Check if the position is already occupied
-        if (model.isDefenderAt(clickedPosition)) {
+        /*if (model.isDefenderAt(clickedPosition)) {
             System.out.println("Position already occupied!");
             return;
-        }
+        }*/
 
         // Add a new defender to the model
         if (this.chosenDefender != null) {
-            model.setDefender(this.chosenDefender, row, col);
+            model.placeDefender(chosenDefender, clickedPosition);
+            //model.setDefender(this.chosenDefender, row, col);
         }
 
         // Notify observers (GamePanel) to update the view

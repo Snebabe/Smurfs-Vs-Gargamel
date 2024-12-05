@@ -8,5 +8,6 @@ public abstract class DefenceEntity extends Entity {
     public DefenceEntity(int maxHealth, int attackDamage, int range, int cost) {
         super(maxHealth, attackDamage, range);
 
+
     }
 }
