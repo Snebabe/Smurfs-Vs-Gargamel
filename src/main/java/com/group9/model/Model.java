@@ -6,6 +6,11 @@ package com.group9.model;
  * idk
  */
 
+import com.group9.model.entities.attackers.AttackEntity;
+import com.group9.model.entities.attackers.AttackEntityFactory;
+import com.group9.model.entities.defenders.DefenceEntity;
+import com.group9.model.entities.defenders.DefenceEntityFactory;
+
 import java.util.*;
 
 public class Model {

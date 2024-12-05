@@ -44,9 +44,13 @@ public class Lane {
 
 
     public boolean hasAttackerReachedDefender(AttackEntity attacker) {
-        int attackerCellIndex = (int) Math.floor(1 - attacker.getLaneProgress()) * this.getNumberOfCells();
+        // Calculate the attacker's cell index
+        int attackerCellIndex = (int) ((1 - attacker.getLaneProgress()) * this.getNumberOfCells());
 
-        if (attackerCellIndex > this.getNumberOfCells()-1) { return false; }
+        // Ensure the index is within bounds
+        if (attackerCellIndex < 0 || attackerCellIndex >= this.getNumberOfCells()) {
+            return false;
+        }
 
         // Check if there's a defender at the same cell index
         return gridCells.get(attackerCellIndex).hasDefender();
