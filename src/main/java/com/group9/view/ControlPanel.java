@@ -24,7 +24,7 @@ public class ControlPanel extends JPanel implements WaveCompleteListener {
     public ControlPanel(Model model, GameController controller) {
         this.controller = controller;
         this.model = model;
-        this.model.addWaveCompleteListener(this);
+        this.model.getWaveManager().addWaveCompleteListener(this);
 
         // Set up the layout for the control panel
         setLayout(new FlowLayout(FlowLayout.CENTER, 10, 10));
@@ -33,7 +33,7 @@ public class ControlPanel extends JPanel implements WaveCompleteListener {
         // Initialize the buttons
         addShroomButton = new JButton("Add Shroom");
         startWaveButton = new JButton("Start Wave");
-        startGameButton = new JButton("Start Game");
+        //startGameButton = new JButton("Start Game");
         resetGameButton = new JButton("Reset Game");
 
         // Add action listeners to the buttons
@@ -53,6 +53,7 @@ public class ControlPanel extends JPanel implements WaveCompleteListener {
             }
         });
 
+        /*
         startGameButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -61,22 +62,24 @@ public class ControlPanel extends JPanel implements WaveCompleteListener {
             }
         });
 
+
+         */
         resetGameButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                // Reset game logic here (you can customize this part)
                 System.out.println("Resetting game...");
+                model.resetGame();
             }
         });
 
         // Add the buttons to the control panel
         add(addShroomButton);
         add(startWaveButton);
-        add(startGameButton);
+        //add(startGameButton);
         add(resetGameButton);
 
         // Initially disable the start wave button
-        setStartWaveButtonEnabled(true);
+        setStartWaveButtonEnabled(false);
     }
     public void setStartWaveButtonEnabled(boolean enabled) {
         startWaveButton.setEnabled(enabled);

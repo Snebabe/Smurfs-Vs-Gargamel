@@ -1,12 +1,12 @@
-package com.group9.model;
+package com.group9.model.entities.attackers;
 
-import jdk.jshell.spi.ExecutionControl;
+import com.group9.model.entities.Entity;
 
-public abstract class AttackEntity extends Entity{
+public abstract class AttackEntity extends Entity {
     private int speed;
     private float laneProgress;
 
-    AttackEntity(int maxHealth, int attackDamage, int range, int speed) {
+    public AttackEntity(int maxHealth, int attackDamage, int range, int speed) {
         super(maxHealth, attackDamage,range);
         this.speed = speed;
         this.laneProgress = 0;

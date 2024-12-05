@@ -1,5 +1,7 @@
 package com.group9.model;
 
+import com.group9.model.entities.defenders.DefenceEntity;
+
 public class GridCell {
 
     private DefenceEntity defender;

@@ -1,4 +1,6 @@
-package com.group9.model;
+package com.group9.model.entities.defenders;
+
+import com.group9.model.DefenderType;
 
 public class DefenceEntityFactory {
     public static DefenceEntity createDefender(DefenderType type) {

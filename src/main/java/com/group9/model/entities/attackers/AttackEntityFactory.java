@@ -1,4 +1,4 @@
-package com.group9.model;
+package com.group9.model.entities.attackers;
 
 public class AttackEntityFactory {
 

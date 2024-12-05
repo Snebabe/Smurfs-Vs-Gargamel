@@ -2,8 +2,8 @@ package com.group9.view;
 
 import com.group9.controller.GameController;
 import com.group9.controller.Observer;
-import com.group9.model.AttackEntity;
-import com.group9.model.DefenceEntity;
+import com.group9.model.entities.attackers.AttackEntity;
+import com.group9.model.entities.defenders.DefenceEntity;
 import com.group9.model.Model;
 import com.group9.model.Position;
 

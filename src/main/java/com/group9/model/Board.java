@@ -1,5 +1,7 @@
 package com.group9.model;
 
+import com.group9.model.entities.defenders.DefenceEntity;
+
 import java.util.ArrayList;
 import java.util.List;
 

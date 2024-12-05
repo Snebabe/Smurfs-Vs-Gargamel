@@ -1,6 +1,8 @@
 package com.group9.model;
+import com.group9.model.entities.attackers.AttackEntity;
+import com.group9.model.entities.defenders.DefenceEntity;
+
 import java.util.ArrayList;
-import java.util.Comparator;
 import java.util.List;
 
 public class Lane {

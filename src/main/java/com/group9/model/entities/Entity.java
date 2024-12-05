@@ -1,4 +1,6 @@
-package com.group9.model;
+package com.group9.model.entities;
+
+import com.group9.model.hasAttack;
 
 public abstract class Entity implements hasAttack {
     private int health;
@@ -7,7 +9,7 @@ public abstract class Entity implements hasAttack {
     private boolean isDead;
     private int attackRange;
 
-    Entity(int maxHealth, int attackDamage, int attackRange) {
+    public Entity(int maxHealth, int attackDamage, int attackRange) {
         this.health = maxHealth;
         this.maxHealth = maxHealth;
         this.attackDamage = attackDamage;
