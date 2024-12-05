@@ -25,7 +25,7 @@ public class Model {
     private GameStateManager gameStateManager;
     private int laneAmount = 7;
     private int laneSize = 9;
-    private Player player;
+    private ResourceManager resourceManager;
 
     private List<DefenderType> defenderTypes;
 
@@ -36,11 +36,14 @@ public class Model {
         this.waveManager = new WaveManager(new AttackEntityFactory(), board);
         this.attackManager = new AttackManager(board);
         this.gameStateManager = new GameStateManager(board);
-        this.player = new Player();
+        this.resourceManager = new ResourceManager();
 
 
         this.defenderTypes = new ArrayList<>();
         initializeDefenderTypes();
+
+        attackManager.addAttackDeathOberver(resourceManager);
+
     }
 
     private void initializeDefenderTypes() {
@@ -54,9 +57,9 @@ public class Model {
 
     public void placeDefender(DefenderType defenderType, Position position) {
 
-        if((player.getResources() >= defenderType.getCost()) && !isDefenderAt(position)) {
+        if((resourceManager.getResources() >= defenderType.getCost()) && !isDefenderAt(position)) {
             setDefender(defenderType, position.getRow(), position.getCol());
-            player.changeResources(-defenderType.getCost());
+            resourceManager.changeResources(-defenderType.getCost());
         }
         else if(isDefenderAt(position)) {
             System.out.println("Defender already in place");
@@ -73,7 +76,11 @@ public class Model {
 
         waveManager.update();
         attackManager.executeAttackCycle();
+
     }
+
+
+
 
     public void resetGame() {
         this.board = new Board(laneAmount, laneSize, 100);
@@ -84,6 +91,10 @@ public class Model {
 
     public WaveManager getWaveManager() {
         return waveManager;
+    }
+
+    public ResourceManager getResourceManager()  {
+        return resourceManager;
     }
 
     public void startWave() {
@@ -119,6 +130,22 @@ public class Model {
                 if (cell.hasDefender()) {
                     map.put(cell.getDefender(), new Position(row, col));
                 }
+            }
+        }
+        return map;
+    }
+
+    public Map<Projectile, Position> getAllProjectilesPosition() {
+        Map<Projectile, Position> map = new HashMap<>();
+        for (int row = 0; row < board.getLaneAmount(); row++) {
+            Lane lane = board.getLanes().get(row);
+
+            // Create a snapshot to avoid ConcurrentModificationException
+            List<Projectile> snapshot = new ArrayList<>(lane.getProjectiles());
+
+            for (Projectile projectile : snapshot) {
+                int col = (int) (projectile.getLaneProgress() * lane.getNumberOfCells());
+                map.put(projectile, new Position(row, col));
             }
         }
         return map;

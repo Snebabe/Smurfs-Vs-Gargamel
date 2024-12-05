@@ -13,6 +13,8 @@ public class Lane {
     private List<GridCell> gridCells;
     private int laneIndex;
 
+    private List<Projectile> projectiles;
+
     // Constructor
     public Lane(int laneSize, int laneIndex) {
         this.attackEntities = new ArrayList<>();
@@ -22,6 +24,12 @@ public class Lane {
         for (int cellIndex = 0; cellIndex < laneSize; cellIndex++) {
             this.gridCells.add(new GridCell(laneIndex,cellIndex));
         }
+
+        this.projectiles = new ArrayList<>();
+    }
+
+    public List<Projectile> getProjectiles() {
+        return this.projectiles;
     }
 
     // Add an Attacker to the lane
