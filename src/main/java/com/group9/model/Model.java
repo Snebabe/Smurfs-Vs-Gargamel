@@ -10,6 +10,7 @@ import com.group9.model.entities.attackers.AttackEntity;
 import com.group9.model.entities.attackers.AttackEntityFactory;
 import com.group9.model.entities.defenders.DefenceEntity;
 import com.group9.model.entities.defenders.DefenceEntityFactory;
+import com.group9.model.entities.defenders.DefenderType;
 
 import java.util.*;
 
@@ -24,36 +25,61 @@ public class Model {
     private GameStateManager gameStateManager;
     private int laneAmount = 7;
     private int laneSize = 9;
-    private boolean gameOver = false;
+    private Player player;
+
+    private List<DefenderType> defenderTypes;
+
 
 
     public Model() {
         this.board = new Board(laneAmount, laneSize, 100);
         this.waveManager = new WaveManager(new AttackEntityFactory(), board);
         this.attackManager = new AttackManager(board);
-        this.gameStateManager = new GameStateManager(this, board);
+        this.gameStateManager = new GameStateManager(board);
+        this.player = new Player();
+
+
+        this.defenderTypes = new ArrayList<>();
+        initializeDefenderTypes();
+    }
+
+    private void initializeDefenderTypes() {
+        defenderTypes.add(new DefenderType("Shroom", "shroom.png", 100));
+        defenderTypes.add(new DefenderType("Boxer", "sunflower.png", 150));
+    }
+
+    public List<DefenderType> getDefenderTypes() {
+        return defenderTypes;
+    }
+
+    public void placeDefender(DefenderType defenderType, Position position) {
+
+        if((player.getResources() >= defenderType.getCost()) && !isDefenderAt(position)) {
+            setDefender(defenderType, position.getRow(), position.getCol());
+            player.changeResources(-defenderType.getCost());
+        }
+        else if(isDefenderAt(position)) {
+            System.out.println("Defender already in place");
+        }
+        else{
+            System.out.println("Not enough money");
+        }
     }
 
     public void update() {
-        if (gameOver) {
+        if (gameStateManager.isGameOver()) {
             resetGame();
-            gameOver = false;
         } // Reset game
 
         waveManager.update();
         attackManager.executeAttackCycle();
-        gameStateManager.checkGameOverCondition();
-    }
-
-    public void gameOver() {
-        this.gameOver = true;
-        System.out.println("Game Over!"); // Placeholder for actual game-over logic
-        // Notify observers, save game state, or display game-over screen if needed
     }
 
     public void resetGame() {
         this.board = new Board(laneAmount, laneSize, 100);
         waveManager.resetWaveManager(board);
+        attackManager.resetBoard(board);
+        gameStateManager.resetBoard(board);
     }
 
     public WaveManager getWaveManager() {

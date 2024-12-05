@@ -20,7 +20,6 @@ public class GamePanel extends JPanel implements Observer {
     private int columnCount = 8; // Number of columns
     private int rowCount = 5;   // Number of rows
     private List<Rectangle> cells;
-    private Point selectedCell; // To store the selected cell
     private Model model;
     private GameController controller;
 

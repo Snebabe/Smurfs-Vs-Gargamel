@@ -1,6 +1,6 @@
 package com.group9.controller;
 
-import com.group9.model.DefenderType;
+import com.group9.model.entities.defenders.DefenderType;
 import com.group9.model.Model;
 import com.group9.model.Position;
 

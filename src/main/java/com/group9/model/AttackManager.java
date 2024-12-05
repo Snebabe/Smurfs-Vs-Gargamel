@@ -12,6 +12,10 @@ public class AttackManager {
         this.board = board;
     }
 
+
+    public void resetBoard(Board board) {
+        this.board = board;
+    }
     public void executeAttackCycle() {
         for (Lane lane : board.getLanes()) {
             // Sort attackers in the lane by laneProgress
@@ -57,10 +61,8 @@ public class AttackManager {
                 attacker.move();
                 continue;
             }
-            System.out.println(attackerCellIndex);
             // Get the defender at the attacker's position
             DefenceEntity defender = lane.getDefenderAtIndex(attackerCellIndex);
-            System.out.println(defender);
 
             if (defender != null) {
                 // Attack the defender

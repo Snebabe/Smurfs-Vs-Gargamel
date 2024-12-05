@@ -1,17 +1,11 @@
 package com.group9.view;
 
-import com.group9.controller.Controller;
 import com.group9.controller.GameController;
 import com.group9.controller.Observer;
-import com.group9.model.DefenderType;
 import com.group9.model.Model;
-import com.group9.model.Position;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.util.Map;
 
 public class View extends JFrame implements Observer {
     private static Model model;

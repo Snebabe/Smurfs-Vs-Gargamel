@@ -13,7 +13,6 @@ public class WaveManager {private int waveNumber;
     private int spawnInterval;
     private int ticksSinceLastSpawn;
     private AttackEntityFactory factory;
-    private List<Lane> lanes;
     private List<WaveCompleteListener> listeners;
     private Board board;
 
@@ -23,7 +22,6 @@ public class WaveManager {private int waveNumber;
         this.waveReward = 50;
         this.factory = factory;
         this.board = board;
-        this.lanes = board.getLanes();
         this.spawnInterval = 25; // Set the interval to spawn attackers
         this.ticksSinceLastSpawn = 0;
         this.listeners = new ArrayList<>();

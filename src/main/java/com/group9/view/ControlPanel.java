@@ -1,8 +1,7 @@
 package com.group9.view;
 
-import com.group9.controller.Controller;
 import com.group9.controller.GameController;
-import com.group9.model.DefenderType;
+import com.group9.model.entities.defenders.DefenderType;
 import com.group9.model.Model;
 import com.group9.model.WaveCompleteListener;
 
@@ -13,7 +12,6 @@ import java.awt.event.ActionListener;
 
 
 public class ControlPanel extends JPanel implements WaveCompleteListener {
-    private JButton addShroomButton;
     private JButton startWaveButton;
     private JButton startGameButton;
     private JButton resetGameButton;
@@ -31,18 +29,40 @@ public class ControlPanel extends JPanel implements WaveCompleteListener {
         setBorder(BorderFactory.createTitledBorder("Controls"));
 
         // Initialize the buttons
-        addShroomButton = new JButton("Add Shroom");
         startWaveButton = new JButton("Start Wave");
         //startGameButton = new JButton("Start Game");
         resetGameButton = new JButton("Reset Game");
 
         // Add action listeners to the buttons
-        addShroomButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                controller.handleDefenderClick(DefenderType.SHROOM);
-            }
-        });
+
+        // Add buttons for each DefenderType
+        for (DefenderType type : model.getDefenderTypes()) {
+            // Create a panel to hold the label and button
+            JPanel defenderPanel = new JPanel();
+            defenderPanel.setLayout(new BoxLayout(defenderPanel, BoxLayout.Y_AXIS)); // Vertical layout
+
+            // Create the cost label
+            JLabel costLabel = new JLabel("Cost: " + type.getCost());
+            costLabel.setAlignmentX(Component.CENTER_ALIGNMENT); // Center the label
+
+            // Create the button
+            JButton button = new JButton(type.getName());
+            button.setAlignmentX(Component.CENTER_ALIGNMENT); // Center the button
+
+            button.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    controller.handleDefenderClick(type); // Pass the specific DefenderType to the controller
+                }
+            });
+
+            // Add the label and button to the panel
+            defenderPanel.add(costLabel);
+            defenderPanel.add(button);
+
+            // Add the panel to the main container
+            add(defenderPanel);
+        }
 
         startWaveButton.addActionListener(new ActionListener() {
             @Override
@@ -73,7 +93,6 @@ public class ControlPanel extends JPanel implements WaveCompleteListener {
         });
 
         // Add the buttons to the control panel
-        add(addShroomButton);
         add(startWaveButton);
         //add(startGameButton);
         add(resetGameButton);
