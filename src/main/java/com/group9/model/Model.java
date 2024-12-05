@@ -37,6 +37,7 @@ public class Model {
         this.attackManager = new AttackManager(board);
         this.gameStateManager = new GameStateManager(board);
         this.player = new Player();
+        this.waveManager.addWaveCompleteListener(player);
 
 
         this.defenderTypes = new ArrayList<>();
@@ -80,10 +81,15 @@ public class Model {
         waveManager.resetWaveManager(board);
         attackManager.resetBoard(board);
         gameStateManager.resetBoard(board);
+        player.resetResources();
     }
 
     public WaveManager getWaveManager() {
         return waveManager;
+    }
+
+    public Player getPlayer() {
+        return player;
     }
 
     public void startWave() {

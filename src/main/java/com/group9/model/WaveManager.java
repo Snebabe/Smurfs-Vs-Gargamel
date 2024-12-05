@@ -14,36 +14,42 @@ public class WaveManager {private int waveNumber;
     private int ticksSinceLastSpawn;
     private AttackEntityFactory factory;
     private List<WaveCompleteListener> listeners;
+    private boolean waveCompleted;
     private Board board;
 
     public WaveManager(AttackEntityFactory factory, Board board) {
         this.waveNumber = 0;
-        this.waveSize = 5;
-        this.waveReward = 50;
+        this.waveSize = 0;
+        this.waveReward = 0;
         this.factory = factory;
         this.board = board;
-        this.spawnInterval = 25; // Set the interval to spawn attackers
+        this.spawnInterval = 40; // Set the interval to spawn attackers
         this.ticksSinceLastSpawn = 0;
         this.listeners = new ArrayList<>();
+        this.waveCompleted = false;
     }
 
     public void startWave() {
         waveNumber++;
-        waveSize += 2;
-        waveReward += 50;
-        spawnInterval -= 10;
+        waveSize += 3;
+        waveReward = 300 + (waveNumber -1) *50; // Start at 300 and increment by 50 each wave
+        if(spawnInterval>10) {
+            spawnInterval -= 5;
+        }
         attackersToSpawn = waveSize;
         ticksSinceLastSpawn = 0;
+        waveCompleted = false;
     }
 
     public void resetWaveManager(Board board) {
         waveNumber = 0;
-        waveSize = 5;
-        waveReward = 50;
-        spawnInterval = 100;
+        waveSize = 0;
+        waveReward = 0;
+        spawnInterval = 40;
         attackersToSpawn = 0;
         ticksSinceLastSpawn = 0;
         this.board = board;
+        this.waveCompleted = false;
     }
 
     public void update() {
@@ -78,9 +84,13 @@ public class WaveManager {private int waveNumber;
 
     // Notify observers when a wave is complete
     private void notifyWaveComplete() {
-        for (WaveCompleteListener listener : listeners) {
-            listener.onWaveComplete();
+        if (!waveCompleted) {
+            waveCompleted = true;
+            for (WaveCompleteListener listener : listeners) {
+                listener.onWaveComplete(getWaveReward());
+            }
         }
+
     }
 
     private void checkWaveCompletion() {

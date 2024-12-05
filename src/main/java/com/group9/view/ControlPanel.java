@@ -105,7 +105,7 @@ public class ControlPanel extends JPanel implements WaveCompleteListener {
     }
 
     @Override
-    public void onWaveComplete() {
+    public void onWaveComplete(int waveReward) {
         setStartWaveButtonEnabled(true);
     }
 }

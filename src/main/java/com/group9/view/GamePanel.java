@@ -108,8 +108,8 @@ public class GamePanel extends JPanel implements Observer {
             g2d.fillRect(x+cellWidth/4, y+cellHeight/3, cellWidth/2, cellHeight/2);
 
             // Render health bar above the attacker
-            int barWidth = 30;
-            int barHeight = 5;
+            int barWidth = cellWidth/2;
+            int barHeight = cellHeight/10;
             int barX = x + cellWidth/4;
             int barY = y + cellHeight/7; // Position above the attacker
 
@@ -152,12 +152,12 @@ public class GamePanel extends JPanel implements Observer {
 
             // Render attacker as a red circle
             g2d.setColor(Color.RED);
-            g2d.fillOval(pixelX + cellWidth/3, pixelY + cellHeight/3, 20, 20); // Small circle for attackers
+            g2d.fillOval(pixelX + cellWidth/3, pixelY + cellHeight/3, cellWidth/2, cellHeight/2); // Small circle for attackers
 
             // Render health bar above the attacker
-            int barWidth = 30;
-            int barHeight = 5;
-            int barX = pixelX + cellWidth/4;
+            int barWidth = cellWidth/2;
+            int barHeight = cellHeight/10;
+            int barX = pixelX + cellWidth/3;
             int barY = pixelY + cellHeight/6; // Position above the attacker
 
             // Calculate health percentage
