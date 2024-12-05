@@ -17,9 +17,11 @@ public class Model {
     private List<Entity> entities;
     private WaveManager waveManager;
     private List<WaveCompleteListener> listeners;
+    private int laneAmount = 7;
+    private int laneSize = 9;
 
     public Model() {
-        this.board = new Board(5, 9, 100);
+        this.board = new Board(laneAmount, laneSize, 100);
         this.waveManager = new WaveManager(new AttackEntityFactory(), board);
         listeners = new ArrayList<>();
     }
@@ -40,6 +42,13 @@ public class Model {
         }
     }
 
+    public int getLaneAmount() {
+        return this.laneAmount;
+    }
+
+    public int getLaneSize() {
+        return this.laneSize;
+    }
 
     public Map<AttackEntity, Position> getAllAttackersPosition() {
         Map<AttackEntity, Position> map = new HashMap<>();

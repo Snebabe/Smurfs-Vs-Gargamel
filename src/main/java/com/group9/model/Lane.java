@@ -40,19 +40,6 @@ public class Lane {
         return this.gridCells.size();
     }
 
-    // Update all attackers in the lane (e.g., movement)
-    public void updateAttackers() {
-        // Remove dead attackers
-        attackEntities.removeIf(AttackEntity::isDead);
-
-        for (AttackEntity attacker : attackEntities) {
-            if (hasAttackerReachedDefender(attacker)) {
-                attacker.move();
-            }
-        }
-        // Sort again after movement
-        sortAttackers();
-    }
 
     public boolean hasAttackerReachedDefender(AttackEntity attacker) {
         int attackerCellIndex = (int) Math.floor(1 - attacker.getLaneProgress()) * this.getNumberOfCells();
