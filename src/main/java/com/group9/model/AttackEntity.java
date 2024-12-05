@@ -6,8 +6,8 @@ public abstract class AttackEntity extends Entity{
     private int speed;
     private float laneProgress;
 
-    AttackEntity(int health, int attackDamage, int range, int speed) {
-        super(health, attackDamage,range);
+    AttackEntity(int maxHealth, int attackDamage, int range, int speed) {
+        super(maxHealth, attackDamage,range);
         this.speed = speed;
         this.laneProgress = 0;
     }

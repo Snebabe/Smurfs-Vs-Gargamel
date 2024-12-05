@@ -2,12 +2,14 @@ package com.group9.model;
 
 public abstract class Entity implements hasAttack {
     private int health;
+    private int maxHealth;
     private int attackDamage;
     private boolean isDead;
     private int attackRange;
 
-    Entity(int health, int attackDamage, int attackRange) {
-        this.health = health;
+    Entity(int maxHealth, int attackDamage, int attackRange) {
+        this.health = maxHealth;
+        this.maxHealth = maxHealth;
         this.attackDamage = attackDamage;
         this.attackRange = attackRange;
         this.isDead = false;
@@ -24,6 +26,10 @@ public abstract class Entity implements hasAttack {
 
     public int getHealth() {
         return this.health;
+    }
+
+    public int getMaxHealth() {
+        return this.maxHealth;
     }
 
     public boolean isDead() {
