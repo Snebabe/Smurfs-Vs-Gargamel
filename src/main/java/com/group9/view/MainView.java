@@ -2,10 +2,7 @@ package com.group9.view;
 
 import com.group9.controller.GameController;
 import com.group9.controller.Observer;
-import com.group9.model.AttackGargamel;
-import com.group9.model.DefenderType;
-import com.group9.model.Model;
-import com.group9.model.Position;
+import com.group9.model.*;
 
 import javax.swing.*;
 import java.awt.*;
@@ -120,10 +117,10 @@ public class MainView extends JPanel implements iView, Observer {
             }
         }
 
-        for (Map.Entry<String, Position> entry: model.getAllDefendersPosition().entrySet()) {
-            String s = entry.getKey();
+        for (Map.Entry<DefenceEntity, Position> entry: model.getAllDefendersPosition().entrySet()) {
+            //String s = entry.getKey();
             Position p = entry.getValue();
-            addEntityToCell(p.getX(), p.getY(), s);
+            addEntityToCell(p.getRow(), p.getCol(), "Defender");
         }
 
 

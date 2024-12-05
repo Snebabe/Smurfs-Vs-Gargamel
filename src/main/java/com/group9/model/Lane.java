@@ -26,6 +26,10 @@ public class Lane {
         attackEntities.add(attackEntity);
     }
 
+    public void removeAttacker(AttackEntity attackEntity) {
+        attackEntities.remove(attackEntity);
+    }
+
     // Add a defender to the lane
     public void setDefender(DefenceEntity defender, int col) {
         GridCell cell = this.gridCells.get(col);
@@ -57,20 +61,6 @@ public class Lane {
 
         // Check if there's a defender at the same cell index
         return gridCells.get(attackerCellIndex).hasDefender();
-    }
-
-    public void updateDefenders(){
-        // animation (optional)
-        // find closest enemy in lane
-        // if enemy in range -> attack
-//        for(GridCell cell: gridCells) {
-//            DefenceEntity defender = cell.getDefender();
-//            int x = defender.getXPosition();
-//            AttackEntity closest = getClosestAttacker(x);
-//            if (x - closest.getXPosition() <= defender.getRange()) {
-//                defender.useAttack(closest);
-//            }
-//        }
     }
 
     public DefenceEntity getDefenderAtIndex(int index) {

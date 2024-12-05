@@ -1,24 +1,19 @@
 package com.group9.model;
 
 public class Position {
-    private int x;
-    private int y;
+    private int col;
+    private int row;
 
-    Position(int x, int y) {
-        this.x = x;
-        this.y = y;
+    public Position(int row, int col) {
+        this.row = row;
+        this.col = col;
     }
 
-    Position(int x, int y, int progress) {
-        this.x = x + progress;
-        this.y = y;
+    public int getCol() {
+        return col;
     }
 
-    public int getX() {
-        return x;
-    }
-
-    public int getY() {
-        return y;
+    public int getRow() {
+        return row;
     }
 }

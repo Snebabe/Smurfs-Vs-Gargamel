@@ -41,28 +41,26 @@ public class Model {
     }
 
 
-    public Map<String, Position> getAllAttackersPosition() {
-        Map<String, Position> map = new HashMap<>();
+    public Map<AttackEntity, Position> getAllAttackersPosition() {
+        Map<AttackEntity, Position> map = new HashMap<>();
         for (int row = 0; row < board.getLaneAmount(); row++) {
             Lane lane = board.getLanes().get(row);
             for (AttackEntity attacker : lane.getAttackers()) {
-                float colPosition = (1 - attacker.getLaneProgress()) * lane.getNumberOfCells();
-                int xPos = (int) (colPosition * board.getCellSize());
-                int yPos = row * board.getCellSize();
-                map.put("Attacker", new Position(xPos, yPos));
+                int col = (int) ((1 - attacker.getLaneProgress()) * lane.getNumberOfCells());
+                map.put(attacker, new Position(row, col));
             }
         }
         return map;
     }
 
-    public Map<String, Position> getAllDefendersPosition() {
-        Map<String, Position> map = new HashMap<>();
+    public Map<DefenceEntity, Position> getAllDefendersPosition() {
+        Map<DefenceEntity, Position> map = new HashMap<>();
         for (int row = 0; row < board.getLaneAmount(); row++) {
             Lane lane = board.getLanes().get(row);
             for (int col = 0; col < lane.getNumberOfCells(); col++) {
                 GridCell cell = lane.getGridCells().get(col);
                 if (cell.hasDefender()) {
-                    map.put("shroom", new Position(row, col));
+                    map.put(cell.getDefender(), new Position(row, col));
                 }
             }
         }
@@ -74,7 +72,7 @@ public class Model {
 
         // Checks if attacker needs to be spawned
         waveManager.update();
-        moveCycle();
+        attackCycle();
         checkWaveCleared();
         /*for(Lane lane: board.getLanes()) {
             lane.updateAttackers();
@@ -123,6 +121,7 @@ public class Model {
             // Get the sorted list of attackers
             List<AttackEntity> attackers = lane.getAttackers();
             if(attackers.isEmpty()) {continue;}
+
             for (int cellIndex = 0; cellIndex < lane.getNumberOfCells(); cellIndex++) {
                 // Get the defender at the current cell index
                 DefenceEntity defender = lane.getDefenderAtIndex(cellIndex);
@@ -140,22 +139,39 @@ public class Model {
                 float distance = targetCellIndex - cellIndex;
                 if (distance > 0 && distance <= defender.getAttackRange()) {
                     defender.useAttack(firstAttacker);
+                    if (firstAttacker.isDead()) {
+                        lane.removeAttacker(firstAttacker);
+                        // Check if still attackers alive, otherwise break
+                        if(attackers.isEmpty()) {break;}
+                    }
                 }
             }
 
             // Handle melee attackers (stop moving and attack defenders in the same position)
             for (AttackEntity attacker : attackers) {
-                int attackerCellIndex = (int) Math.floor(1 - attacker.getLaneProgress()) * lane.getNumberOfCells();
+                int attackerCellIndex = (int) Math.abs(Math.floor((1 - attacker.getLaneProgress()) * lane.getNumberOfCells()));
 
-                // Check if attacker is inside grid space
-                if (attackerCellIndex > lane.getNumberOfCells()-1) { continue; }
+                // Check if attacker is outside grid space
+                if (attackerCellIndex > lane.getNumberOfCells()-1) {
+                    attacker.move();
+                    continue;
+                }
 
                 // Check if there's a defender at the same cell index
                 DefenceEntity defender = lane.getDefenderAtIndex(attackerCellIndex);
+                boolean attackerInsideGridSpace = (1 - attacker.getLaneProgress()) * lane.getNumberOfCells() > 0;
+
+                //System.out.println(attackerCellIndex);
+                //System.out.println(defender);
 
                 if (defender != null) {
                     // Stop the attacker's movement and attack the defender
                     attacker.useAttack(defender);
+                    if (defender.isDead()) {
+                        lane.setDefender(null, attackerCellIndex);
+                    }
+                } else if (attackerInsideGridSpace && !lane.hasAttackerReachedDefender(attacker)){
+                    attacker.move();
                 }
             }
         }
@@ -163,5 +179,9 @@ public class Model {
 
     public void setDefender(DefenderType defender, int row, int col) {
         board.setDefender(new DefenceEntityFactory().createDefender(defender), row, col);
+    }
+
+    public boolean isDefenderAt(Position position) {
+        return getAllDefendersPosition().containsValue(position);
     }
 }
