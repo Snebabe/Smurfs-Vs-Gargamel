@@ -19,12 +19,12 @@ public class WaveManager {private int waveNumber;
 
     public WaveManager(AttackEntityFactory factory, Board board) {
         this.waveNumber = 0;
-        this.waveSize = 0;
+        this.waveSize = 50;
         this.waveReward = 50;
         this.factory = factory;
         this.board = board;
         this.lanes = board.getLanes();
-        this.spawnInterval = 100; // Set the interval to spawn attackers
+        this.spawnInterval = 25; // Set the interval to spawn attackers
         this.ticksSinceLastSpawn = 0;
         this.listeners = new ArrayList<>();
     }

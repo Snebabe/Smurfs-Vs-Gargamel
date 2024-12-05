@@ -35,9 +35,9 @@ public class Model {
     }
 
     public void update() {
-        if (this.gameOver) {
-            this. = false;
+        if (gameOver) {
             resetGame();
+            gameOver = false;
         } // Reset game
 
         waveManager.update();

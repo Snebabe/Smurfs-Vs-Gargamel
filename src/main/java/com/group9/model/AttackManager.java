@@ -3,7 +3,6 @@ package com.group9.model;
 import com.group9.model.entities.attackers.AttackEntity;
 import com.group9.model.entities.defenders.DefenceEntity;
 
-import java.sql.SQLOutput;
 import java.util.List;
 
 public class AttackManager {

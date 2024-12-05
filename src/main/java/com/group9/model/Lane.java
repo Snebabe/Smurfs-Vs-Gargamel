@@ -3,6 +3,7 @@ import com.group9.model.entities.attackers.AttackEntity;
 import com.group9.model.entities.defenders.DefenceEntity;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 
 public class Lane {
@@ -55,6 +56,7 @@ public class Lane {
         // Check if there's a defender at the same cell index
         return gridCells.get(attackerCellIndex).hasDefender();
     }
+
 
     public DefenceEntity getDefenderAtIndex(int index) {
         GridCell gridcell = gridCells.get(index);
