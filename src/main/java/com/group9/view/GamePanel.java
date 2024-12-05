@@ -50,7 +50,6 @@ public class GamePanel extends JPanel implements Observer {
                     int row = (e.getY() - yOffset) / cellHeight;
 
                     if (column >= 0 && row >= 0 && column < columnCount && row < rowCount) {
-                        selectedCell = new Point(column, row);
 
                         // Notify the controller to handle placement
                         controller.handleCellClick(row, column);
@@ -67,7 +66,6 @@ public class GamePanel extends JPanel implements Observer {
     @Override
     public void invalidate() {
         cells.clear();
-        selectedCell = null;
         super.invalidate();
     }
 

@@ -18,7 +18,7 @@ public class WaveManager {private int waveNumber;
 
     public WaveManager(AttackEntityFactory factory, Board board) {
         this.waveNumber = 0;
-        this.waveSize = 50;
+        this.waveSize = 5;
         this.waveReward = 50;
         this.factory = factory;
         this.board = board;
@@ -38,7 +38,7 @@ public class WaveManager {private int waveNumber;
 
     public void resetWaveManager(Board board) {
         waveNumber = 0;
-        waveSize = 0;
+        waveSize = 5;
         waveReward = 50;
         spawnInterval = 100;
         attackersToSpawn = 0;
@@ -61,8 +61,8 @@ public class WaveManager {private int waveNumber;
 
     private void spawnAttackerRandomly() {
         Random random = new Random();
-        int randomLaneIndex = random.nextInt(lanes.size());
-        Lane selectedLane = lanes.get(randomLaneIndex);
+        int randomLaneIndex = random.nextInt(board.getLanes().size());
+        Lane selectedLane = board.getLanes().get(randomLaneIndex);
         selectedLane.addAttacker(factory.createRandomAttacker());
     }
 

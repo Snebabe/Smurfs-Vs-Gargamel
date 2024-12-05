@@ -129,6 +129,6 @@ public class Model {
     }
 
     public boolean isDefenderAt(Position position) {
-        return getAllDefendersPosition().containsValue(position);
+        return board.getLanes().get(position.getRow()).getDefenderAtIndex(position.getCol()) != null;
     }
 }
