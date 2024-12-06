@@ -1,13 +1,11 @@
-package com.group9.view;
+package com.group9.view.panels;
 
 import com.group9.controller.InputObserver;
 import com.group9.model.Model;
 import com.group9.model.WaveCompleteListener;
-import com.group9.model.entities.defenders.DefenderType;
 
 import javax.swing.*;
 import java.awt.*;
-import java.util.ArrayList;
 import java.util.List;
 
 public class ControlPanel extends JPanel implements WaveCompleteListener {

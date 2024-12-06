@@ -1,4 +1,4 @@
-package com.group9.view;
+package com.group9.view.panels;
 
 import com.group9.model.Model;
 
