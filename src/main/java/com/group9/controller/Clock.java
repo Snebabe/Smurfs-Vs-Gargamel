@@ -1,5 +1,7 @@
 package com.group9.controller;
 
+import com.group9.model.Observer;
+
 import java.util.HashSet;
 import java.util.Set;
 import javax.swing.Timer;

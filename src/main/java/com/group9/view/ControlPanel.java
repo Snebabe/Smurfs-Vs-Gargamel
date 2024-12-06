@@ -1,109 +1,93 @@
 package com.group9.view;
 
-import com.group9.controller.GameController;
-import com.group9.model.entities.defenders.DefenderType;
+import com.group9.controller.InputObserver;
 import com.group9.model.Model;
 import com.group9.model.WaveCompleteListener;
+import com.group9.model.entities.defenders.DefenderType;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-
+import java.util.ArrayList;
+import java.util.List;
 
 public class ControlPanel extends JPanel implements WaveCompleteListener {
     private JButton startWaveButton;
-    private JButton startGameButton;
     private JButton resetGameButton;
+    private final List<InputObserver> inputObservers;
+    private final Model model;
 
-    private Model model;
-    private GameController controller;
-
-    public ControlPanel(Model model, GameController controller) {
-        this.controller = controller;
+    public ControlPanel(Model model, List<InputObserver> inputObservers) {
         this.model = model;
+        this.inputObservers = inputObservers;
+
+        // Register this panel as a WaveCompleteListener
         this.model.getWaveManager().addWaveCompleteListener(this);
 
-        // Set up the layout for the control panel
-        setLayout(new FlowLayout(FlowLayout.CENTER, 10, 10));
-        setBorder(BorderFactory.createTitledBorder("Controls"));
+        // Set up the layout and visual appearance of the control panel
+        setupLayout();
 
-        // Initialize the buttons
-        startWaveButton = new JButton("Start Wave");
-        //startGameButton = new JButton("Start Game");
-        resetGameButton = new JButton("Reset Game");
+        // Initialize buttons and listeners
+        initializeComponents();
+        initializeListeners();
 
-        // Add action listeners to the buttons
-
-        // Add buttons for each DefenderType
-        for (DefenderType type : model.getDefenderTypes()) {
-            // Create a panel to hold the label and button
-            JPanel defenderPanel = new JPanel();
-            defenderPanel.setLayout(new BoxLayout(defenderPanel, BoxLayout.Y_AXIS)); // Vertical layout
-
-            // Create the cost label
-            JLabel costLabel = new JLabel("Cost: " + type.getCost());
-            costLabel.setAlignmentX(Component.CENTER_ALIGNMENT); // Center the label
-
-            // Create the button
-            JButton button = new JButton(type.getName());
-            button.setAlignmentX(Component.CENTER_ALIGNMENT); // Center the button
-
-            button.addActionListener(new ActionListener() {
-                @Override
-                public void actionPerformed(ActionEvent e) {
-                    controller.handleDefenderClick(type); // Pass the specific DefenderType to the controller
-                }
-            });
-
-            // Add the label and button to the panel
-            defenderPanel.add(costLabel);
-            defenderPanel.add(button);
-
-            // Add the panel to the main container
-            add(defenderPanel);
-        }
-
-        startWaveButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                System.out.println("Spawning Wave");
-                model.startWave();
-                setStartWaveButtonEnabled(false); // Disable the button after starting the wave
-            }
-        });
-
-        /*
-        startGameButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                // Start game logic here (you can customize this part)
-                System.out.println("Starting game...");
-            }
-        });
-
-
-         */
-        resetGameButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                System.out.println("Resetting game...");
-                model.resetGame();
-            }
-        });
-
-        // Add the buttons to the control panel
-        add(startWaveButton);
-        //add(startGameButton);
-        add(resetGameButton);
-
-        // Initially disable the start wave button
+        // Initially disable the Start Wave button
         setStartWaveButtonEnabled(false);
     }
+
+    /**
+     * Sets up the layout and basic properties of the panel.
+     */
+    private void setupLayout() {
+        setLayout(new FlowLayout(FlowLayout.CENTER, 10, 10));
+        setBorder(BorderFactory.createTitledBorder("Controls"));
+    }
+
+    /**
+     * Initializes components for the control panel.
+     */
+    private void initializeComponents() {
+        // Buttons
+        startWaveButton = new JButton("Start Wave");
+        resetGameButton = new JButton("Reset Game");
+
+        // Add a panel for defender selection
+        add(new DefenderPanel(model.getDefenderTypes(), inputObservers));
+
+        // Add buttons to the control panel
+        add(startWaveButton);
+        add(resetGameButton);
+    }
+
+    /**
+     * Initializes listeners for the buttons.
+     */
+    private void initializeListeners() {
+        // Listener for the Start Wave button
+        startWaveButton.addActionListener(e -> {
+            setStartWaveButtonEnabled(false); // Disable the button after starting the wave
+            for (InputObserver observer : inputObservers) {
+                observer.onStartWaveClicked();
+            }
+        });
+
+        // Listener for the Reset Game button
+        resetGameButton.addActionListener(e -> {
+            for (InputObserver observer : inputObservers) {
+                observer.onResetGameClicked();
+            }
+        });
+    }
+
+    /**
+     * Enables or disables the Start Wave button.
+     */
     public void setStartWaveButtonEnabled(boolean enabled) {
         startWaveButton.setEnabled(enabled);
     }
 
+    /**
+     * Callback method invoked when a wave is completed.
+     */
     @Override
     public void onWaveComplete(int waveReward) {
         setStartWaveButtonEnabled(true);

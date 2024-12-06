@@ -1,23 +1,24 @@
 package com.group9.view;
 
 import com.group9.controller.GameController;
-import com.group9.controller.Observer;
+import com.group9.controller.InputObserver;
+import com.group9.model.Observer;
 import com.group9.model.Model;
 
 import javax.swing.*;
 import java.awt.*;
+import java.util.ArrayList;
+import java.util.List;
 
 public class View extends JFrame implements Observer {
-    private static Model model;
-    private static GameController controller;
     private InfoPanel infoPanel;
-
     private GamePanel gamePanel;
     private ControlPanel controlPanel;
+
+    private final List<InputObserver> inputObservers = new ArrayList<>();
+
     public View(int WIDTH, int HEIGHT, Model model) {
         // Set up the JFrame
-        this.model = model;
-        this.controller = new GameController(model);
 
         this.setTitle("Smurfs vs. Gargamel");
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -25,8 +26,8 @@ public class View extends JFrame implements Observer {
         this.setLayout(new BorderLayout());
 
         // Initialize components
-        gamePanel = new GamePanel(model, controller, WIDTH, HEIGHT);
-        controlPanel = new ControlPanel(model, controller);
+        gamePanel = new GamePanel(model, inputObservers);
+        controlPanel = new ControlPanel(model, inputObservers);
         infoPanel = new InfoPanel(model);
 
 
@@ -43,17 +44,7 @@ public class View extends JFrame implements Observer {
         infoPanel.update();
     }
 
-
-
-    /*public void setCount(int count) {
-        countLabel.setText("Count: " + count);
+    public void addInputObserver(InputObserver observer) {
+        inputObservers.add(observer);
     }
-
-    public void addIncrementListener(ActionListener listener) {
-        incrementButton.addActionListener(listener);
-    }
-
-    public void addDecrementListener(ActionListener listener) {
-        decrementButton.addActionListener(listener);
-    }*/
 }

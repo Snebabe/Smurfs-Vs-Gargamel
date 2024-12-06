@@ -1,7 +1,8 @@
 package com.group9.view;
 
 import com.group9.controller.GameController;
-import com.group9.controller.Observer;
+import com.group9.controller.InputObserver;
+import com.group9.model.Observer;
 import com.group9.model.Projectile;
 import com.group9.model.entities.attackers.AttackEntity;
 import com.group9.model.entities.defenders.DefenceEntity;
@@ -22,14 +23,12 @@ public class GamePanel extends JPanel implements Observer {
     private int rowCount = 5;   // Number of rows
     private List<Rectangle> cells;
     private Model model;
-    private GameController controller;
+    private List<InputObserver> inputObservers;
 
-    public GamePanel(Model model, GameController controller, int WIDTH, int HEIGHT) {
+    public GamePanel(Model model, List<InputObserver> inputObservers) {
         this.model = model;
         this.rowCount = model.getLaneAmount();
         this.columnCount = model.getLaneSize();
-        this.controller = controller;
-        this.setPreferredSize(new Dimension(WIDTH, HEIGHT));
         this.setBackground(Color.WHITE);
 
         cells = new ArrayList<>(columnCount * rowCount);
@@ -52,8 +51,10 @@ public class GamePanel extends JPanel implements Observer {
 
                     if (column >= 0 && row >= 0 && column < columnCount && row < rowCount) {
 
-                        // Notify the controller to handle placement
-                        controller.handleCellClick(row, column);
+                        // Notify the observers that gridCellClicked
+                        for (InputObserver observer : inputObservers) {
+                            observer.onGridCellClicked(row, column);
+                        }
 
                         repaint(); // Update the grid with the selected cell
                     }

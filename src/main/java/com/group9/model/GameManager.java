@@ -1,7 +1,6 @@
 package com.group9.model;
 
 import com.group9.controller.Clock;
-import com.group9.controller.Observer;
 import com.group9.view.View;
 
 import java.util.HashSet;
