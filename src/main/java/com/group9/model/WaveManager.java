@@ -1,5 +1,6 @@
 package com.group9.model;
 
+import com.group9.model.entities.attackers.AttackEntity;
 import com.group9.model.entities.attackers.AttackEntityFactory;
 
 import java.util.ArrayList;
@@ -69,7 +70,9 @@ public class WaveManager {private int waveNumber;
         Random random = new Random();
         int randomLaneIndex = random.nextInt(board.getLanes().size());
         Lane selectedLane = board.getLanes().get(randomLaneIndex);
-        selectedLane.addAttacker(factory.createRandomAttacker());
+        AttackEntity attacker = factory.createRandomAttacker();
+        this.board.addMovable(attacker);
+        selectedLane.addAttacker(attacker);
     }
 
 

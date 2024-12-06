@@ -1,7 +1,7 @@
 package com.group9.view;
 
 import com.group9.controller.GameController;
-import com.group9.controller.Observer;
+import com.group9.model.Observer;
 import com.group9.model.Projectile;
 import com.group9.model.entities.attackers.AttackEntity;
 import com.group9.model.entities.defenders.DefenceEntity;
@@ -176,6 +176,7 @@ public class GamePanel extends JPanel implements Observer {
 
         }
 
+        // Render projectiles based on their positions and progress
         for (Map.Entry<Projectile, Position> entry1 : model.getAllProjectilesPosition().entrySet()) {
             Projectile projectile = entry1.getKey();
             Position position1 = entry1.getValue();
@@ -186,7 +187,7 @@ public class GamePanel extends JPanel implements Observer {
             int projectileY = position1.getRow() * cellHeight + yOffset;
 
             g2d.setColor(Color.BLACK);
-            g2d.fillOval(projectileX + cellWidth / 3, projectileY + cellHeight / 3, 5, 5); // Draw a small circle
+            g2d.fillOval(projectileX + cellWidth / 3, projectileY + cellHeight / 3, cellWidth/10, cellHeight/10); // Draw a small circle
             g2d.dispose();
         }
     }

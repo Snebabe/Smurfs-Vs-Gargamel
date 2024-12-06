@@ -1,7 +1,7 @@
 package com.group9.view;
 
 import com.group9.controller.GameController;
-import com.group9.controller.Observer;
+import com.group9.model.Observer;
 import com.group9.model.Model;
 
 import javax.swing.*;

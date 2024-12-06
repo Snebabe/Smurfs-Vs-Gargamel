@@ -1,8 +1,9 @@
 package com.group9.model.entities.attackers;
 
+import com.group9.model.Movable;
 import com.group9.model.entities.Entity;
 
-public abstract class AttackEntity extends Entity {
+public abstract class AttackEntity extends Entity implements Movable {
     private int speed;
     private float laneProgress;
     private int resourceReward;
@@ -19,12 +20,16 @@ public abstract class AttackEntity extends Entity {
     }
 
     public int getResourceReward()  {
-        return resourceReward;
+        return this.resourceReward;
+    }
+
+    public int getSpeed() {
+        return this.speed;
     }
 
 
-        //TODO
-    public void move() {
-        this.laneProgress += (float) speed / 100;
+    public void setLaneProgress(float laneProgress) {
+        this.laneProgress = laneProgress;
     }
+
 }

@@ -2,7 +2,7 @@ package com.group9.model;
 
 import com.group9.model.entities.attackers.AttackEntity;
 
-public class Projectile {
+public class Projectile implements Movable {
     private float laneProgress;
     private AttackEntity target;
     private int speed;
@@ -17,30 +17,43 @@ public class Projectile {
         this.active = true;
     }
 
-    public void update() {
-        if(laneProgress >= 1 || target.isDead()) {
-            active = false;
-        }
+    public boolean moveAllowed() {
 
-        float distance = (1-target.getLaneProgress()) - laneProgress;
-        System.out.println("Distance: " + distance + ", Speed Increment: " + (float) speed / 100);
-
-        if(distance < (float)speed/100) {
-            target.takeDamage(damage);
-            active = false;
-            System.out.println("Projectile hit target. Damage dealt: " + damage);
-        }
-        else{
-            laneProgress += (float)speed/100;
-            System.out.println("Projectile moving. New laneProgress: " + laneProgress);
-        }
     }
 
     public boolean isActive() {
         return active;
     }
 
+    public void setActive(boolean active) {
+        this.active = active;
+    }
+
+    public int getDamage() {
+        return damage;
+    }
+
+    public AttackEntity getTarget() {
+        return target;
+    }
+
+    @Override
     public float getLaneProgress() {
         return laneProgress;
+    }
+
+    @Override
+    public void setLaneProgress(float laneProgress) {
+        this.laneProgress = laneProgress;
+    }
+
+    @Override
+    public int getSpeed() {
+        return speed;
+    }
+
+    @Override
+    public MovementRule getMovementRule() {
+        return new ProjectileMovementRule();
     }
 }

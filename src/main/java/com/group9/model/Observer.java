@@ -1,4 +1,4 @@
-package com.group9.controller;
+package com.group9.model;
 
 public interface Observer {
     void update();

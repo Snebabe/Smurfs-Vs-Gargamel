@@ -10,7 +10,6 @@ public abstract class DefenceEntity extends Entity {
     private int cost;
     private boolean ranged;
 
-
     public DefenceEntity(int maxHealth, int attackDamage, int range, int cost, boolean ranged) {
         super(maxHealth, attackDamage, range);
         this.ranged = ranged;
@@ -18,7 +17,7 @@ public abstract class DefenceEntity extends Entity {
 
     public void useAttack(AttackEntity attackEntity, List<Projectile> projectiles, float laneProgress) {
         if(ranged) {
-            projectiles.add(new Projectile(laneProgress, attackEntity, 5, getAttackDamage()));
+            projectiles.add(new Projectile(laneProgress, attackEntity, 2, getAttackDamage()));
         }
         else {
             super.useAttack(attackEntity);

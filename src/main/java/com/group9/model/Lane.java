@@ -15,11 +15,13 @@ public class Lane {
 
     private List<Projectile> projectiles;
 
+
     // Constructor
     public Lane(int laneSize, int laneIndex) {
         this.attackEntities = new ArrayList<>();
         this.gridCells = new ArrayList<>();
         this.laneIndex = laneIndex;
+
 
         for (int cellIndex = 0; cellIndex < laneSize; cellIndex++) {
             this.gridCells.add(new GridCell(laneIndex,cellIndex));
