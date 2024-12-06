@@ -5,9 +5,9 @@ public class AttackEntityFactory {
     public AttackEntity createAttacker(String type) {
         switch (type) {
             case "Gargamel":
-                return new AttackGargamel(100, 10, 1, 1);
+                return new AttackGargamel(100, 10, 1, 1, 50);
             case "FastGargamel":
-                return new AttackGargamel(100, 10, 1, 2);
+                return new AttackGargamel(100, 10, 1, 2, 50);
             default:
                 throw new IllegalArgumentException("Invalid attacker type: " + type);
         }

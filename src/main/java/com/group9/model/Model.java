@@ -130,6 +130,22 @@ public class Model {
         return map;
     }
 
+    public Map<Projectile, Position> getAllProjectilesPosition() {
+        Map<Projectile, Position> map = new HashMap<>();
+        for (int row = 0; row < board.getLaneAmount(); row++) {
+            Lane lane = board.getLanes().get(row);
+
+            // Create a snapshot to avoid ConcurrentModificationException
+            List<Projectile> snapshot = new ArrayList<>(lane.getProjectiles());
+
+            for (Projectile projectile : snapshot) {
+                int col = (int) (projectile.getLaneProgress() * lane.getNumberOfCells());
+                map.put(projectile, new Position(row, col));
+            }
+        }
+        return map;
+    }
+
     public void setDefender(DefenderType defender, int row, int col) {
         board.setDefender(new DefenceEntityFactory().createDefender(defender), row, col);
     }

@@ -2,6 +2,7 @@ package com.group9.view;
 
 import com.group9.controller.GameController;
 import com.group9.controller.Observer;
+import com.group9.model.Projectile;
 import com.group9.model.entities.attackers.AttackEntity;
 import com.group9.model.entities.defenders.DefenceEntity;
 import com.group9.model.Model;
@@ -105,13 +106,13 @@ public class GamePanel extends JPanel implements Observer {
 
 
             g2d.setColor(Color.BLUE);
-            g2d.fillRect(x+cellWidth/4, y+cellHeight/3, cellWidth/2, cellHeight/2);
+            g2d.fillRect(x + cellWidth / 4, y + cellHeight / 3, cellWidth / 2, cellHeight / 2);
 
             // Render health bar above the attacker
-            int barWidth = cellWidth/2;
-            int barHeight = cellHeight/10;
-            int barX = x + cellWidth/4;
-            int barY = y + cellHeight/7; // Position above the attacker
+            int barWidth = cellWidth / 2;
+            int barHeight = cellHeight / 10;
+            int barX = x + cellWidth / 4;
+            int barY = y + cellHeight / 7; // Position above the attacker
 
             // Calculate health percentage
             double healthPercent = (double) defender.getHealth() / defender.getMaxHealth();
@@ -152,13 +153,13 @@ public class GamePanel extends JPanel implements Observer {
 
             // Render attacker as a red circle
             g2d.setColor(Color.RED);
-            g2d.fillOval(pixelX + cellWidth/3, pixelY + cellHeight/3, cellWidth/2, cellHeight/2); // Small circle for attackers
+            g2d.fillOval(pixelX + cellWidth / 3, pixelY + cellHeight / 3, cellWidth / 2, cellHeight / 2); // Small circle for attackers
 
             // Render health bar above the attacker
-            int barWidth = cellWidth/2;
-            int barHeight = cellHeight/10;
-            int barX = pixelX + cellWidth/3;
-            int barY = pixelY + cellHeight/6; // Position above the attacker
+            int barWidth = cellWidth / 2;
+            int barHeight = cellHeight / 10;
+            int barX = pixelX + cellWidth / 3;
+            int barY = pixelY + cellHeight / 6; // Position above the attacker
 
             // Calculate health percentage
             double healthPercent = (double) attacker.getHealth() / attacker.getMaxHealth();
@@ -171,11 +172,24 @@ public class GamePanel extends JPanel implements Observer {
             // Draw health bar foreground
             g2d.setColor(Color.GREEN);
             g2d.fillRect(barX, barY, filledWidth, barHeight);
+
+
         }
 
-        g2d.dispose();
-    }
+        for (Map.Entry<Projectile, Position> entry1 : model.getAllProjectilesPosition().entrySet()) {
+            Projectile projectile = entry1.getKey();
+            Position position1 = entry1.getValue();
 
+            double progress = projectile.getLaneProgress();
+
+            int projectileX = (int) (width * progress);
+            int projectileY = position1.getRow() * cellHeight + yOffset;
+
+            g2d.setColor(Color.BLACK);
+            g2d.fillOval(projectileX + cellWidth / 3, projectileY + cellHeight / 3, 5, 5); // Draw a small circle
+            g2d.dispose();
+        }
+    }
     @Override
     public void update() {
         repaint();
