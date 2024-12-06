@@ -1,10 +1,13 @@
-package com.group9.model;
+package com.group9.model.managers;
 
+import com.group9.model.*;
+import com.group9.model.board.Board;
+import com.group9.model.board.Lane;
+import com.group9.model.entities.Projectile;
 import com.group9.model.entities.attackers.AttackEntity;
 import com.group9.model.entities.defenders.DefenceEntity;
 
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 
 public class AttackManager implements Observer {
@@ -45,24 +48,6 @@ public class AttackManager implements Observer {
         }
     }
 
-    public void moveAttackers() {
-        for (Lane lane : board.getLanes()) {
-            for (AttackEntity attacker : lane.getAttackers()) {
-                // Calculate the attacker's position on the grid
-                int attackerCellIndex = (int) ((1 - attacker.getLaneProgress()) * lane.getNumberOfCells());
-                // Ensure the attackerCellIndex is within bounds
-                if (attackerCellIndex >= lane.getNumberOfCells()) {
-                    MoveHandler.move(attacker);
-                }
-                if (!lane.hasAttackerReachedDefender(attacker)) {
-                    // Move the attacker forward if no defender is present
-                    MoveHandler.move(attacker);
-                }
-            }
-        }
-    }
-
-
     private void handleDefenderAttacks(Lane lane) {
         List<AttackEntity> attackers = lane.getAttackers();
         if (attackers.isEmpty()) return;
@@ -78,8 +63,13 @@ public class AttackManager implements Observer {
             float distance = targetCellIndex - cellIndex;
 
             if (distance > 0 && distance <= defender.getAttackRange()) {
-                defender.useAttack(firstAttacker, lane.getProjectiles(), (float)cellIndex/(lane.getNumberOfCells()-1));
-                board.addMovable(lane.getProjectiles().getLast());
+                if (defender.isRanged()) {
+                    Projectile projectile = new Projectile((float)cellIndex/(lane.getNumberOfCells()-1), firstAttacker, 4, defender.getAttackDamage());
+                    lane.getProjectiles().add(projectile);
+                    board.addMovable(projectile, lane);
+                } else {
+                    defender.useAttack(firstAttacker);
+                }
                 if (firstAttacker.isDead()) {
                     lane.removeAttacker(firstAttacker);
                     notifyAttackerDeath(firstAttacker);

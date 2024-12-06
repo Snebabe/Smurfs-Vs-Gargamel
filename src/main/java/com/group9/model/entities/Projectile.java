@@ -1,6 +1,9 @@
-package com.group9.model;
+package com.group9.model.entities;
 
 import com.group9.model.entities.attackers.AttackEntity;
+import com.group9.model.movement.Movable;
+import com.group9.model.movement.MovementRule;
+import com.group9.model.movement.ProjectileMovementRule;
 
 public class Projectile implements Movable {
     private float laneProgress;
@@ -15,10 +18,6 @@ public class Projectile implements Movable {
         this.speed = speed;
         this.damage = damage;
         this.active = true;
-    }
-
-    public boolean moveAllowed() {
-
     }
 
     public boolean isActive() {
@@ -56,4 +55,5 @@ public class Projectile implements Movable {
     public MovementRule getMovementRule() {
         return new ProjectileMovementRule();
     }
+
 }

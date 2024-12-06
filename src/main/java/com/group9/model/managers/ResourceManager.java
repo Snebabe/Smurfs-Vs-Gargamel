@@ -1,17 +1,16 @@
-package com.group9.model;
+package com.group9.model.managers;
 
+import com.group9.model.AttackDeathObserver;
+import com.group9.model.WaveCompleteListener;
 import com.group9.model.entities.attackers.AttackEntity;
 import com.group9.model.entities.defenders.DefenceEntity;
 
 public class ResourceManager implements AttackDeathObserver, WaveCompleteListener {
     private int startResources = 450;
     private int resources;
-    private DefenceEntity selectedDefence;
 
-    ResourceManager(){
+    public ResourceManager(){
         this.resources = startResources;
-        this.selectedDefence = null;
-
     }
 
     public int getResources() {

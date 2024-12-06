@@ -1,5 +1,9 @@
-package com.group9.model;
+package com.group9.model.managers;
 
+import com.group9.model.board.Board;
+import com.group9.model.board.Lane;
+import com.group9.model.Observer;
+import com.group9.model.WaveCompleteListener;
 import com.group9.model.entities.attackers.AttackEntity;
 import com.group9.model.entities.attackers.AttackEntityFactory;
 
@@ -7,24 +11,26 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
-public class WaveManager {private int waveNumber;
+public class WaveManager implements Observer {private int waveNumber;
     private int waveSize;
     private int waveReward;
     private int attackersToSpawn;
-    private int spawnInterval;
+    private int spawnIntervalInTicks;
     private int ticksSinceLastSpawn;
+    private int TICKS_PER_SECONDS;
     private AttackEntityFactory factory;
     private List<WaveCompleteListener> listeners;
     private boolean waveCompleted;
     private Board board;
 
-    public WaveManager(AttackEntityFactory factory, Board board) {
+    public WaveManager(AttackEntityFactory factory, Board board , int TICKS_PER_SECONDS) {
         this.waveNumber = 0;
         this.waveSize = 0;
         this.waveReward = 0;
         this.factory = factory;
         this.board = board;
-        this.spawnInterval = 40; // Set the interval to spawn attackers
+        this.TICKS_PER_SECONDS = TICKS_PER_SECONDS;
+        this.spawnIntervalInTicks = TICKS_PER_SECONDS*5; // Set the interval to spawn attackers
         this.ticksSinceLastSpawn = 0;
         this.listeners = new ArrayList<>();
         this.waveCompleted = false;
@@ -34,11 +40,10 @@ public class WaveManager {private int waveNumber;
         waveNumber++;
         waveSize += 3;
         waveReward = 300 + (waveNumber -1) *50; // Start at 300 and increment by 50 each wave
-        if(spawnInterval>10) {
-            spawnInterval -= 5;
+        if(spawnIntervalInTicks > TICKS_PER_SECONDS*2) {
+            spawnIntervalInTicks -= TICKS_PER_SECONDS/2; // Decrease the spawn interval by 0.5 seconds each wave;
         }
         attackersToSpawn = waveSize;
-        ticksSinceLastSpawn = 0;
         waveCompleted = false;
     }
 
@@ -46,17 +51,17 @@ public class WaveManager {private int waveNumber;
         waveNumber = 0;
         waveSize = 0;
         waveReward = 0;
-        spawnInterval = 40;
         attackersToSpawn = 0;
         ticksSinceLastSpawn = 0;
         this.board = board;
         this.waveCompleted = false;
     }
 
+    @Override
     public void update() {
         if (attackersToSpawn > 0) {
             ticksSinceLastSpawn++;
-            if (ticksSinceLastSpawn >= spawnInterval) {
+            if (ticksSinceLastSpawn >= spawnIntervalInTicks) {
                 spawnAttackerRandomly();
                 attackersToSpawn--;
                 ticksSinceLastSpawn = 0;
@@ -71,7 +76,7 @@ public class WaveManager {private int waveNumber;
         int randomLaneIndex = random.nextInt(board.getLanes().size());
         Lane selectedLane = board.getLanes().get(randomLaneIndex);
         AttackEntity attacker = factory.createRandomAttacker();
-        this.board.addMovable(attacker);
+        this.board.addMovable(attacker, selectedLane);
         selectedLane.addAttacker(attacker);
     }
 

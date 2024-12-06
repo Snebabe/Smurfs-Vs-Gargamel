@@ -8,7 +8,7 @@ public class App {
     public static void main(String[] args) {
 
         // Initialize the MVC components
-        int TICKS_PER_SECONDS = 60;
+        int TICKS_PER_SECONDS = 120;
         Model model = new Model(TICKS_PER_SECONDS);
         View view = new View(800, 480, model);
         Clock clock = new Clock(TICKS_PER_SECONDS);

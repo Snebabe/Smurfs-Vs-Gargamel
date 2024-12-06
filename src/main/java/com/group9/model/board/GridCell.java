@@ -1,4 +1,4 @@
-package com.group9.model;
+package com.group9.model.board;
 
 import com.group9.model.entities.defenders.DefenceEntity;
 

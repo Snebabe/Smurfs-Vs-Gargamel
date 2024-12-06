@@ -6,11 +6,19 @@ package com.group9.model;
  * idk
  */
 
+import com.group9.model.board.Board;
+import com.group9.model.board.GridCell;
+import com.group9.model.board.Lane;
+import com.group9.model.entities.Projectile;
 import com.group9.model.entities.attackers.AttackEntity;
 import com.group9.model.entities.attackers.AttackEntityFactory;
 import com.group9.model.entities.defenders.DefenceEntity;
 import com.group9.model.entities.defenders.DefenceEntityFactory;
 import com.group9.model.entities.defenders.DefenderType;
+import com.group9.model.managers.AttackManager;
+import com.group9.model.managers.GameStateManager;
+import com.group9.model.managers.ResourceManager;
+import com.group9.model.managers.WaveManager;
 
 import java.util.*;
 
@@ -36,7 +44,7 @@ public class Model implements Observer {
     public Model(int TICKS_PER_SECONDS) {
         this.TICKS_PER_SECONDS = TICKS_PER_SECONDS;
         this.board = new Board(laneAmount, laneSize, 100, TICKS_PER_SECONDS);
-        this.waveManager = new WaveManager(new AttackEntityFactory(), board);
+        this.waveManager = new WaveManager(new AttackEntityFactory(), board, TICKS_PER_SECONDS);
         this.attackManager = new AttackManager(board);
         this.gameStateManager = new GameStateManager(board);
         this.resourceManager = new ResourceManager();
@@ -78,8 +86,7 @@ public class Model implements Observer {
         } // Reset game
 
         waveManager.update();
-        attackManager.updateProjectiles();
-        attackManager.moveAttackers();
+        board.getMoveManager().update();
     }
 
     public void resetGame() {

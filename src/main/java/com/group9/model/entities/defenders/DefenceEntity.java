@@ -1,10 +1,6 @@
 package com.group9.model.entities.defenders;
 
-import com.group9.model.Projectile;
 import com.group9.model.entities.Entity;
-import com.group9.model.entities.attackers.AttackEntity;
-
-import java.util.List;
 
 public abstract class DefenceEntity extends Entity {
     private int cost;
@@ -15,12 +11,8 @@ public abstract class DefenceEntity extends Entity {
         this.ranged = ranged;
     }
 
-    public void useAttack(AttackEntity attackEntity, List<Projectile> projectiles, float laneProgress) {
-        if(ranged) {
-            projectiles.add(new Projectile(laneProgress, attackEntity, 2, getAttackDamage()));
-        }
-        else {
-            super.useAttack(attackEntity);
-        }
+    public boolean isRanged() {
+        return ranged;
     }
+
 }

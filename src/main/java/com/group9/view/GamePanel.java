@@ -2,7 +2,7 @@ package com.group9.view;
 
 import com.group9.controller.GameController;
 import com.group9.model.Observer;
-import com.group9.model.Projectile;
+import com.group9.model.entities.Projectile;
 import com.group9.model.entities.attackers.AttackEntity;
 import com.group9.model.entities.defenders.DefenceEntity;
 import com.group9.model.Model;
