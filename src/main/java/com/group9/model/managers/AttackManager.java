@@ -1,13 +1,16 @@
-package com.group9.model;
+package com.group9.model.managers;
 
+import com.group9.model.*;
+import com.group9.model.board.Board;
+import com.group9.model.board.Lane;
+import com.group9.model.entities.Projectile;
 import com.group9.model.entities.attackers.AttackEntity;
 import com.group9.model.entities.defenders.DefenceEntity;
 
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 
-public class AttackManager {
+public class AttackManager implements Observer {
     private Board board;
     private List<AttackDeathObserver> attackDeathObservers;
 
@@ -34,33 +37,15 @@ public class AttackManager {
     public void resetBoard(Board board) {
         this.board = board;
     }
-    public void executeAttackCycle() {
+
+    @Override
+    public void update() {
         for (Lane lane : board.getLanes()) {
             // Sort attackers in the lane by laneProgress
             lane.sortAttackers();
             handleDefenderAttacks(lane);
             handleMeleeAttacks(lane);
-            updateProjectiles(lane);
         }
-    }
-
-    public void updateProjectiles(Lane lane) {
-        Iterator<Projectile> iterator = lane.getProjectiles().iterator();
-        while(iterator.hasNext()) {
-            Projectile projectile = iterator.next();
-            projectile.update();
-            if(!projectile.isActive()) {
-                iterator.remove();
-            }
-        }
-
-
-        /*for(Projectile projectile : lane.getProjectiles()) {
-            projectile.update();
-            if(!projectile.isActive()) {
-                lane.getProjectiles().remove(projectile);
-            }
-        }*/
     }
 
     private void handleDefenderAttacks(Lane lane) {
@@ -78,7 +63,13 @@ public class AttackManager {
             float distance = targetCellIndex - cellIndex;
 
             if (distance > 0 && distance <= defender.getAttackRange()) {
-                defender.useAttack(firstAttacker, lane.getProjectiles(), (float)cellIndex/(lane.getNumberOfCells()-1));
+                if (defender.isRanged()) {
+                    Projectile projectile = new Projectile((float)cellIndex/(lane.getNumberOfCells()-1), firstAttacker, 4, defender.getAttackDamage());
+                    lane.getProjectiles().add(projectile);
+                    board.addMovable(projectile, lane);
+                } else {
+                    defender.useAttack(firstAttacker);
+                }
                 if (firstAttacker.isDead()) {
                     lane.removeAttacker(firstAttacker);
                     notifyAttackerDeath(firstAttacker);
@@ -89,17 +80,9 @@ public class AttackManager {
     }
 
     private void handleMeleeAttacks(Lane lane) {
-        List<AttackEntity> attackers = lane.getAttackers();
 
-        for (AttackEntity attacker : attackers) {
-            // Calculate the attacker's position on the grid
+        for (AttackEntity attacker : lane.getAttackers()) {
             int attackerCellIndex = (int) ((1 - attacker.getLaneProgress()) * lane.getNumberOfCells());
-
-            // Ensure the attackerCellIndex is within bounds
-            if (attackerCellIndex < 0 || attackerCellIndex >= lane.getNumberOfCells()) {
-                attacker.move();
-                continue;
-            }
             // Get the defender at the attacker's position
             DefenceEntity defender = lane.getDefenderAtIndex(attackerCellIndex);
 
@@ -111,9 +94,6 @@ public class AttackManager {
                 if (defender.isDead()) {
                     lane.setDefender(null, attackerCellIndex);
                 }
-            } else if (!lane.hasAttackerReachedDefender(attacker)) {
-                // Move the attacker forward if no defender is present
-                attacker.move();
             }
         }
     }

@@ -1,5 +1,7 @@
-package com.group9.model;
+package com.group9.model.managers;
 
+import com.group9.model.board.Board;
+import com.group9.model.board.Lane;
 import com.group9.model.entities.attackers.AttackEntity;
 
 public class GameStateManager {

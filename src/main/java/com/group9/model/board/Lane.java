@@ -1,9 +1,9 @@
-package com.group9.model;
+package com.group9.model.board;
+import com.group9.model.entities.Projectile;
 import com.group9.model.entities.attackers.AttackEntity;
 import com.group9.model.entities.defenders.DefenceEntity;
 
 import java.util.ArrayList;
-import java.util.Comparator;
 import java.util.List;
 
 public class Lane {
@@ -15,11 +15,13 @@ public class Lane {
 
     private List<Projectile> projectiles;
 
+
     // Constructor
     public Lane(int laneSize, int laneIndex) {
         this.attackEntities = new ArrayList<>();
         this.gridCells = new ArrayList<>();
         this.laneIndex = laneIndex;
+
 
         for (int cellIndex = 0; cellIndex < laneSize; cellIndex++) {
             this.gridCells.add(new GridCell(laneIndex,cellIndex));
@@ -50,21 +52,6 @@ public class Lane {
     public int getNumberOfCells(){
         return this.gridCells.size();
     }
-
-
-    public boolean hasAttackerReachedDefender(AttackEntity attacker) {
-        // Calculate the attacker's cell index
-        int attackerCellIndex = (int) ((1 - attacker.getLaneProgress()) * this.getNumberOfCells());
-
-        // Ensure the index is within bounds
-        if (attackerCellIndex < 0 || attackerCellIndex >= this.getNumberOfCells()) {
-            return false;
-        }
-
-        // Check if there's a defender at the same cell index
-        return gridCells.get(attackerCellIndex).hasDefender();
-    }
-
 
     public DefenceEntity getDefenderAtIndex(int index) {
         GridCell gridcell = gridCells.get(index);

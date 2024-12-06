@@ -6,15 +6,23 @@ package com.group9.model;
  * idk
  */
 
+import com.group9.model.board.Board;
+import com.group9.model.board.GridCell;
+import com.group9.model.board.Lane;
+import com.group9.model.entities.Projectile;
 import com.group9.model.entities.attackers.AttackEntity;
 import com.group9.model.entities.attackers.AttackEntityFactory;
 import com.group9.model.entities.defenders.DefenceEntity;
 import com.group9.model.entities.defenders.DefenceEntityFactory;
 import com.group9.model.entities.defenders.DefenderType;
+import com.group9.model.managers.AttackManager;
+import com.group9.model.managers.GameStateManager;
+import com.group9.model.managers.ResourceManager;
+import com.group9.model.managers.WaveManager;
 
 import java.util.*;
 
-public class Model {
+public class Model implements Observer {
     // Ha ett board
     // Tillgång till varje cell
     // getters som: getBoard
@@ -29,16 +37,20 @@ public class Model {
 
     private List<DefenderType> defenderTypes;
 
+    private int TICKS_PER_SECONDS;
 
 
-    public Model() {
-        this.board = new Board(laneAmount, laneSize, 100);
-        this.waveManager = new WaveManager(new AttackEntityFactory(), board);
+
+    public Model(int TICKS_PER_SECONDS) {
+        this.TICKS_PER_SECONDS = TICKS_PER_SECONDS;
+        this.board = new Board(laneAmount, laneSize, 100, TICKS_PER_SECONDS);
+        this.waveManager = new WaveManager(new AttackEntityFactory(), board, TICKS_PER_SECONDS);
         this.attackManager = new AttackManager(board);
         this.gameStateManager = new GameStateManager(board);
         this.resourceManager = new ResourceManager();
         this.waveManager.addWaveCompleteListener(resourceManager);
         this.attackManager.addAttackDeathOberver(resourceManager);
+
 
 
         this.defenderTypes = new ArrayList<>();
@@ -74,11 +86,11 @@ public class Model {
         } // Reset game
 
         waveManager.update();
-        attackManager.executeAttackCycle();
+        board.getMoveManager().update();
     }
 
     public void resetGame() {
-        this.board = new Board(laneAmount, laneSize, 100);
+        this.board = new Board(laneAmount, laneSize, 100,TICKS_PER_SECONDS);
         waveManager.resetWaveManager(board);
         attackManager.resetBoard(board);
         gameStateManager.resetBoard(board);
@@ -91,6 +103,9 @@ public class Model {
 
     public ResourceManager getResourceManager() {
         return resourceManager;
+    }
+    public AttackManager getAttackManager() {
+        return attackManager;
     }
 
     public void startWave() {

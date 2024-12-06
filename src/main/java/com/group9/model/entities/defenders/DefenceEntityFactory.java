@@ -7,9 +7,9 @@ public class DefenceEntityFactory {
     public static DefenceEntity createDefender(DefenderType type) {
         switch (type.getName()) {
             case "Shroom":
-                return new DefenceShroom(200, 3, 3, 1, type.getCost(), true);
+                return new DefenceShroom(200, 10, 5, 1, type.getCost(), true);
             case "Boxer":
-                return new DefenceBoxer(1000, 75, 1, 1, type.getCost(), false);
+                return new DefenceBoxer(400, 20, 1, 1, type.getCost(), false);
             default:
                 throw new IllegalArgumentException("Invalid defender type: " + type);
         }
