@@ -22,7 +22,7 @@ public class InfoPanel extends JPanel {
 
         waveLabel = new JLabel("Current Wave: 0");
         attackersLeftLabel = new JLabel("Attackers Left: 0");
-        resourcesLabel = new JLabel(" Resources: "+ model.getPlayer().getResources());
+        resourcesLabel = new JLabel(" Resources: "+ model.getResourceManager().getResources());
 
         wavePanel.add(waveLabel);
         wavePanel.add(attackersLeftLabel);
@@ -33,6 +33,6 @@ public class InfoPanel extends JPanel {
     public void update() {
         waveLabel.setText("Current Wave: " + model.getWaveManager().getWaveNumber());
         attackersLeftLabel.setText("Attackers Left: " + model.getWaveManager().getAttackersToSpawn());
-        resourcesLabel.setText(" Resources: "+ model.getPlayer().getResources());
+        resourcesLabel.setText(" Resources: "+ model.getResourceManager().getResources());
     }
 }

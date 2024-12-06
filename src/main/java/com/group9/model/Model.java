@@ -25,7 +25,7 @@ public class Model {
     private GameStateManager gameStateManager;
     private int laneAmount = 7;
     private int laneSize = 9;
-    private Player player;
+    private ResourceManager resourceManager;
 
     private List<DefenderType> defenderTypes;
 
@@ -36,8 +36,9 @@ public class Model {
         this.waveManager = new WaveManager(new AttackEntityFactory(), board);
         this.attackManager = new AttackManager(board);
         this.gameStateManager = new GameStateManager(board);
-        this.player = new Player();
-        this.waveManager.addWaveCompleteListener(player);
+        this.resourceManager = new ResourceManager();
+        this.waveManager.addWaveCompleteListener(resourceManager);
+        this.attackManager.addAttackDeathOberver(resourceManager);
 
 
         this.defenderTypes = new ArrayList<>();
@@ -55,9 +56,9 @@ public class Model {
 
     public void placeDefender(DefenderType defenderType, Position position) {
 
-        if((player.getResources() >= defenderType.getCost()) && !isDefenderAt(position)) {
+        if((resourceManager.getResources() >= defenderType.getCost()) && !isDefenderAt(position)) {
             setDefender(defenderType, position.getRow(), position.getCol());
-            player.changeResources(-defenderType.getCost());
+            resourceManager.changeResources(-defenderType.getCost());
         }
         else if(isDefenderAt(position)) {
             System.out.println("Defender already in place");
@@ -81,15 +82,15 @@ public class Model {
         waveManager.resetWaveManager(board);
         attackManager.resetBoard(board);
         gameStateManager.resetBoard(board);
-        player.resetResources();
+        resourceManager.resetResources();
     }
 
     public WaveManager getWaveManager() {
         return waveManager;
     }
 
-    public Player getPlayer() {
-        return player;
+    public ResourceManager getResourceManager() {
+        return resourceManager;
     }
 
     public void startWave() {
