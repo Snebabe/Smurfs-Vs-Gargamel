@@ -185,7 +185,7 @@ public class GamePanel extends JPanel implements Observer {
             int projectileX = (int) (width * progress);
             int projectileY = position1.getRow() * cellHeight + yOffset;
 
-            g2d.setColor(Color.RED);
+            g2d.setColor(Color.BLACK);
             g2d.fillOval(projectileX + cellWidth / 3, projectileY + cellHeight / 3, 5, 5); // Draw a small circle
             g2d.dispose();
         }

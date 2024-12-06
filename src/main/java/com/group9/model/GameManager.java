@@ -21,7 +21,7 @@ public class GameManager {
     }
     public void start() {
         Thread gameLoop = new Thread(() -> {
-            final int TICKS_PER_SECOND = 20;
+            final int TICKS_PER_SECOND = 60;
             final long MS_PER_TICK = 1000 / TICKS_PER_SECOND;
 
             while (running) {

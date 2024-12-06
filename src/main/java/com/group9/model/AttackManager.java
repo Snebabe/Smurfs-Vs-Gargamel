@@ -78,7 +78,7 @@ public class AttackManager {
             float distance = targetCellIndex - cellIndex;
 
             if (distance > 0 && distance <= defender.getAttackRange()) {
-                defender.useAttack(firstAttacker, lane.getProjectiles(), (float)cellIndex/10);
+                defender.useAttack(firstAttacker, lane.getProjectiles(), (float)cellIndex/(lane.getNumberOfCells()-1));
                 if (firstAttacker.isDead()) {
                     lane.removeAttacker(firstAttacker);
                     notifyAttackerDeath(firstAttacker);
