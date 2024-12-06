@@ -1,8 +1,8 @@
 package com.group9.view.renderers;
 
 import com.group9.model.Model;
-import com.group9.model.Projectile;
 import com.group9.model.Position;
+import com.group9.model.entities.Projectile;
 
 import java.awt.*;
 import java.util.Map;

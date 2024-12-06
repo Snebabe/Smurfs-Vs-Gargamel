@@ -1,7 +1,6 @@
 package com.group9;
 
 import com.group9.controller.GameController;
-import com.group9.model.GameManager;
 import com.group9.model.Clock;
 import com.group9.model.Model;
 import com.group9.view.View;

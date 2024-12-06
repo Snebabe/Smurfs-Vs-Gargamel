@@ -68,7 +68,7 @@ public class Lane {
             int j = i - 1;
 
             // Move attackers that are ahead of the key back by one position
-            while (j >= 0 && attackEntities.get(j).getLaneProgress() > key.getLaneProgress()) {
+            while (j >= 0 && attackEntities.get(j).getLaneProgress() < key.getLaneProgress()) {
                 attackEntities.set(j + 1, attackEntities.get(j));
                 j--;
             }
