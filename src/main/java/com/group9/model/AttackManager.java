@@ -4,6 +4,7 @@ import com.group9.model.entities.attackers.AttackEntity;
 import com.group9.model.entities.defenders.DefenceEntity;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.Iterator;
 import java.util.List;
 
@@ -46,13 +47,56 @@ public class AttackManager {
 
     public void updateProjectiles(Lane lane) {
         Iterator<Projectile> iterator = lane.getProjectiles().iterator();
+        while (iterator.hasNext()) {
+            Projectile projectile = iterator.next();
+
+            // Ensure the projectile has a valid target
+            if (projectile.getTarget() == null || projectile.getTarget().isDead()) {
+                if (!lane.getAttackers().isEmpty()) {
+                    // Assign a new target, preferably the closest one
+                    AttackEntity closestTarget = lane.getAttackers().stream()
+                            .min(Comparator.comparingDouble(AttackEntity::getLaneProgress))
+                            .orElse(null);
+                    projectile.setTarget(closestTarget);
+                } else {
+                    // No targets available; deactivate the projectile
+                    projectile.setTarget(null);
+                    projectile.update();
+                    iterator.remove();
+                    continue;
+                }
+            }
+
+            // Update the projectile
+            projectile.update();
+
+            // Remove inactive projectiles
+            if (!projectile.isActive()) {
+                iterator.remove();
+            }
+        }
+
+        // Remove dead attackers only after all projectiles are processed
+        lane.getAttackers().removeIf(AttackEntity::isDead);
+
+
+
+
+
+
+        /*lane.getAttackers().removeIf(AttackEntity::isDead);
+        Iterator<Projectile> iterator = lane.getProjectiles().iterator();
         while(iterator.hasNext()) {
             Projectile projectile = iterator.next();
+            if(!lane.getAttackers().isEmpty()){
+                projectile.setTarget(lane.getAttackers().get(lane.getAttackers().size()-1));
+            }
+
             projectile.update();
             if(!projectile.isActive()) {
                 iterator.remove();
             }
-        }
+        }*/
 
 
         /*for(Projectile projectile : lane.getProjectiles()) {

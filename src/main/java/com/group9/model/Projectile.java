@@ -23,16 +23,16 @@ public class Projectile {
         }
 
         float distance = (1-target.getLaneProgress()) - laneProgress;
-        System.out.println("Distance: " + distance + ", Speed Increment: " + (float) speed / 100);
+
 
         if(distance < (float)speed/100) {
             target.takeDamage(damage);
             active = false;
-            System.out.println("Projectile hit target. Damage dealt: " + damage);
+
         }
         else{
             laneProgress += (float)speed/100;
-            System.out.println("Projectile moving. New laneProgress: " + laneProgress);
+
         }
     }
 
@@ -40,7 +40,15 @@ public class Projectile {
         return active;
     }
 
+    public void setTarget(AttackEntity target) {
+        this.target = target;
+    }
+
     public float getLaneProgress() {
         return laneProgress;
+    }
+
+    public AttackEntity getTarget() {
+        return target;
     }
 }

@@ -18,7 +18,7 @@ public abstract class DefenceEntity extends Entity {
 
     public void useAttack(AttackEntity attackEntity, List<Projectile> projectiles, float laneProgress) {
         if(ranged) {
-            projectiles.add(new Projectile(laneProgress, attackEntity, 5, getAttackDamage()));
+            projectiles.add(new Projectile(laneProgress, attackEntity, 1, getAttackDamage()));
         }
         else {
             super.useAttack(attackEntity);
