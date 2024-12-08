@@ -24,28 +24,6 @@ Here follows some of our epic user stories:
     _As a Player, I want to enjoy an interactive UI with engaging graphics and sounds, so I feel immersed in the Smurf universe._
 ]
 
-Below is the domain model for Smurfs vs. Gargamel:
-#figure(
-    caption: [Domain model for Smurfs vs. Gargamel],
-    image("res/domain_model.png", width: 90%)
-)
-
-#pagebreak()
-
-Here is a mockup of the game, together with an early rendering:
-
-#figure(
-    caption: [GUI mockup],
-    image("res/mockup1.jpg", width: 60%)
-)
-
-#figure(
-    caption: [Early rendering of the game],
-    image("res/early_rendering.png", width: 80%)
-)
-
-#pagebreak()
-
 == Requirements Overview
 
 To define our requirements, we first start by defining the scope. We want to highlight these four key features of our game. The game should include:
@@ -106,7 +84,10 @@ There are also some technical interfaces, as the game is designed as a desktop-b
     )
 )
 
-Based on the our current user feedback, we represent the following stakeholders:
+#pagebreak()
+
+Based on our current user feedback, we represent the following stakeholders:
+
 #table(
   columns: 3,
   [*Role*],
@@ -131,8 +112,6 @@ Based on the our current user feedback, we represent the following stakeholders:
     - A fun, engaging game, running smooth without unexpected behaviour.
   ],
 )
-
-#pagebreak()
 
 Now comes the main requirements needed by our game:
 
@@ -200,4 +179,25 @@ Now comes the main requirements needed by our game:
         ],
 
     )
+)
+
+#pagebreak()
+
+Below is the domain model for Smurfs vs. Gargamel:
+
+#figure(
+    caption: [Domain model for Smurfs vs. Gargamel],
+    image("res/domain_model.png", width: 90%)
+)
+
+Here is a mockup of the game, together with an early rendering:
+
+#figure(
+    caption: [GUI mockup],
+    image("res/mockup1.jpg", width: 60%)
+)
+
+#figure(
+    caption: [Early rendering of the game],
+    image("res/early_rendering.png", width: 80%)
 )
