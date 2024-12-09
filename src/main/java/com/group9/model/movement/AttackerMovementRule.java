@@ -9,7 +9,7 @@ public class AttackerMovementRule implements MovementRule {
         // Calculate the attacker's cell index
         int attackerCellIndex = (int) ((1 - movable.getLaneProgress()) * lane.getNumberOfCells());
 
-        // Ensure the index is within bounds
+        // Attackers spawn initially outside the grid bounds
         if (attackerCellIndex >= lane.getNumberOfCells()) {
             return true;
         } else if (attackerCellIndex < 0 ) {
