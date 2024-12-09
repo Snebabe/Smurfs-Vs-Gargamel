@@ -1,5 +1,7 @@
 package com.group9.model.entities;
 
+import com.group9.model.entities.attackers.AttackerType;
+import com.group9.model.entities.defenders.DefenderType;
 import com.group9.model.hasAttack;
 
 public abstract class Entity implements hasAttack {

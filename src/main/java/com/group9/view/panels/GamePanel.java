@@ -3,6 +3,7 @@ package com.group9.view.panels;
 import com.group9.controller.InputObserver;
 import com.group9.model.Model;
 import com.group9.model.Observer;
+import com.group9.view.AnimationHandler;
 import com.group9.view.renderers.*;
 
 import javax.swing.*;
@@ -18,11 +19,13 @@ public class GamePanel extends JPanel implements Observer {
     private int columnCount; // Number of columns
     private int rowCount;   // Number of rows
     private Model model;
+    private AnimationHandler animationHandler;
 
-    public GamePanel(Model model, List<InputObserver> inputObservers) {
+    public GamePanel(Model model, AnimationHandler animationHandler, List<InputObserver> inputObservers) {
         this.model = model;
         this.rowCount = model.getLaneAmount();
         this.columnCount = model.getLaneSize();
+        this.animationHandler = animationHandler;
         this.setBackground(Color.WHITE);
 
         // Initialize the list of entity renderers with direct access to the model
@@ -79,29 +82,22 @@ public class GamePanel extends JPanel implements Observer {
 
         // Call draw() for each renderer
         for (EntityRenderer renderer : entityRenderers) {
-            renderer.draw(g2d, model, cellWidth, cellHeight, width);
+            renderer.draw(g2d, model, animationHandler, cellWidth, cellHeight, width);
         }
 
         g2d.dispose();
     }
 
-    private void initializeGridCells(int cellWidth, int cellHeight) {
+
+
+    private void drawGrid(Graphics2D g2d, int cellWidth, int cellHeight) {
+        g2d.setColor(Color.GRAY);
         for (int row = 0; row < rowCount; row++) {
             for (int col = 0; col < columnCount; col++) {
-                Rectangle cell = new Rectangle(
-                        col * cellWidth,
-                        row * cellHeight,
-                        cellWidth,
-                        cellHeight);
-                cells.add(cell);
+                int x = col * cellWidth;
+                int y = row * cellHeight;
+                g2d.drawRect(x, y, cellWidth, cellHeight);
             }
-        }
-    }
-
-    private void drawGrid(Graphics2D g2d) {
-        g2d.setColor(Color.GRAY);
-        for (Rectangle cell : cells) {
-            g2d.draw(cell);
         }
     }
 

@@ -1,5 +1,7 @@
 package com.group9.model.entities.defenders;
 
+import com.group9.model.entities.attackers.AttackerType;
+
 public class DefenceEntityFactory {
 
     public static DefenceEntity createDefender(DefenderType type) {

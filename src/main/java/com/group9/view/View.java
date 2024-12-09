@@ -36,8 +36,12 @@ public class View extends JFrame implements Observer {
         this.setSize(new Dimension(WIDTH, HEIGHT));
         this.setLayout(new BorderLayout());
 
+        this.animationHandler = new AnimationHandler();
+        initializeAnimationHandlers(animationHandler);
+
+
         // Initialize components
-        gamePanel = new GamePanel(model, inputObservers);
+        gamePanel = new GamePanel(model, animationHandler, inputObservers);
         controlPanel = new ControlPanel(model, inputObservers);
         infoPanel = new InfoPanel(model);
 

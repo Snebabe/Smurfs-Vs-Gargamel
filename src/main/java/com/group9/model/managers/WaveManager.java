@@ -11,7 +11,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
-public class WaveManager implements Observer {private int waveNumber;
+public class WaveManager implements Observer {
+    private int waveNumber;
     private int waveSize;
     private int waveReward;
     private int attackersToSpawn;
