@@ -26,10 +26,35 @@ The system uses a modular, object-oriented design with several high-level module
 
 Another module is `Board`, containing information about the different lanes with their respective cells. There also a module for the panels, together with one for the renderers. The panels store input recievers, notifying `Model` about specific inputs from the user.
 
+== High-level Architecture
+
 A high-level architecture can be diagrammed like this:
 
 #figure(
   caption: [High-Level Architecture of the System],
-  image("res/diagram_hi.png", width: 55%)
+  image("res/diagram_hi.png", width: 50%)
+)
+
+== Detailed design
+
+The high-level diagram may be decomposed into smaller, more detailed diagrams. Starting off with the way the app is launched: 
+
+#figure(
+  caption: [Starting the App],
+  image("res/cd_app.png", width: 100%)
+)
+
+The view should initialize the different panels and the respective renderers, together with the controller. Decomposing the process into a class diagram yields: 
+
+#figure(
+  caption: [Initializing the View],
+  image("res/cd_view.png", width: 110%)
+)
+
+The final part to showcase is the model, and its communication with the board, the managers, and the entities. The diagram looks like:
+
+#figure(
+  caption: [The model with dependencies],
+  image("res/cd_model.drawio.png", width: 90%)
 )
 
