@@ -3,6 +3,7 @@ package com.group9.view.renderers;
 import com.group9.model.Model;
 import com.group9.model.Position;
 import com.group9.model.entities.Projectile;
+import com.group9.view.AnimationHandler;
 
 import java.awt.*;
 import java.util.Map;
@@ -10,7 +11,7 @@ import java.util.Map;
 public class ProjectileRenderer implements EntityRenderer {
 
     @Override
-    public void draw(Graphics2D g2d, Model model, int cellWidth, int cellHeight, int panelWidth) {
+    public void draw(Graphics2D g2d, Model model, AnimationHandler animationHandler, int cellWidth, int cellHeight, int panelWidth) {
         // Loop through all projectiles and their positions in the model
         for (Map.Entry<Projectile, Position> entry : model.getAllProjectilesPosition().entrySet()) {
             Projectile projectile = entry.getKey();

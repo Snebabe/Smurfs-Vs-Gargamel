@@ -17,7 +17,6 @@ public class GamePanel extends JPanel implements Observer {
     private final List<EntityRenderer> entityRenderers;
     private int columnCount; // Number of columns
     private int rowCount;   // Number of rows
-    private List<Rectangle> cells;
     private Model model;
 
     public GamePanel(Model model, List<InputObserver> inputObservers) {
@@ -34,8 +33,6 @@ public class GamePanel extends JPanel implements Observer {
         entityRenderers.add(new DefenderRenderer(healthBarUtils));
         entityRenderers.add(new AttackerRenderer(healthBarUtils));
         entityRenderers.add(new ProjectileRenderer());
-
-        cells = new ArrayList<>(columnCount * rowCount);
 
         addMouseListener(createMouseHandler(inputObservers));
     }
@@ -78,11 +75,7 @@ public class GamePanel extends JPanel implements Observer {
         int cellHeight = height / rowCount;
 
         // Initialize grid cells if empty
-        if (cells.isEmpty()) {
-            initializeGridCells(cellWidth, cellHeight);
-        }
-
-        drawGrid(g2d);
+        drawGrid(g2d, cellWidth, cellHeight);
 
         // Call draw() for each renderer
         for (EntityRenderer renderer : entityRenderers) {

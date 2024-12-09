@@ -15,7 +15,7 @@ public class Clock {
         private int tickInterval;
         private int tickCounter;
         public TickCounter(float seconds) {
-            this.tickInterval = (int) seconds*TICKS_PER_SECOND;
+            this.tickInterval = (int) (seconds*TICKS_PER_SECOND);
             this.tickCounter = 0;
         }
         public void increment() {

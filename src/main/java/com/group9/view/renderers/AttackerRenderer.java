@@ -3,6 +3,11 @@ package com.group9.view.renderers;
 import com.group9.model.entities.attackers.AttackEntity;
 import com.group9.model.Position;
 import com.group9.model.Model;
+import com.group9.view.AnimationHandler;
+
+import javax.imageio.ImageIO;
+import java.awt.image.BufferedImage;
+import java.io.File;
 
 import java.awt.*;
 import java.util.Map;
@@ -17,7 +22,7 @@ public class AttackerRenderer implements EntityRenderer {
     }
 
     @Override
-    public void draw(Graphics2D g2d, Model model, int cellWidth, int cellHeight, int panelWidth) {
+    public void draw(Graphics2D g2d, Model model, AnimationHandler animationHandler, int cellWidth, int cellHeight, int panelWidth) {
         // Loop through all attackers and their positions
         for (Map.Entry<AttackEntity, Position> entry : model.getAllAttackersPosition().entrySet()) {
             AttackEntity attacker = entry.getKey();
@@ -29,6 +34,12 @@ public class AttackerRenderer implements EntityRenderer {
 
             // Draw attacker
             g2d.setColor(Color.RED);
+            /*g2d.drawImage(animationHandler.getFrame(attacker.getType(), attacker.getCurrentState()),
+                    pixelX + g2d.getClipBounds().width / model.getLaneSize() / 3,
+                    pixelY + g2d.getClipBounds().height / model.getLaneAmount() / 3,
+                    g2d.getClipBounds().width / model.getLaneSize() / 2,
+                    g2d.getClipBounds().height / model.getLaneAmount() / 2, null);*/
+
             g2d.fillOval(pixelX + g2d.getClipBounds().width / model.getLaneSize() / 3,
                     pixelY + g2d.getClipBounds().height / model.getLaneAmount() / 3,
                     g2d.getClipBounds().width / model.getLaneSize() / 2, g2d.getClipBounds().height / model.getLaneAmount() / 2);

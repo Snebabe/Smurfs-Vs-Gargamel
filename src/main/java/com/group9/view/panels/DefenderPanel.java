@@ -8,18 +8,18 @@ import java.awt.*;
 import java.util.List;
 
 public class DefenderPanel extends JPanel {
-    public DefenderPanel(List<DefenderType> defenderTypes, List<InputObserver> observers) {
+    public DefenderPanel(List<InputObserver> observers) {
         setLayout(new FlowLayout(FlowLayout.CENTER, 10, 10));
         setBorder(BorderFactory.createTitledBorder("Defenders"));
 
-        for (DefenderType type : defenderTypes) {
+        for (DefenderType type : DefenderType.values()) {
             JPanel panel = new JPanel();
             panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
 
             JLabel costLabel = new JLabel("Cost: " + type.getCost());
             costLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
 
-            JButton button = new JButton(type.getName());
+            JButton button = new JButton(type.toString());
             button.setAlignmentX(Component.CENTER_ALIGNMENT);
             button.addActionListener(e -> {
                 for (InputObserver observer : observers) {

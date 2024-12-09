@@ -35,8 +35,6 @@ public class Model implements Observer {
     private int laneSize = 9;
     private ResourceManager resourceManager;
 
-    private List<DefenderType> defenderTypes;
-
     private int TICKS_PER_SECONDS;
 
 
@@ -50,21 +48,8 @@ public class Model implements Observer {
         this.resourceManager = new ResourceManager();
         this.waveManager.addWaveCompleteListener(resourceManager);
         this.attackManager.addAttackDeathOberver(resourceManager);
-
-
-
-        this.defenderTypes = new ArrayList<>();
-        initializeDefenderTypes();
     }
 
-    private void initializeDefenderTypes() {
-        defenderTypes.add(new DefenderType("Shroom", "shroom.png", 100));
-        defenderTypes.add(new DefenderType("Boxer", "sunflower.png", 150));
-    }
-
-    public List<DefenderType> getDefenderTypes() {
-        return defenderTypes;
-    }
 
     public void placeDefender(DefenderType defenderType, Position position) {
 

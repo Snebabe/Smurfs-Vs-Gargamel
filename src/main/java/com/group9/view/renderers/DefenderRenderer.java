@@ -3,6 +3,7 @@ package com.group9.view.renderers;
 import com.group9.model.entities.defenders.DefenceEntity;
 import com.group9.model.Position;
 import com.group9.model.Model;
+import com.group9.view.AnimationHandler;
 
 import java.awt.*;
 import java.util.Map;
@@ -17,7 +18,7 @@ public class DefenderRenderer implements EntityRenderer {
     }
 
     @Override
-    public void draw(Graphics2D g2d, Model model, int cellWidth, int cellHeight, int panelWidth) {
+    public void draw(Graphics2D g2d, Model model, AnimationHandler animationHandler, int cellWidth, int cellHeight, int panelWidth) {
         // Loop through all defenders and their positions
         for (Map.Entry<DefenceEntity, Position> entry : model.getAllDefendersPosition().entrySet()) {
             DefenceEntity defender = entry.getKey();
@@ -28,9 +29,16 @@ public class DefenderRenderer implements EntityRenderer {
 
             // Draw defender
             g2d.setColor(Color.BLUE);
-            g2d.fillRect(x + g2d.getClipBounds().width / model.getLaneSize() / 4, y + g2d.getClipBounds().height / model.getLaneAmount() / 3,
-                    g2d.getClipBounds().width / model.getLaneSize() / 2, g2d.getClipBounds().height / model.getLaneAmount() / 2);
 
+            g2d.drawImage(animationHandler.getFrame(defender.getType(), defender.getCurrentState()),
+                    x + g2d.getClipBounds().width / model.getLaneSize() / 4,
+                    y + g2d.getClipBounds().height / model.getLaneAmount() / 3,
+                    g2d.getClipBounds().width / model.getLaneSize() / 2,
+                    g2d.getClipBounds().height / model.getLaneAmount() / 2, null);
+
+            /*g2d.fillRect(x + g2d.getClipBounds().width / model.getLaneSize() / 4, y + g2d.getClipBounds().height / model.getLaneAmount() / 3,
+                    g2d.getClipBounds().width / model.getLaneSize() / 2, g2d.getClipBounds().height / model.getLaneAmount() / 2);
+*/
             // Use HealthBarUtils to draw the health bar
             healthBarUtils.drawHealthBar(g2d, defender.getHealth(), defender.getMaxHealth(),
                     x + g2d.getClipBounds().width / model.getLaneSize() / 4,

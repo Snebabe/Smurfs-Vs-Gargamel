@@ -3,6 +3,7 @@ package com.group9.model.managers;
 import com.group9.model.*;
 import com.group9.model.board.Board;
 import com.group9.model.board.Lane;
+import com.group9.model.entities.EntityState;
 import com.group9.model.entities.Projectile;
 import com.group9.model.entities.attackers.AttackEntity;
 import com.group9.model.entities.defenders.DefenceEntity;
@@ -71,6 +72,7 @@ public class AttackManager implements Observer {
                     defender.useAttack(firstAttacker);
                 }
                 if (firstAttacker.isDead()) {
+                    defender.setCurrentState(EntityState.IDLE);
                     lane.removeAttacker(firstAttacker);
                     notifyAttackerDeath(firstAttacker);
                     if (attackers.isEmpty()) break;
@@ -89,6 +91,7 @@ public class AttackManager implements Observer {
             if (defender != null) {
                 // Attack the defender
                 attacker.useAttack(defender);
+                attacker.setCurrentState(EntityState.ATTACK);
 
                 // Remove the defender if it's dead
                 if (defender.isDead()) {
