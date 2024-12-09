@@ -64,6 +64,7 @@ public class AttackManager implements Observer {
             float distance = targetCellIndex - cellIndex;
 
             if (distance > 0 && distance <= defender.getAttackRange()) {
+                defender.setCurrentState(EntityState.ATTACK);
                 if (defender.isRanged()) {
                     Projectile projectile = new Projectile((float)cellIndex/(lane.getNumberOfCells()-1), firstAttacker, 4, defender.getAttackDamage());
                     lane.getProjectiles().add(projectile);
@@ -95,6 +96,7 @@ public class AttackManager implements Observer {
 
                 // Remove the defender if it's dead
                 if (defender.isDead()) {
+                    attacker.setCurrentState(EntityState.MOVE);
                     lane.setDefender(null, attackerCellIndex);
                 }
             }

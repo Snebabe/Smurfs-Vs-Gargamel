@@ -3,7 +3,7 @@ package com.group9.model.entities;
 import com.group9.model.hasAttack;
 
 public abstract class Entity implements hasAttack {
-    private AnimationState state;
+    private EntityState currentState;
     private int health;
     private int maxHealth;
     private int attackDamage;
@@ -41,13 +41,6 @@ public abstract class Entity implements hasAttack {
         return attackDamage;
     }
 
-    public void setState(AnimationState state) {
-        this.state = state;
-    }
-    
-    public AnimationState getState() {
-        return state;
-    }
 
     public int getHealth() {
         return this.health;

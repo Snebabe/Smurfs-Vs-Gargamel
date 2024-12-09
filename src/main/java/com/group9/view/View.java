@@ -24,6 +24,7 @@ public class View extends JFrame implements Observer {
     private InfoPanel infoPanel;
     private GamePanel gamePanel;
     private ControlPanel controlPanel;
+    private AnimationHandler animationHandler;
 
     private final List<InputObserver> inputObservers = new ArrayList<>();
 
