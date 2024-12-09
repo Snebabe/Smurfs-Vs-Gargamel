@@ -18,21 +18,20 @@ public class Projectile {
     }
 
     public void update() {
-        if(laneProgress >= 1 || target.isDead()) {
+        // If target is dead or null, deactivate the projectile
+        if (target == null || target.isDead()) {
             active = false;
+            return;
         }
 
-        float distance = (1-target.getLaneProgress()) - laneProgress;
+        // Calculate distance to the target
+        float distance = (1 - target.getLaneProgress()) - laneProgress;
 
-
-        if(distance < (float)speed/100) {
+        if (distance < (float) speed / 100) {
             target.takeDamage(damage);
             active = false;
-
-        }
-        else{
-            laneProgress += (float)speed/100;
-
+        } else {
+            laneProgress += (float) speed / 100;
         }
     }
 

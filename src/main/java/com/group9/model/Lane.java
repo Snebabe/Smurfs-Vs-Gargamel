@@ -29,7 +29,7 @@ public class Lane {
     }
 
     public List<Projectile> getProjectiles() {
-        return this.projectiles;
+        return projectiles;
     }
 
     // Add an Attacker to the lane

@@ -50,61 +50,26 @@ public class AttackManager {
         while (iterator.hasNext()) {
             Projectile projectile = iterator.next();
 
-            // Ensure the projectile has a valid target
+            // If target is null or dead, try to reassign a new target
             if (projectile.getTarget() == null || projectile.getTarget().isDead()) {
-                if (!lane.getAttackers().isEmpty()) {
-                    // Assign a new target, preferably the closest one
-                    AttackEntity closestTarget = lane.getAttackers().stream()
-                            .min(Comparator.comparingDouble(AttackEntity::getLaneProgress))
-                            .orElse(null);
-                    projectile.setTarget(closestTarget);
-                } else {
-                    // No targets available; deactivate the projectile
-                    projectile.setTarget(null);
-                    projectile.update();
+                AttackEntity closestTarget = lane.getAttackers().stream()
+                        .filter(a -> !a.isDead())
+                        .min(Comparator.comparingDouble(AttackEntity::getLaneProgress))
+                        .orElse(null);
+                projectile.setTarget(closestTarget);
+
+                if (closestTarget == null) {
                     iterator.remove();
                     continue;
                 }
             }
 
-            // Update the projectile
             projectile.update();
 
-            // Remove inactive projectiles
             if (!projectile.isActive()) {
                 iterator.remove();
             }
         }
-
-        // Remove dead attackers only after all projectiles are processed
-        lane.getAttackers().removeIf(AttackEntity::isDead);
-
-
-
-
-
-
-        /*lane.getAttackers().removeIf(AttackEntity::isDead);
-        Iterator<Projectile> iterator = lane.getProjectiles().iterator();
-        while(iterator.hasNext()) {
-            Projectile projectile = iterator.next();
-            if(!lane.getAttackers().isEmpty()){
-                projectile.setTarget(lane.getAttackers().get(lane.getAttackers().size()-1));
-            }
-
-            projectile.update();
-            if(!projectile.isActive()) {
-                iterator.remove();
-            }
-        }*/
-
-
-        /*for(Projectile projectile : lane.getProjectiles()) {
-            projectile.update();
-            if(!projectile.isActive()) {
-                lane.getProjectiles().remove(projectile);
-            }
-        }*/
     }
 
     private void handleDefenderAttacks(Lane lane) {
@@ -116,17 +81,18 @@ public class AttackManager {
 
             if (defender == null) continue;
 
-            AttackEntity firstAttacker = attackers.get(0);
-            float targetLaneProgress = firstAttacker.getLaneProgress();
-            float targetCellIndex = (1 - targetLaneProgress) * lane.getNumberOfCells();
-            float distance = targetCellIndex - cellIndex;
+            // Iterate through all attackers to find those within range
+            for (AttackEntity attacker : new ArrayList<>(attackers)) {
+                float targetLaneProgress = attacker.getLaneProgress();
+                float targetCellIndex = (1 - targetLaneProgress) * lane.getNumberOfCells();
+                float distance = targetCellIndex - cellIndex;
 
-            if (distance > 0 && distance <= defender.getAttackRange()) {
-                defender.useAttack(firstAttacker, lane.getProjectiles(), (float)cellIndex/(lane.getNumberOfCells()-1));
-                if (firstAttacker.isDead()) {
-                    lane.removeAttacker(firstAttacker);
-                    notifyAttackerDeath(firstAttacker);
-                    if (attackers.isEmpty()) break;
+                if (distance > 0 && distance <= defender.getAttackRange()) {
+                    defender.useAttack(attacker, lane.getProjectiles(), (float) cellIndex / (lane.getNumberOfCells() - 1));
+                    if (attacker.isDead()) {
+                        lane.removeAttacker(attacker);
+                        notifyAttackerDeath(attacker);
+                    }
                 }
             }
         }
