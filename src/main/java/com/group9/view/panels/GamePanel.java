@@ -6,10 +6,14 @@ import com.group9.model.Observer;
 import com.group9.view.AnimationHandler;
 import com.group9.view.renderers.*;
 
+import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.io.File;
+import java.io.IOException;
+import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -91,13 +95,29 @@ public class GamePanel extends JPanel implements Observer {
 
 
     private void drawGrid(Graphics2D g2d, int cellWidth, int cellHeight) {
-        g2d.setColor(Color.GRAY);
-        for (int row = 0; row < rowCount; row++) {
-            for (int col = 0; col < columnCount; col++) {
-                int x = col * cellWidth;
-                int y = row * cellHeight;
-                g2d.drawRect(x, y, cellWidth, cellHeight);
+        try {
+            Image gridImage = ImageIO.read(new File(getClass().getResource("/images/gridcell.png").toURI()));
+            Image gridImage2 = ImageIO.read(new File(getClass().getResource("/images/gridcell2.png").toURI()));
+
+            for (int row = 0; row < rowCount; row++) {
+                for (int col = 0; col < columnCount; col++) {
+                    int x = col * cellWidth;
+                    int y = row * cellHeight;
+
+                    // Alternate between gridImage and gridImage2
+                    Image currentImage = ((row + col) % 2 == 0) ? gridImage : gridImage2;
+
+                    //g2d.drawImage(currentImage, (int) (x * 0.99), (int) (y * 0.99), (int) (cellWidth * 1.4), (int) (cellHeight * 1.4), null);
+                    g2d.drawImage(currentImage,x, y, cellWidth, cellHeight, null);
+
+                    //g2d.drawRect(x, y, cellWidth, cellHeight);
+                }
             }
+        } catch (IOException e) {
+            e.printStackTrace();
+            System.err.println("Failed to load grid image.");
+        } catch (URISyntaxException e) {
+            throw new RuntimeException(e);
         }
     }
 

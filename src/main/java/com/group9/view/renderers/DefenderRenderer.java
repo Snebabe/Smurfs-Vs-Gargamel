@@ -24,27 +24,24 @@ public class DefenderRenderer implements EntityRenderer {
             DefenceEntity defender = entry.getKey();
             Position position = entry.getValue();
 
-            int x = position.getCol() * g2d.getClipBounds().width / model.getLaneSize();
-            int y = position.getRow() * g2d.getClipBounds().height / model.getLaneAmount();
+            // Calculate the top-left corner of the grid cell
+            int x = position.getCol() * cellWidth;
+            int y = position.getRow() * cellHeight;
 
-            // Draw defender
-            g2d.setColor(Color.BLUE);
+            int xOffset = (int) (cellWidth * 0.1);
+            int yOffset = (int) (cellHeight * 0.1);
 
+            // Draw defender image, filling the grid cell
             g2d.drawImage(animationHandler.getFrame(defender.getType(), defender.getCurrentState()),
-                    x + g2d.getClipBounds().width / model.getLaneSize() / 4,
-                    y + g2d.getClipBounds().height / model.getLaneAmount() / 3,
-                    g2d.getClipBounds().width / model.getLaneSize() / 2,
-                    g2d.getClipBounds().height / model.getLaneAmount() / 2, null);
+                    x + xOffset, y + yOffset, cellWidth - xOffset, cellHeight - yOffset, null);
 
-            /*g2d.fillRect(x + g2d.getClipBounds().width / model.getLaneSize() / 4, y + g2d.getClipBounds().height / model.getLaneAmount() / 3,
-                    g2d.getClipBounds().width / model.getLaneSize() / 2, g2d.getClipBounds().height / model.getLaneAmount() / 2);
-*/
             // Use HealthBarUtils to draw the health bar
-            healthBarUtils.drawHealthBar(g2d, defender.getHealth(), defender.getMaxHealth(),
-                    x + g2d.getClipBounds().width / model.getLaneSize() / 4,
-                    y + g2d.getClipBounds().height / model.getLaneAmount() / 7,
-                    g2d.getClipBounds().width / model.getLaneSize() / 2,
-                    g2d.getClipBounds().height / model.getLaneAmount() / 10);
+            healthBarUtils.drawHealthBar(g2d, Color.GREEN, defender.getHealth(), defender.getMaxHealth(),
+                    x,  // Slight padding for the health bar
+                    y, // Position near the bottom of the cell
+                    cellWidth,   // Health bar width as a fraction of the cell
+                    cellHeight);    // Health bar height as a fraction of the cell
         }
     }
+
 }
