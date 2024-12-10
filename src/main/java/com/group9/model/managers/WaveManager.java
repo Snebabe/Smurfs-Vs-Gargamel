@@ -41,7 +41,7 @@ public class WaveManager implements Observer {
         waveNumber++;
         waveSize += 3;
         waveReward = 300 + (waveNumber -1) *50; // Start at 300 and increment by 50 each wave
-        if(spawnIntervalInTicks > TICKS_PER_SECONDS*2) {
+        if(spawnIntervalInTicks > TICKS_PER_SECONDS/2) { // Minimum spawn rate 0.5 seconds
             spawnIntervalInTicks -= TICKS_PER_SECONDS/2; // Decrease the spawn interval by 0.5 seconds each wave;
         }
         attackersToSpawn = waveSize;
