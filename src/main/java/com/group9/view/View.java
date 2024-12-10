@@ -11,6 +11,8 @@ import com.group9.model.entities.defenders.DefenderType;
 import com.group9.view.panels.ControlPanel;
 import com.group9.view.panels.GamePanel;
 import com.group9.view.panels.InfoPanel;
+import com.group9.view.panels.StartPanel;
+
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
@@ -24,6 +26,7 @@ public class View extends JFrame implements Observer {
     private InfoPanel infoPanel;
     private GamePanel gamePanel;
     private ControlPanel controlPanel;
+    private StartPanel startPanel;
     private AnimationHandler animationHandler;
 
     private final List<InputObserver> inputObservers = new ArrayList<>();
@@ -44,16 +47,23 @@ public class View extends JFrame implements Observer {
         gamePanel = new GamePanel(model, animationHandler, inputObservers);
         controlPanel = new ControlPanel(model, inputObservers);
         infoPanel = new InfoPanel(model);
+        startPanel = new StartPanel(e -> switchToNormalView());
 
-        this.add(controlPanel, BorderLayout.SOUTH);
-        this.add(gamePanel, BorderLayout.CENTER);
-        this.add(infoPanel, BorderLayout.EAST);
-
+        this.add(startPanel, BorderLayout.CENTER);
 
         clock.addObserver(this,0);
         clock.addObserver(animationHandler, 1/4f);
 
         this.setVisible(true);
+    }
+
+    private void switchToNormalView() {
+        this.remove(startPanel);
+        this.add(controlPanel, BorderLayout.SOUTH);
+        this.add(gamePanel, BorderLayout.CENTER);
+        this.add(infoPanel, BorderLayout.EAST);
+        this.revalidate();
+        this.repaint();
     }
 
     public void initializeAnimationHandlers(AnimationHandler animationHandler) {
