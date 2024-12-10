@@ -20,7 +20,7 @@ public class PositionManager {
         this.board = board;
     }
 
-    public void resetPositionManager(Board board) {
+    public void resetBoard(Board board) {
         this.board = board;
     }
 

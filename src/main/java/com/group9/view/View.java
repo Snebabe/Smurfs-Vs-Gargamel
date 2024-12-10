@@ -2,16 +2,14 @@ package com.group9.view;
 
 import com.group9.controller.InputObserver;
 import com.group9.model.Clock;
+import com.group9.model.GameOverListener;
 import com.group9.model.Model;
 import com.group9.model.Observer;
 import com.group9.model.entities.EntityState;
 import com.group9.model.entities.attackers.AttackEntity;
 import com.group9.model.entities.attackers.AttackerType;
 import com.group9.model.entities.defenders.DefenderType;
-import com.group9.view.panels.ControlPanel;
-import com.group9.view.panels.GamePanel;
-import com.group9.view.panels.InfoPanel;
-import com.group9.view.panels.StartPanel;
+import com.group9.view.panels.*;
 
 
 import javax.imageio.ImageIO;
@@ -22,12 +20,13 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class View extends JFrame implements Observer {
+public class View extends JFrame implements Observer, GameOverListener {
     private InfoPanel infoPanel;
     private GamePanel gamePanel;
     private ControlPanel controlPanel;
     private StartPanel startPanel;
     private AnimationHandler animationHandler;
+    private GameOverPanel gameOverPanel;
 
     private final List<InputObserver> inputObservers = new ArrayList<>();
 
@@ -53,6 +52,7 @@ public class View extends JFrame implements Observer {
 
         clock.addObserver(this,0);
         clock.addObserver(animationHandler, 1/4f);
+        model.addGameOverListener(this);
 
         this.setVisible(true);
     }
@@ -64,6 +64,29 @@ public class View extends JFrame implements Observer {
         this.add(infoPanel, BorderLayout.EAST);
         this.revalidate();
         this.repaint();
+    }
+
+    public void switchToEndView(int wavesCompleted) {
+        this.gameOverPanel = new GameOverPanel(wavesCompleted, e -> startNewGame(), e -> quitGame());
+
+        this.remove(controlPanel);
+        this.remove(gamePanel);
+        this.remove(infoPanel);
+
+        this.add(gameOverPanel, BorderLayout.CENTER);
+        this.revalidate();
+        this.repaint();
+    }
+
+    // Closes the Game Over panel and switches back to the normal view
+    // The game will be reset by the model automatically after loss
+    private void startNewGame() {
+        this.remove(gameOverPanel);
+        switchToNormalView();
+    }
+
+    private void quitGame() {
+        System.exit(0);
     }
 
     public void initializeAnimationHandlers(AnimationHandler animationHandler) {
@@ -137,5 +160,10 @@ public class View extends JFrame implements Observer {
 
     public void addInputObserver(InputObserver observer) {
         inputObservers.add(observer);
+    }
+
+    @Override
+    public void onGameOver(int wavesSurvived) {
+        switchToEndView(wavesSurvived);
     }
 }

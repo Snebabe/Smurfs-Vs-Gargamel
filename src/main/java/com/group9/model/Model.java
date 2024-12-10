@@ -49,7 +49,7 @@ public class Model implements Observer {
     private void initializeManagers() {
         this.waveManager = new WaveManager(new AttackEntityFactory(), board, TICKS_PER_SECONDS);
         this.attackManager = new AttackManager(board);
-        this.gameStateManager = new GameStateManager(board);
+        this.gameStateManager = new GameStateManager(board, waveManager);
         this.resourceManager = new ResourceManager();
         this.positionManager = new PositionManager(board);
         this.defenderManager = new DefenderManager(board, resourceManager);
@@ -58,15 +58,20 @@ public class Model implements Observer {
     private void registerObservers() {
         this.waveManager.addWaveCompleteListener(resourceManager);
         this.attackManager.addAttackDeathOberver(resourceManager);
+
+    }
+
+    public void addGameOverListener(GameOverListener listener) {
+        this.gameStateManager.addGameOverListener(listener);
     }
 
     public void resetGame() {
         initializeBoard();
         waveManager.resetWaveManager(board);
         attackManager.resetBoard(board);
-        gameStateManager.resetBoard(board);
+        gameStateManager.resetBoardAndWaveManager(board, waveManager);
         resourceManager.resetResources();
-        positionManager.resetPositionManager(board);
+        positionManager.resetBoard(board);
         defenderManager.resetDefenderManager(board, resourceManager);
     }
 
