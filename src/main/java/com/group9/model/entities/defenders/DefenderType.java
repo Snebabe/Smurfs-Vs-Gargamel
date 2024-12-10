@@ -2,7 +2,8 @@ package com.group9.model.entities.defenders;
 
 public enum DefenderType {
     SHROOM(100),
-    BOXER(150);
+    BOXER(100),
+    ARCHER(150);
 
     private final int cost;
 

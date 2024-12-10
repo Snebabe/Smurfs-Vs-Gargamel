@@ -51,38 +51,13 @@ public class View extends JFrame implements Observer {
 
 
         clock.addObserver(this,0);
-        clock.addObserver(animationHandler, 1/3);
+        clock.addObserver(animationHandler, 1/4f);
 
         this.setVisible(true);
     }
 
     public void initializeAnimationHandlers(AnimationHandler animationHandler) {
-        /*
-        animationHandler.registerEntityAnimations(
-                AttackerType.GARGAMEL,
-                EntityState.MOVE,
-                "//attackers/gargamel/move/"
 
-
-        );
-
-        animationHandler.registerEntityAnimations(
-                AttackerType.GARGAMEL,
-                EntityState.ATTACK,
-                "/images/attackers/gargamel/attack/"
-        );
-
-        animationHandler.registerEntityAnimations(
-                DefenderType.SHROOM,
-                EntityState.MOVE,
-                "/images/defenders/fastgargamel/move/"
-        );
-
-        animationHandler.registerEntityAnimations(
-                DefenderType.SHROOM,
-                EntityState.ATTACK,
-                "/images/defenders/shroom/attack/"
-        );*/
 
         animationHandler.registerEntityAnimations(
                 DefenderType.BOXER,
@@ -94,6 +69,52 @@ public class View extends JFrame implements Observer {
                 DefenderType.BOXER,
                 EntityState.ATTACK,
                 "/images/defenders/boxer/attack/"
+        );
+
+        animationHandler.registerEntityAnimations(
+                DefenderType.ARCHER,
+                EntityState.IDLE,
+                "/images/defenders/archer/idle/"
+        );
+
+        animationHandler.registerEntityAnimations(
+                DefenderType.ARCHER,
+                EntityState.ATTACK,
+                "/images/defenders/archer/attack/"
+        );
+
+        animationHandler.registerEntityAnimations(
+                DefenderType.SHROOM,
+                EntityState.IDLE,
+                "/images/defenders/shroom/idle/"
+        );
+
+        animationHandler.registerEntityAnimations(
+                DefenderType.SHROOM,
+                EntityState.ATTACK,
+                "/images/defenders/shroom/attack/"
+        );
+
+
+        animationHandler.registerEntityAnimations(
+                AttackerType.GARGAMEL,
+                EntityState.ATTACK,
+                "/images/attackers/gargamel/attack/"
+        );
+        animationHandler.registerEntityAnimations(
+                AttackerType.GARGAMEL,
+                EntityState.MOVE,
+                "/images/attackers/gargamel/move/"
+        );
+        animationHandler.registerEntityAnimations(
+                AttackerType.FASTGARGAMEL,
+                EntityState.ATTACK,
+                "/images/attackers/fastgargamel/attack/"
+        );
+        animationHandler.registerEntityAnimations(
+                AttackerType.FASTGARGAMEL,
+                EntityState.MOVE,
+                "/images/attackers/fastgargamel/move/"
         );
 
     }

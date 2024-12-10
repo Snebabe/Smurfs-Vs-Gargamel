@@ -28,28 +28,25 @@ public class AttackerRenderer implements EntityRenderer {
             AttackEntity attacker = entry.getKey();
             Position position = entry.getValue();
 
+            // Calculate the attacker's progress along the lane and position
             double progress = attacker.getLaneProgress();
-            int pixelX = (int) (g2d.getClipBounds().width * (1 - progress));
-            int pixelY = position.getRow() * g2d.getClipBounds().height / model.getLaneAmount();
+            int x = (int) (cellWidth * model.getLaneSize() * (1 - progress)); // Horizontal position based on progress
+            int y = position.getRow() * cellHeight; // Vertical position based on row
 
-            // Draw attacker
-            g2d.setColor(Color.RED);
-            /*g2d.drawImage(animationHandler.getFrame(attacker.getType(), attacker.getCurrentState()),
-                    pixelX + g2d.getClipBounds().width / model.getLaneSize() / 3,
-                    pixelY + g2d.getClipBounds().height / model.getLaneAmount() / 3,
-                    g2d.getClipBounds().width / model.getLaneSize() / 2,
-                    g2d.getClipBounds().height / model.getLaneAmount() / 2, null);*/
+            int xOffset = (int) (cellWidth * 0.1);
+            int yOffset = (int) (cellHeight * 0.1);
 
-            g2d.fillOval(pixelX + g2d.getClipBounds().width / model.getLaneSize() / 3,
-                    pixelY + g2d.getClipBounds().height / model.getLaneAmount() / 3,
-                    g2d.getClipBounds().width / model.getLaneSize() / 2, g2d.getClipBounds().height / model.getLaneAmount() / 2);
+            // Draw defender image, filling the grid cell
+            g2d.drawImage(animationHandler.getFrame(attacker.getType(), attacker.getCurrentState()),
+                    x + xOffset, y + yOffset, cellWidth - xOffset, cellHeight - yOffset, null);
 
             // Use HealthBarUtils to draw the health bar
-            healthBarUtils.drawHealthBar(g2d, attacker.getHealth(), attacker.getMaxHealth(),
-                    pixelX + g2d.getClipBounds().width / model.getLaneSize() / 3,
-                    pixelY + g2d.getClipBounds().height / model.getLaneAmount() / 6,
-                    g2d.getClipBounds().width / model.getLaneSize() / 2,
-                    g2d.getClipBounds().height / model.getLaneAmount() / 10);
+            healthBarUtils.drawHealthBar(g2d,Color.RED, attacker.getHealth(), attacker.getMaxHealth(),
+                    x,  // Slight padding for the health bar
+                    y, // Position near the bottom of the cell
+                    cellWidth,   // Health bar width as a fraction of the cell
+                    cellHeight);    // Health bar height as a fraction of the cell
         }
+
     }
 }
