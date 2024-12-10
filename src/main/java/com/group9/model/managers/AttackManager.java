@@ -51,12 +51,17 @@ public class AttackManager implements Observer {
 
     private void handleDefenderAttacks(Lane lane) {
         List<AttackEntity> attackers = lane.getAttackers();
-        if (attackers.isEmpty()) return;
 
+        // Loop through all defenders in the lane
         for (int cellIndex = 0; cellIndex < lane.getNumberOfCells(); cellIndex++) {
             DefenceEntity defender = lane.getDefenderAtIndex(cellIndex);
 
             if (defender == null) continue;
+
+            if (attackers.isEmpty()) {
+                setAllDefendersToIDLE(lane);
+                return;
+            }
 
             AttackEntity firstAttacker = attackers.get(0);
             float targetLaneProgress = firstAttacker.getLaneProgress();
@@ -76,11 +81,21 @@ public class AttackManager implements Observer {
                     defender.setCurrentState(EntityState.IDLE);
                     lane.removeAttacker(firstAttacker);
                     notifyAttackerDeath(firstAttacker);
-                    if (attackers.isEmpty()) break;
                 }
+
             }
         }
     }
+
+    private void setAllDefendersToIDLE(Lane lane) {
+        for (int cellIndex = 0; cellIndex < lane.getNumberOfCells(); cellIndex++) {
+            DefenceEntity defender = lane.getDefenderAtIndex(cellIndex);
+            if (defender != null) {
+                defender.setCurrentState(EntityState.IDLE);
+            }
+        }
+    }
+
 
     private void handleMeleeAttacks(Lane lane) {
 
