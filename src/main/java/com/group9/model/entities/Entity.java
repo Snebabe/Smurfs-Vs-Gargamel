@@ -1,20 +1,38 @@
 package com.group9.model.entities;
 
+import com.group9.model.entities.attackers.AttackerType;
+import com.group9.model.entities.defenders.DefenderType;
 import com.group9.model.hasAttack;
 
 public abstract class Entity implements hasAttack {
+    private EntityState currentState;
     private int health;
     private int maxHealth;
     private int attackDamage;
     private boolean isDead;
     private int attackRange;
+    private Enum type;
 
-    public Entity(int maxHealth, int attackDamage, int attackRange) {
+    public Entity(Enum type, int maxHealth, int attackDamage, int attackRange) {
+
         this.health = maxHealth;
         this.maxHealth = maxHealth;
         this.attackDamage = attackDamage;
         this.attackRange = attackRange;
         this.isDead = false;
+        this.type = type;
+    }
+
+    public Enum getType() {
+        return this.type;
+    }
+
+    public EntityState getCurrentState() {
+        return currentState;
+    }
+
+    public void setCurrentState(EntityState state) {
+        this.currentState = state;
     }
 
     public int getAttackRange() {

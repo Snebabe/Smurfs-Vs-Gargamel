@@ -1,5 +1,22 @@
 package com.group9.model.entities.defenders;
 
+public enum DefenderType {
+    SHROOM(100),
+    BOXER(100),
+    ARCHER(150);
+
+    private final int cost;
+
+    DefenderType(int cost) {
+        this.cost = cost;
+    }
+
+    public int getCost() {
+        return cost;
+    }
+}
+
+/*
 public class DefenderType {
     private String name;
     private String imagePath; // Path to the image file
@@ -22,4 +39,4 @@ public class DefenderType {
     public int getCost() {
         return cost;
     }
-}
+}*/

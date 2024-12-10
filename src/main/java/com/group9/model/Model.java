@@ -15,69 +15,59 @@ import com.group9.model.entities.attackers.AttackEntityFactory;
 import com.group9.model.entities.defenders.DefenceEntity;
 import com.group9.model.entities.defenders.DefenceEntityFactory;
 import com.group9.model.entities.defenders.DefenderType;
-import com.group9.model.managers.AttackManager;
-import com.group9.model.managers.GameStateManager;
-import com.group9.model.managers.ResourceManager;
-import com.group9.model.managers.WaveManager;
+import com.group9.model.managers.*;
 
 import java.util.*;
 
 public class Model implements Observer {
-    // Ha ett board
-    // Tillgång till varje cell
-    // getters som: getBoard
+
+    private static final int laneAmount = 5;
+    private static final int laneSize = 9;
+    private static final int cellSize = 100;
 
     private Board board;
+    private PositionManager positionManager;
     private WaveManager waveManager;
     private AttackManager attackManager;
+    private DefenderManager defenderManager;
     private GameStateManager gameStateManager;
-    private int laneAmount = 7;
-    private int laneSize = 9;
     private ResourceManager resourceManager;
-
-    private List<DefenderType> defenderTypes;
 
     private int TICKS_PER_SECONDS;
 
-
-
     public Model(int TICKS_PER_SECONDS) {
         this.TICKS_PER_SECONDS = TICKS_PER_SECONDS;
-        this.board = new Board(laneAmount, laneSize, 100, TICKS_PER_SECONDS);
+        initializeBoard();
+        initializeManagers();
+        registerObservers();
+    }
+
+    private void initializeBoard() {
+        this.board = new Board(laneAmount, laneSize, cellSize, TICKS_PER_SECONDS);
+    }
+
+    private void initializeManagers() {
         this.waveManager = new WaveManager(new AttackEntityFactory(), board, TICKS_PER_SECONDS);
         this.attackManager = new AttackManager(board);
         this.gameStateManager = new GameStateManager(board);
         this.resourceManager = new ResourceManager();
+        this.positionManager = new PositionManager(board);
+        this.defenderManager = new DefenderManager(board, resourceManager);
+    }
+
+    private void registerObservers() {
         this.waveManager.addWaveCompleteListener(resourceManager);
         this.attackManager.addAttackDeathOberver(resourceManager);
-
-
-
-        this.defenderTypes = new ArrayList<>();
-        initializeDefenderTypes();
     }
 
-    private void initializeDefenderTypes() {
-        defenderTypes.add(new DefenderType("Shroom", "shroom.png", 100));
-        defenderTypes.add(new DefenderType("Boxer", "sunflower.png", 150));
-    }
-
-    public List<DefenderType> getDefenderTypes() {
-        return defenderTypes;
-    }
-
-    public void placeDefender(DefenderType defenderType, Position position) {
-
-        if((resourceManager.getResources() >= defenderType.getCost()) && !isDefenderAt(position)) {
-            setDefender(defenderType, position.getRow(), position.getCol());
-            resourceManager.changeResources(-defenderType.getCost());
-        }
-        else if(isDefenderAt(position)) {
-            System.out.println("Defender already in place");
-        }
-        else{
-            System.out.println("Not enough money");
-        }
+    public void resetGame() {
+        initializeBoard();
+        waveManager.resetWaveManager(board);
+        attackManager.resetBoard(board);
+        gameStateManager.resetBoard(board);
+        resourceManager.resetResources();
+        positionManager.resetPositionManager(board);
+        defenderManager.resetDefenderManager(board, resourceManager);
     }
 
     public void update() {
@@ -87,14 +77,6 @@ public class Model implements Observer {
 
         waveManager.update();
         board.getMoveManager().update();
-    }
-
-    public void resetGame() {
-        this.board = new Board(laneAmount, laneSize, 100,TICKS_PER_SECONDS);
-        waveManager.resetWaveManager(board);
-        attackManager.resetBoard(board);
-        gameStateManager.resetBoard(board);
-        resourceManager.resetResources();
     }
 
     public WaveManager getWaveManager() {
@@ -113,60 +95,26 @@ public class Model implements Observer {
     }
 
     public int getLaneAmount() {
-        return this.laneAmount;
+        return laneAmount;
     }
 
     public int getLaneSize() {
-        return this.laneSize;
+        return laneSize;
     }
 
     public Map<AttackEntity, Position> getAllAttackersPosition() {
-        Map<AttackEntity, Position> map = new HashMap<>();
-        for (int row = 0; row < board.getLaneAmount(); row++) {
-            Lane lane = board.getLanes().get(row);
-            for (AttackEntity attacker : lane.getAttackers()) {
-                int col = (int) ((1 - attacker.getLaneProgress()) * lane.getNumberOfCells());
-                map.put(attacker, new Position(row, col));
-            }
-        }
-        return map;
+        return positionManager.getAllAttackersPosition();
     }
 
     public Map<DefenceEntity, Position> getAllDefendersPosition() {
-        Map<DefenceEntity, Position> map = new HashMap<>();
-        for (int row = 0; row < board.getLaneAmount(); row++) {
-            Lane lane = board.getLanes().get(row);
-            for (int col = 0; col < lane.getNumberOfCells(); col++) {
-                GridCell cell = lane.getGridCells().get(col);
-                if (cell.hasDefender()) {
-                    map.put(cell.getDefender(), new Position(row, col));
-                }
-            }
-        }
-        return map;
+        return positionManager.getAllDefendersPosition();
     }
 
     public Map<Projectile, Position> getAllProjectilesPosition() {
-        Map<Projectile, Position> map = new HashMap<>();
-        for (int row = 0; row < board.getLaneAmount(); row++) {
-            Lane lane = board.getLanes().get(row);
-
-            // Create a snapshot to avoid ConcurrentModificationException
-            List<Projectile> snapshot = new ArrayList<>(lane.getProjectiles());
-
-            for (Projectile projectile : snapshot) {
-                int col = (int) (projectile.getLaneProgress() * lane.getNumberOfCells());
-                map.put(projectile, new Position(row, col));
-            }
-        }
-        return map;
+        return positionManager.getAllProjectilesPosition();
     }
 
-    public void setDefender(DefenderType defender, int row, int col) {
-        board.setDefender(new DefenceEntityFactory().createDefender(defender), row, col);
-    }
-
-    public boolean isDefenderAt(Position position) {
-        return board.getLanes().get(position.getRow()).getDefenderAtIndex(position.getCol()) != null;
+    public void placeDefender(DefenderType defenderType, Position position) {
+        defenderManager.placeDefender(defenderType, position);
     }
 }

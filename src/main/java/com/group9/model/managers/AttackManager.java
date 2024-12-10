@@ -3,6 +3,7 @@ package com.group9.model.managers;
 import com.group9.model.*;
 import com.group9.model.board.Board;
 import com.group9.model.board.Lane;
+import com.group9.model.entities.EntityState;
 import com.group9.model.entities.Projectile;
 import com.group9.model.entities.attackers.AttackEntity;
 import com.group9.model.entities.defenders.DefenceEntity;
@@ -50,12 +51,17 @@ public class AttackManager implements Observer {
 
     private void handleDefenderAttacks(Lane lane) {
         List<AttackEntity> attackers = lane.getAttackers();
-        if (attackers.isEmpty()) return;
 
+        // Loop through all defenders in the lane
         for (int cellIndex = 0; cellIndex < lane.getNumberOfCells(); cellIndex++) {
             DefenceEntity defender = lane.getDefenderAtIndex(cellIndex);
 
             if (defender == null) continue;
+
+            if (attackers.isEmpty()) {
+                setAllDefendersToIDLE(lane);
+                return;
+            }
 
             AttackEntity firstAttacker = attackers.get(0);
             float targetLaneProgress = firstAttacker.getLaneProgress();
@@ -63,6 +69,7 @@ public class AttackManager implements Observer {
             float distance = targetCellIndex - cellIndex;
 
             if (distance > 0 && distance <= defender.getAttackRange()) {
+                defender.setCurrentState(EntityState.ATTACK);
                 if (defender.isRanged()) {
                     Projectile projectile = new Projectile((float)cellIndex/(lane.getNumberOfCells()-1), firstAttacker, 4, defender.getAttackDamage());
                     lane.getProjectiles().add(projectile);
@@ -71,13 +78,24 @@ public class AttackManager implements Observer {
                     defender.useAttack(firstAttacker);
                 }
                 if (firstAttacker.isDead()) {
+                    defender.setCurrentState(EntityState.IDLE);
                     lane.removeAttacker(firstAttacker);
                     notifyAttackerDeath(firstAttacker);
-                    if (attackers.isEmpty()) break;
                 }
+
             }
         }
     }
+
+    private void setAllDefendersToIDLE(Lane lane) {
+        for (int cellIndex = 0; cellIndex < lane.getNumberOfCells(); cellIndex++) {
+            DefenceEntity defender = lane.getDefenderAtIndex(cellIndex);
+            if (defender != null) {
+                defender.setCurrentState(EntityState.IDLE);
+            }
+        }
+    }
+
 
     private void handleMeleeAttacks(Lane lane) {
 
@@ -89,9 +107,11 @@ public class AttackManager implements Observer {
             if (defender != null) {
                 // Attack the defender
                 attacker.useAttack(defender);
+                attacker.setCurrentState(EntityState.ATTACK);
 
                 // Remove the defender if it's dead
                 if (defender.isDead()) {
+                    attacker.setCurrentState(EntityState.MOVE);
                     lane.setDefender(null, attackerCellIndex);
                 }
             }

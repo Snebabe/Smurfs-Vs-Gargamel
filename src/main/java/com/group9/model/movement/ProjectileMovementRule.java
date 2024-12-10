@@ -18,7 +18,7 @@ public class ProjectileMovementRule implements MovementRule {
         }
         float distance = (1-attackEntity.getLaneProgress()) - projectile.getLaneProgress();
 
-        if(distance < 0) {
+        if(distance < 0.05) {
             attackEntity.takeDamage(projectile.getDamage());
             projectile.setActive(false);
             return false;

@@ -10,14 +10,14 @@ public class App {
 
         // Initialize the MVC components
         int TICKS_PER_SECONDS = 120;
+        Clock clock = new Clock(TICKS_PER_SECONDS);
+
         Model model = new Model(TICKS_PER_SECONDS);
-        View view = new View(800, 480, model);
+        View view = new View(800, 480, model, clock);
         GameController controller = new GameController(model);
 
         view.addInputObserver(controller);
-        Clock clock = new Clock(TICKS_PER_SECONDS);
 
-        clock.addObserver(view,0);
         clock.addObserver(model,0);
         // Attacks are updated every second
         clock.addObserver(model.getAttackManager(),1f);
