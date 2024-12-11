@@ -49,7 +49,7 @@ public class ControlPanel extends JPanel implements WaveCompleteListener {
         resetGameButton = new JButton("Reset Game");
 
         // Add a panel for defender selection
-        add(new DefenderPanel(model.getDefenderTypes(), inputObservers));
+        add(new DefenderPanel(inputObservers));
 
         // Add buttons to the control panel
         add(startWaveButton);

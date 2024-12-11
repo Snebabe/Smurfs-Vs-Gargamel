@@ -5,17 +5,18 @@ import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
-public class Clock {
+public class Clock{
     final int TICKS_PER_SECOND;
     final long MS_PER_TICK;
     private boolean paused;
     private final Map<Observer,TickCounter> observers;
 
+
     private class TickCounter {
         private int tickInterval;
         private int tickCounter;
         public TickCounter(float seconds) {
-            this.tickInterval = (int) seconds*TICKS_PER_SECOND;
+            this.tickInterval = (int) (seconds*TICKS_PER_SECOND);
             this.tickCounter = 0;
         }
         public void increment() {
@@ -74,18 +75,5 @@ public class Clock {
         });
         gameLoop.start();
     }
-
-    public void pause() {
-        paused = true;
-    }
-
-    public void resume() {
-        paused = false;
-    }
-
-    public boolean isPaused() {
-        return paused;
-    }
-
 
 }

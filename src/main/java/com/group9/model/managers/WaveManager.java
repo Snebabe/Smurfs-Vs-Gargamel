@@ -11,7 +11,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
-public class WaveManager implements Observer {private int waveNumber;
+public class WaveManager implements Observer {
+    private int waveNumber;
     private int waveSize;
     private int waveReward;
     private int attackersToSpawn;
@@ -40,7 +41,7 @@ public class WaveManager implements Observer {private int waveNumber;
         waveNumber++;
         waveSize += 3;
         waveReward = 300 + (waveNumber -1) *50; // Start at 300 and increment by 50 each wave
-        if(spawnIntervalInTicks > TICKS_PER_SECONDS*2) {
+        if(spawnIntervalInTicks > TICKS_PER_SECONDS/2) { // Minimum spawn rate 0.5 seconds
             spawnIntervalInTicks -= TICKS_PER_SECONDS/2; // Decrease the spawn interval by 0.5 seconds each wave;
         }
         attackersToSpawn = waveSize;
