@@ -22,11 +22,11 @@ The goal with the project is to provide an engaging and strategic gameplay exper
 
 = System architecture
 
+== High-level architecture
+
 The system uses a modular, object-oriented design with several high-level modules. The main module for game logic is the `Model`. Within the `Model` module, there is information about where all sprites currently are together with their projectiles, and the functions to add new sprites, such as attackers or defenders. `Model` makes sure to avoid unnecessary complexity by using several different managers for different responsibilities.
 
 Another module is `Board`, containing information about the different lanes with their respective cells. There also a module for the panels, together with one for the renderers. The panels store input recievers, notifying `Model` about specific inputs from the user.
-
-== High-level Architecture
 
 A high-level architecture can be diagrammed like this:
 
@@ -37,14 +37,14 @@ A high-level architecture can be diagrammed like this:
 
 == Detailed design
 
-The high-level diagram may be decomposed into smaller, more detailed diagrams. Starting off with the way the app is launched: 
+The high-level diagram may be decomposed into smaller, more detailed diagrams. First off, the project should be started from an application class. Within the application, a model should be instantiated to make sure that each component of the project uses the same model. Inside the application, a clock is also instantiated. The purpose of the clock is to keep track of time intervals inside the game. The clock makes sure that updates (such as attacks) happens when they should. `View` is created and recieves the model, while `GameManager` starts the game. The summary is described in a class diagram: 
 
 #figure(
   caption: [Starting the App],
   image("res/cd_app.png", width: 100%)
 )
 
-The view should initialize the different panels and the respective renderers, together with the controller. Decomposing the process into a class diagram yields: 
+Within `View`, the user interface is initialized. The software makes use of two categories of views. These are panels and renderers. In short, a panel is a part of the screen, holding some set of information or functionality. All panels make use of the Java Swing component `JPanel`. Three main panels exist: `InfoPanel`, `GamePanel`, and `ControlPanel`. `InfoPanel` displays relevant metrics about the game. It includes information about the wave (such as wave number and remaining attackers) as well as the player's current resources. `ControlPanel` displays the controls available to the player. In the controls there exists a shop, with the options to purchase different defenders, and also the ability to start the next wave. `GamePanel` is the main comoponent in the view. Here, the board is displayed, including all entities that comes with it. It is within `GamePanel` that renderers exist. Here are also three main renderers: `AttackRenderer`, `DefenceRenderer`, and `ProjectileRenderer`. The job for all renderers is the same, render the different elements on the screen. The information to render is fetched from the model. When composed into a class diagram, the result becomes: 
 
 #figure(
   caption: [Initializing the View],

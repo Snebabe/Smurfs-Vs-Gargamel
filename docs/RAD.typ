@@ -190,14 +190,21 @@ Below is the domain model for Smurfs vs. Gargamel:
     image("res/domain_model.png", width: 90%)
 )
 
-Here is a mockup of the game, together with an early rendering:
+The mockups should emphasize the core mechanics of the game. The board should be visible, together with the controls for purchasing smurfs. n early GUI mockup of the game:
 
 #figure(
     caption: [GUI mockup],
     image("res/mockup1.jpg", width: 60%)
 )
 
+The early rendering mockups should prioritize rendering a board, and the ability to place smurfs. After that, the existance of attackers should be added. Here follows an early rendering, together with an as of now, current rendering: 
+
 #figure(
     caption: [Early rendering of the game],
     image("res/early_rendering.png", width: 80%)
+)
+
+#figure(
+    caption: [Current rendering of the game],
+    image("res/current_rendering.png", width: 100%)
 )
