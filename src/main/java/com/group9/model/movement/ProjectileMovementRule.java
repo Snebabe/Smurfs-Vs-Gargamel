@@ -1,7 +1,7 @@
 package com.group9.model.movement;
 
 import com.group9.model.board.Lane;
-import com.group9.model.entities.Projectile;
+import com.group9.model.entities.projectiles.Projectile;
 import com.group9.model.entities.attackers.AttackEntity;
 
 public class ProjectileMovementRule implements MovementRule {

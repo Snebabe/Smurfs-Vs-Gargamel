@@ -1,5 +1,5 @@
 package com.group9.model.board;
-import com.group9.model.entities.Projectile;
+import com.group9.model.entities.projectiles.Projectile;
 import com.group9.model.entities.attackers.AttackEntity;
 import com.group9.model.entities.defenders.DefenceEntity;
 

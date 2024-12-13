@@ -6,14 +6,12 @@ package com.group9.model;
  * idk
  */
 
+import com.group9.model.attacks.AttackManager;
 import com.group9.model.board.Board;
-import com.group9.model.board.GridCell;
-import com.group9.model.board.Lane;
-import com.group9.model.entities.Projectile;
+import com.group9.model.entities.projectiles.Projectile;
 import com.group9.model.entities.attackers.AttackEntity;
 import com.group9.model.entities.attackers.AttackEntityFactory;
 import com.group9.model.entities.defenders.DefenceEntity;
-import com.group9.model.entities.defenders.DefenceEntityFactory;
 import com.group9.model.entities.defenders.DefenderType;
 import com.group9.model.managers.*;
 

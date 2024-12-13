@@ -1,10 +1,9 @@
-package com.group9.model.managers;
+package com.group9.model.attacks;
 
 import com.group9.model.*;
 import com.group9.model.board.Board;
 import com.group9.model.board.Lane;
 import com.group9.model.entities.EntityState;
-import com.group9.model.entities.Projectile;
 import com.group9.model.entities.attackers.AttackEntity;
 import com.group9.model.entities.defenders.DefenceEntity;
 
@@ -70,13 +69,14 @@ public class AttackManager implements Observer {
 
             if (distance > 0 && distance <= defender.getAttackRange()) {
                 defender.setCurrentState(EntityState.ATTACK);
-                if (defender.isRanged()) {
+                defender.useAttack(firstAttacker);
+                /*if (defender.isRanged()) {
                     Projectile projectile = new Projectile((float)cellIndex/(lane.getNumberOfCells()-1), firstAttacker, 4, defender.getAttackDamage());
                     lane.getProjectiles().add(projectile);
                     board.addMovable(projectile, lane);
                 } else {
                     defender.useAttack(firstAttacker);
-                }
+                }*/
                 if (firstAttacker.isDead()) {
                     defender.setCurrentState(EntityState.IDLE);
                     lane.removeAttacker(firstAttacker);

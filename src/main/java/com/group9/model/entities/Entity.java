@@ -1,7 +1,6 @@
 package com.group9.model.entities;
 
-import com.group9.model.entities.attackers.AttackerType;
-import com.group9.model.entities.defenders.DefenderType;
+import com.group9.model.attacks.AttackStrategy;
 import com.group9.model.hasAttack;
 
 public abstract class Entity implements hasAttack {
@@ -57,7 +56,7 @@ public abstract class Entity implements hasAttack {
     }
 
 
-    public void useAttack(Entity entity) {
+    public void useAttack(Entity target) {
         // setAnimationState("attacking")
         entity.takeDamage(this.getAttackDamage());
     }
