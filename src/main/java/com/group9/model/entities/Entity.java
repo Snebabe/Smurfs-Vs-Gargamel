@@ -11,8 +11,9 @@ public abstract class Entity implements hasAttack {
     private boolean isDead;
     private int attackRange;
     private Enum type;
+    private AttackStrategy attackStrategy;
 
-    public Entity(Enum type, int maxHealth, int attackDamage, int attackRange) {
+    public Entity(Enum type, int maxHealth, int attackDamage, int attackRange, AttackStrategy attackStrategy) {
 
         this.health = maxHealth;
         this.maxHealth = maxHealth;
@@ -20,6 +21,7 @@ public abstract class Entity implements hasAttack {
         this.attackRange = attackRange;
         this.isDead = false;
         this.type = type;
+        this.attackStrategy = attackStrategy;
     }
 
     public Enum getType() {
@@ -58,7 +60,8 @@ public abstract class Entity implements hasAttack {
 
     public void useAttack(Entity target) {
         // setAnimationState("attacking")
-        entity.takeDamage(this.getAttackDamage());
+        //entity.takeDamage(this.getAttackDamage());
+        attackStrategy.useAttack(target, attackDamage);
     }
 
     public void takeDamage(int damage) {
