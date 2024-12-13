@@ -1,5 +1,6 @@
 package com.group9.model.entities.attackers;
 
+import com.group9.model.attacks.AttackStrategy;
 import com.group9.model.board.Lane;
 import com.group9.model.entities.Entity;
 import com.group9.model.entities.EntityState;
@@ -13,8 +14,8 @@ public class AttackEntity extends Entity implements Movable {
     private int resourceReward;
     private Lane lane;
 
-    public AttackEntity(AttackerType type, int maxHealth, int attackDamage, int range, int speed, int resourceReward) {
-        super(type, maxHealth, attackDamage,range);
+    public AttackEntity(AttackerType type, int maxHealth, int attackDamage, int range, int speed, int resourceReward, AttackStrategy attackStrategy) {
+        super(type, maxHealth, attackDamage,range, attackStrategy);
         this.speed = speed;
         this.laneProgress = 0;
         this.resourceReward = resourceReward;
