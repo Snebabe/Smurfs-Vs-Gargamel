@@ -51,12 +51,17 @@ public class Model implements Observer {
         this.resourceManager = new ResourceManager();
         this.positionManager = new PositionManager(board);
         this.defenderManager = new DefenderManager(board, resourceManager);
+        ProjectileManager.initialize(board);
     }
 
     private void registerObservers() {
         this.waveManager.addWaveCompleteListener(resourceManager);
         this.attackManager.addAttackDeathOberver(resourceManager);
 
+    }
+
+    public Board getBoard() {
+        return board;
     }
 
     public void addGameOverListener(GameOverListener listener) {

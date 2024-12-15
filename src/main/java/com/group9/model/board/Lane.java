@@ -39,6 +39,10 @@ public class Lane {
         attackEntities.add(attackEntity);
     }
 
+    public void addProjectile(Projectile projectile) {
+        projectiles.add(projectile);
+    }
+
     public void removeAttacker(AttackEntity attackEntity) {
         attackEntities.remove(attackEntity);
     }

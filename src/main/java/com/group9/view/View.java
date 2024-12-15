@@ -9,6 +9,7 @@ import com.group9.model.entities.EntityState;
 import com.group9.model.entities.attackers.AttackEntity;
 import com.group9.model.entities.attackers.AttackerType;
 import com.group9.model.entities.defenders.DefenderType;
+import com.group9.model.entities.projectiles.ProjectileType;
 import com.group9.view.panels.*;
 
 
@@ -90,65 +91,40 @@ public class View extends JFrame implements Observer, GameOverListener {
     }
 
     public void initializeAnimationHandlers(AnimationHandler animationHandler) {
+        for(DefenderType defenderType : DefenderType.values()) {
+            animationHandler.registerEntityAnimations(
+                    defenderType,
+                    EntityState.IDLE,
+                    "/images/defenders/" + defenderType.toString().toLowerCase() + "/idle/"
+            );
 
+            animationHandler.registerEntityAnimations(
+                    defenderType,
+                    EntityState.ATTACK,
+                    "/images/defenders/" + defenderType.toString().toLowerCase() + "/attack/"
+            );
+        }
 
-        animationHandler.registerEntityAnimations(
-                DefenderType.BOXER,
-                EntityState.IDLE,
-                "/images/defenders/boxer/idle/"
-        );
+        for(AttackerType attackerType: AttackerType.values()){
+            animationHandler.registerEntityAnimations(
+                    attackerType,
+                    EntityState.ATTACK,
+                    "/images/attackers/" + attackerType.toString().toLowerCase() + "/attack/"
+            );
+            animationHandler.registerEntityAnimations(
+                    attackerType,
+                    EntityState.MOVE,
+                    "/images/attackers/" + attackerType.toString().toLowerCase() + "/move/"
+            );
+        }
 
-        animationHandler.registerEntityAnimations(
-                DefenderType.BOXER,
-                EntityState.ATTACK,
-                "/images/defenders/boxer/attack/"
-        );
-
-        animationHandler.registerEntityAnimations(
-                DefenderType.ARCHER,
-                EntityState.IDLE,
-                "/images/defenders/archer/idle/"
-        );
-
-        animationHandler.registerEntityAnimations(
-                DefenderType.ARCHER,
-                EntityState.ATTACK,
-                "/images/defenders/archer/attack/"
-        );
-
-        animationHandler.registerEntityAnimations(
-                DefenderType.SHROOM,
-                EntityState.IDLE,
-                "/images/defenders/shroom/idle/"
-        );
-
-        animationHandler.registerEntityAnimations(
-                DefenderType.SHROOM,
-                EntityState.ATTACK,
-                "/images/defenders/shroom/attack/"
-        );
-
-
-        animationHandler.registerEntityAnimations(
-                AttackerType.GARGAMEL,
-                EntityState.ATTACK,
-                "/images/attackers/gargamel/attack/"
-        );
-        animationHandler.registerEntityAnimations(
-                AttackerType.GARGAMEL,
-                EntityState.MOVE,
-                "/images/attackers/gargamel/move/"
-        );
-        animationHandler.registerEntityAnimations(
-                AttackerType.FASTGARGAMEL,
-                EntityState.ATTACK,
-                "/images/attackers/fastgargamel/attack/"
-        );
-        animationHandler.registerEntityAnimations(
-                AttackerType.FASTGARGAMEL,
-                EntityState.MOVE,
-                "/images/attackers/fastgargamel/move/"
-        );
+        for(ProjectileType projectileType: ProjectileType.values()){
+            animationHandler.registerEntityAnimations(
+                    projectileType,
+                    EntityState.MOVE,
+                    "/images/projectiles/" + projectileType.toString().toLowerCase() + "/"
+            );
+        }
 
     }
 

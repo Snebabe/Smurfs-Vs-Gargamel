@@ -2,6 +2,7 @@ package com.group9.view.renderers;
 
 import com.group9.model.Model;
 import com.group9.model.Position;
+import com.group9.model.entities.EntityState;
 import com.group9.model.entities.projectiles.Projectile;
 import com.group9.view.AnimationHandler;
 
@@ -13,16 +14,16 @@ import java.util.Map;
 public class ProjectileRenderer implements EntityRenderer {
    // private Image arrow;
 
-    private Image arrow;
+    //private Image arrow;
 
-    public ProjectileRenderer() {
+    /*public ProjectileRenderer() {
         try {
             File file = new File(getClass().getResource("/images/arrow.png").toURI());
             arrow = ImageIO.read(file);
         } catch (Exception e) {
             e.printStackTrace();
         }
-    }
+    }*/
 
     @Override
     public void draw(Graphics2D g2d, Model model, AnimationHandler animationHandler, int cellWidth, int cellHeight, int panelWidth) {
@@ -37,11 +38,19 @@ public class ProjectileRenderer implements EntityRenderer {
             int projectileY = position.getRow() * cellHeight; // Y position based on row
 
             // Draw the projectile (using black color and small oval shape)
-            g2d.drawImage(arrow,
+            g2d.drawImage(animationHandler.getFrame(projectile.getType(), EntityState.MOVE),
+                    projectileX + cellWidth / 4,
+                    projectileY + cellHeight / 3,
+                    cellWidth/2,
+                    cellHeight/4,
+                    null);
+
+
+            /*g2d.drawImage(arrow,
                     projectileX + cellWidth / 4,
                     projectileY + cellHeight / 3,
                     cellWidth / 2,
-                    cellHeight / 4, null);
+                    cellHeight / 4, null);*/
         }
     }
 }

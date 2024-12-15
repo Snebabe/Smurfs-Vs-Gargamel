@@ -5,7 +5,7 @@ import com.group9.model.movement.Movable;
 import com.group9.model.movement.MovementRule;
 import com.group9.model.movement.ProjectileMovementRule;
 
-public class Projectile {
+/*public class Projectile {
     private int damage;
     private int speed;
     private int currentCellIndex;
@@ -42,21 +42,27 @@ public class Projectile {
     public boolean isDestroyed() {
         return isDestroyed;
     }
-}
+}*/
 
-/*public class Projectile implements Movable {
+public class Projectile implements Movable {
     private float laneProgress;
     private AttackEntity target;
     private int speed;
     private int damage;
     private boolean active;
+    private ProjectileType projectileType;
 
-    public Projectile(float laneProgress, AttackEntity target, int speed, int damage) {
+    public Projectile(ProjectileType projectileType, float laneProgress, AttackEntity target, int speed, int damage) {
         this.laneProgress = laneProgress;
         this.target = target;
         this.speed = speed;
         this.damage = damage;
         this.active = true;
+        this.projectileType = projectileType;
+    }
+
+    public ProjectileType getType() {
+        return projectileType;
     }
 
     public boolean isActive() {
@@ -96,4 +102,3 @@ public class Projectile {
     }
 
 }
-*/

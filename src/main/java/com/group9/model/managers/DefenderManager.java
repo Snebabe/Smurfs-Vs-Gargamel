@@ -22,7 +22,8 @@ public class DefenderManager {
 
     public void placeDefender(DefenderType defenderType, Position position) {
         if (resourceManager.getResources() >= defenderType.getCost() && !isDefenderAt(position)) {
-            DefenceEntity newDefenceEntity = DefenceEntityFactory.createDefender(defenderType);
+
+            DefenceEntity newDefenceEntity = DefenceEntityFactory.createDefender(defenderType, (float)position.getCol()/(board.getLaneSize()));
             board.setDefender(newDefenceEntity, position.getRow(), position.getCol());
             resourceManager.changeResources(-defenderType.getCost());
         } else if (isDefenderAt(position)) {

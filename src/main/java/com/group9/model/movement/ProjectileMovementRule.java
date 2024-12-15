@@ -14,12 +14,16 @@ public class ProjectileMovementRule implements MovementRule {
             return false;
         }
         if(projectile.getLaneProgress() >= 1 || attackEntity.isDead()) {
-            projectile.setActive(false);
+            return false;
         }
         float distance = (1-attackEntity.getLaneProgress()) - projectile.getLaneProgress();
 
         if(distance < 0.05) {
             attackEntity.takeDamage(projectile.getDamage());
+            if (attackEntity.isDead()) {
+                //TODO: Fix reward when enemy is killed
+                lane.removeAttacker(attackEntity);
+            }
             projectile.setActive(false);
             return false;
         }
