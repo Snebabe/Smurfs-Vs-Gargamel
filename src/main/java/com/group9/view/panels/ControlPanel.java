@@ -4,8 +4,13 @@ import com.group9.controller.InputObserver;
 import com.group9.model.Model;
 import com.group9.model.WaveCompleteListener;
 
+import javax.imageio.ImageIO;
 import javax.swing.*;
+import javax.swing.border.TitledBorder;
 import java.awt.*;
+import java.io.File;
+import java.io.IOException;
+import java.net.URISyntaxException;
 import java.util.List;
 
 public class ControlPanel extends JPanel implements WaveCompleteListener {
@@ -14,9 +19,20 @@ public class ControlPanel extends JPanel implements WaveCompleteListener {
     private final List<InputObserver> inputObservers;
     private final Model model;
 
-    public ControlPanel(Model model, List<InputObserver> inputObservers) {
+    private Image backgroundImage;
+
+
+    public ControlPanel(Model model, List<InputObserver> inputObservers, String backgroundImagePath) {
         this.model = model;
         this.inputObservers = inputObservers;
+        System.out.println(backgroundImagePath);
+
+        try {
+            backgroundImage = ImageIO.read(new File(getClass().getResource(backgroundImagePath).toURI()));
+        } catch (IOException | URISyntaxException e) {
+            e.printStackTrace();
+            System.err.println("Failed to load background image.");
+        }
 
         // Register this panel as a WaveCompleteListener
         this.model.getWaveManager().addWaveCompleteListener(this);
@@ -32,12 +48,25 @@ public class ControlPanel extends JPanel implements WaveCompleteListener {
         setStartWaveButtonEnabled(false);
     }
 
+
+    //Paints the background image on the panel.
+    @Override
+    protected void paintComponent(Graphics g) {
+        super.paintComponent(g);
+        if (backgroundImage != null) {
+            g.drawImage(backgroundImage, 0, 0, getWidth(), getHeight(), this);
+        }
+    }
+
     /**
      * Sets up the layout and basic properties of the panel.
      */
     private void setupLayout() {
         setLayout(new FlowLayout(FlowLayout.CENTER, 10, 10));
-        setBorder(BorderFactory.createTitledBorder("Controls"));
+        TitledBorder borderTitle = BorderFactory.createTitledBorder("Controls");
+        borderTitle.setTitleColor(Color.white);
+        setBorder(borderTitle);
+
     }
 
     /**

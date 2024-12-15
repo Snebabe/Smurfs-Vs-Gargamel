@@ -1,18 +1,25 @@
 package com.group9.model.entities.defenders;
 
 public enum DefenderType {
-    SHROOM(100),
-    BOXER(100),
-    ARCHER(150);
+    SHROOM(100,"A durable defender with high health, the Shroom blocks enemies and absorbs damage, protecting other defenders."),
+    BOXER(100, "A close-combat fighter who uses powerful punches to knock back and damage enemies up close."),
+    ARCHER(150, "A skilled long-range attacker, the Archer strikes from a distance to deal damage before enemies get close.");
 
     private final int cost;
 
-    DefenderType(int cost) {
+    private final String description;
+
+    DefenderType(int cost, String description) {
         this.cost = cost;
+        this.description = description;
     }
 
     public int getCost() {
         return cost;
+    }
+
+    public String getDescription() {
+        return description;
     }
 }
 

@@ -44,8 +44,8 @@ public class View extends JFrame implements Observer, GameOverListener {
 
         // Initialize components
         gamePanel = new GamePanel(model, animationHandler, inputObservers);
-        controlPanel = new ControlPanel(model, inputObservers);
-        infoPanel = new InfoPanel(model);
+        controlPanel = new ControlPanel(model, inputObservers, "/images/controlPanelBackground.jpg");
+        infoPanel = new InfoPanel(model, "/images/controlPanelBackground.jpg");
         startPanel = new StartPanel(e -> switchToNormalView());
 
         this.add(startPanel, BorderLayout.CENTER);
