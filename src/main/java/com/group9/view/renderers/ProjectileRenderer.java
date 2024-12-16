@@ -12,18 +12,6 @@ import java.io.File;
 import java.util.Map;
 
 public class ProjectileRenderer implements EntityRenderer {
-   // private Image arrow;
-
-    //private Image arrow;
-
-    /*public ProjectileRenderer() {
-        try {
-            File file = new File(getClass().getResource("/images/arrow.png").toURI());
-            arrow = ImageIO.read(file);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }*/
 
     @Override
     public void draw(Graphics2D g2d, Model model, AnimationHandler animationHandler, int cellWidth, int cellHeight, int panelWidth) {
@@ -44,13 +32,6 @@ public class ProjectileRenderer implements EntityRenderer {
                     cellWidth/2,
                     cellHeight/4,
                     null);
-
-
-            /*g2d.drawImage(arrow,
-                    projectileX + cellWidth / 4,
-                    projectileY + cellHeight / 3,
-                    cellWidth / 2,
-                    cellHeight / 4, null);*/
         }
     }
 }

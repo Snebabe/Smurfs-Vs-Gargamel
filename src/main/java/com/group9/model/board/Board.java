@@ -1,8 +1,6 @@
 package com.group9.model.board;
 
 import com.group9.model.entities.defenders.DefenceEntity;
-import com.group9.model.movement.Movable;
-import com.group9.model.movement.MoveManager;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -17,17 +15,17 @@ public class Board {
     private int laneSize;
     private int laneAmount;
     private int cellSize;
-    private MoveManager moveManager;
 
 
-    public Board(int laneAmount, int laneSize, int cellSize, int TICKS_PER_SECONDS) {
+    public Board(int laneAmount, int laneSize, int cellSize) {
         this.laneAmount = laneAmount;
         this.laneSize = laneSize;
         this.cellSize = cellSize;
+        resetBoard();
+    }
+
+    public void resetBoard() {
         this.lanes = new ArrayList<>();
-        this.moveManager = new MoveManager(TICKS_PER_SECONDS);
-
-
         for (int i = 0; i < laneAmount; i++) {
             this.lanes.add(new Lane(laneSize, cellSize));
         }
@@ -37,9 +35,7 @@ public class Board {
         Lane lane = this.lanes.get(row);
         lane.setDefender(defender, col);
     }
-    public void addMovable(Movable movable, Lane lane) {
-        moveManager.addMovable(movable, lane);
-    }
+
     public List<Lane> getLanes() {
         return lanes;
     }
@@ -54,9 +50,6 @@ public class Board {
 
     public int getLaneAmount() {
         return laneAmount;
-    }
-    public MoveManager getMoveManager() {
-        return moveManager;
     }
 
 }

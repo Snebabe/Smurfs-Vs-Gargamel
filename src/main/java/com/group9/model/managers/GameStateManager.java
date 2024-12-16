@@ -44,10 +44,4 @@ public class GameStateManager {
         }
         return false;
     }
-
-    public void resetBoardAndWaveManager(Board board, WaveManager waveManager) {
-        this.board = board;
-        this.waveManager = waveManager;
-    }
-
 }

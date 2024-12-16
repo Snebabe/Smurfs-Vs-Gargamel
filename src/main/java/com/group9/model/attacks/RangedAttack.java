@@ -9,7 +9,6 @@ import com.group9.model.entities.defenders.DefenceEntity;
 import com.group9.model.entities.projectiles.Projectile;
 import com.group9.model.entities.projectiles.ProjectileFactory;
 import com.group9.model.entities.projectiles.ProjectileType;
-import com.group9.model.managers.ProjectileManager;
 
 import java.lang.annotation.Target;
 import java.util.List;
@@ -26,8 +25,8 @@ public class RangedAttack implements AttackStrategy {
         AttackEntity target = GameContext.getSingleTarget(lane, defender.getAttackRange(), cellIndex);
         if (target != null) {
             defender.setCurrentState(EntityState.ATTACK);
-            Projectile projectile = ProjectileFactory.createProjectile(projectileType, defender, target, defender.getAttackDamage());
-            ProjectileManager.getInstance().addProjectile(projectile, lane);
+            Projectile projectile = ProjectileFactory.createProjectile(projectileType, defender.getLaneProgress(), defender.getAttackRange(), defender.getAttackDamage());
+            lane.addProjectile(projectile);
         }
         else defender.setCurrentState(EntityState.IDLE);
     }

@@ -49,28 +49,20 @@ public class Projectile implements Movable {
     private AttackEntity target;
     private int speed;
     private int damage;
-    private boolean active;
+    private int range;
     private ProjectileType projectileType;
 
-    public Projectile(ProjectileType projectileType, float laneProgress, AttackEntity target, int speed, int damage) {
-        this.laneProgress = laneProgress;
-        this.target = target;
+    public Projectile(ProjectileType projectileType, float laneProgress, int range, int speed, int damage) {
+        this.currentlaneProgress = laneProgress;
+        this.startingLaneProgress = laneProgress;
         this.speed = speed;
         this.damage = damage;
-        this.active = true;
+        this.range = range;
         this.projectileType = projectileType;
     }
 
     public ProjectileType getType() {
         return projectileType;
-    }
-
-    public boolean isActive() {
-        return active;
-    }
-
-    public void setActive(boolean active) {
-        this.active = active;
     }
 
     public int getDamage() {
@@ -81,14 +73,18 @@ public class Projectile implements Movable {
         return target;
     }
 
+    public float getStartingLaneProgress() {
+        return startingLaneProgress;
+    }
+
     @Override
     public float getLaneProgress() {
-        return laneProgress;
+        return currentlaneProgress;
     }
 
     @Override
     public void setLaneProgress(float laneProgress) {
-        this.laneProgress = laneProgress;
+        this.currentlaneProgress = laneProgress;
     }
 
     @Override

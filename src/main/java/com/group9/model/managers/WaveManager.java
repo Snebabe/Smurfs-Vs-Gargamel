@@ -48,13 +48,12 @@ public class WaveManager implements Observer {
         waveCompleted = false;
     }
 
-    public void resetWaveManager(Board board) {
+    public void resetWaveManager() {
         waveNumber = 0;
         waveSize = 0;
         waveReward = 0;
         attackersToSpawn = 0;
         ticksSinceLastSpawn = 0;
-        this.board = board;
         this.waveCompleted = false;
     }
 
@@ -77,7 +76,6 @@ public class WaveManager implements Observer {
         int randomLaneIndex = random.nextInt(board.getLanes().size());
         Lane selectedLane = board.getLanes().get(randomLaneIndex);
         AttackEntity attacker = factory.createRandomAttacker();
-        this.board.addMovable(attacker, selectedLane);
         selectedLane.addAttacker(attacker);
     }
 

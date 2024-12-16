@@ -3,62 +3,64 @@ package com.group9.model.managers;
 import com.group9.model.Observer;
 import com.group9.model.board.Board;
 import com.group9.model.board.Lane;
+import com.group9.model.entities.attackers.AttackEntity;
 import com.group9.model.entities.projectiles.Projectile;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 public class ProjectileManager {
     private Board board;
-    private static ProjectileManager instance;
-    //private List<Projectile> projectiles = new ArrayList<>();
+    private final List<AttackDeathObserver> attackDeathObservers;
 
-    private ProjectileManager(Board board) {
+    public ProjectileManager(Board board) {
+        this.attackDeathObservers = new ArrayList<>();
         this.board = board;
     }
 
-    public static void initialize(Board board) {
-        if (instance == null) {
-            instance = new ProjectileManager(board);
-        }
-    }
+    public void handleProjectilesCollision() {
+        for (Lane lane : this.board.getLanes()) {
+            Iterator<Projectile> projectileIterator = lane.getProjectiles().iterator();
 
-    public static ProjectileManager getInstance() {
-        if(instance == null) {
-            throw new IllegalStateException("ProjectileManager has not been initialized.");
-        }
-        return instance;
-    }
+            while (projectileIterator.hasNext()) {
+                Projectile projectile = projectileIterator.next();
 
-    public void addProjectile(Projectile projectile, Lane lane) {
-        lane.addProjectile(projectile);
-        board.addMovable(projectile, lane);
+                // If projectile out of range (Needs testing)
+                float laneProgressTraveled = projectile.getLaneProgress() - projectile.getStartingLaneProgress();
+                float cellRangeInLaneProgress = (float) projectile.getRange() / lane.getNumberOfCells();
+                if (projectile.getLaneProgress() >= 1 || laneProgressTraveled > cellRangeInLaneProgress) {
+                    lane.getMovables().remove(projectile);
+                    projectileIterator.remove();
+                    continue;
+                }
 
-    }
+                // Get the attacker in front
+                AttackEntity target = lane.getAttackers().getFirst();
+                if (target == null) {
+                    break;
+                }
 
+                // If projectile hit attacker
+                float distance = (1 - target.getLaneProgress()) - projectile.getLaneProgress();
+                if (distance < 0.05) {
+                    lane.getMovables().remove(projectile);
+                    projectileIterator.remove();
 
-    /*public void updateProjectiles() {
-        /*for (int i = 0; i < projectiles.size(); i++) {
-            Projectile projectile = projectiles.get(i);
-            projectile.update();
-
-            if (projectile.isDestroyed()) {
-                projectiles.remove(i--); // Remove destroyed projectiles
-            }
-        }
-
-        for(int currentLane = 0; currentLane < board.getLaneAmount(); currentLane++) {
-            List<Projectile> projectiles = board.getLanes().get(currentLane).getProjectiles();
-            for (int currentProjectileIndex = 0; currentProjectileIndex < projectiles.size(); currentProjectileIndex++) {
-                Projectile projectile = projectiles.get(currentProjectileIndex);
-                projectile.update();
-
-                if (projectile.isDestroyed()) {
-                    projectiles.remove(currentProjectileIndex--); // Remove destroyed projectiles
+                    target.takeDamage(projectile.getDamage());
+                    if (target.isDead()) {
+                        notifyAttackerDeath(target);
+                        lane.removeAttacker(target);
+                    }
                 }
             }
         }
-    }*/
+    }
 
-
+    public void notifyAttackerDeath(AttackEntity attacker) {
+        System.out.println("Reward: " + attacker.getResourceReward());
+        for(AttackDeathObserver observer : attackDeathObservers) {
+            observer.onAttackerDeath(attacker);
+        }
+    }
 }

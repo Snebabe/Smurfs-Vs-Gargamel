@@ -5,4 +5,5 @@ public interface Movable {
     void setLaneProgress(float laneProgress);
     int getSpeed();
     MovementRule getMovementRule(); // New method to get the associated movement rule
+
 }

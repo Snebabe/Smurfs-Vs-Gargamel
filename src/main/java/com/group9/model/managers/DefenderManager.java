@@ -15,11 +15,6 @@ public class DefenderManager {
         this.resourceManager = resourceManager;
     }
 
-    public void resetDefenderManager(Board board, ResourceManager resourceManager) {
-        this.board = board;
-        this.resourceManager = resourceManager;
-    }
-
     public void placeDefender(DefenderType defenderType, Position position) {
         if (resourceManager.getResources() >= defenderType.getCost() && !isDefenderAt(position)) {
 

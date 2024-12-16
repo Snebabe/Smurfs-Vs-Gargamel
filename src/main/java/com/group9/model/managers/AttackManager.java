@@ -1,4 +1,4 @@
-package com.group9.model.attacks;
+package com.group9.model.managers;
 
 import com.group9.model.*;
 import com.group9.model.board.Board;
@@ -35,11 +35,6 @@ public class AttackManager implements Observer {
         for(AttackDeathObserver observer : attackDeathObservers) {
             observer.onAttackerDeath(attacker);
         }
-    }
-
-
-    public void resetBoard(Board board) {
-        this.board = board;
     }
 
     @Override
