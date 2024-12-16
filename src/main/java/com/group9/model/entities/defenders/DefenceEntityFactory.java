@@ -13,7 +13,7 @@ public class DefenceEntityFactory {
             case BOXER:
                 return new DefenceEntity(DefenderType.BOXER, 100, 15, 1, type.getCost(), laneProgress, new MeleeAttack());
             case ARCHER:
-                return new DefenceEntity(DefenderType.ARCHER, 50, 20, 30, type.getCost(), laneProgress, new RangedAttack(ProjectileType.ARROW));
+                return new DefenceEntity(DefenderType.ARCHER, 50, 20, 7, type.getCost(), laneProgress, new RangedAttack(ProjectileType.ARROW));
             case SHOOTER:
                 return new DefenceEntity(DefenderType.SHOOTER, 50, 30, 5, type.getCost(), laneProgress, new RangedAttack(ProjectileType.BULLET));
             default:

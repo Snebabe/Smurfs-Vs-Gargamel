@@ -36,11 +36,13 @@ public class ProjectileManager {
                     continue;
                 }
 
-                // Get the attacker in front
-                AttackEntity target = lane.getAttackers().getFirst();
-                if (target == null) {
+                // Check if attackers list is empty before accessing the first attacker
+                if (lane.getAttackers().isEmpty()) {
                     break;
                 }
+
+                // Get the attacker in front
+                AttackEntity target = lane.getAttackers().getFirst();
 
                 // If projectile hit attacker
                 float distance = (1 - target.getLaneProgress()) - projectile.getLaneProgress();
