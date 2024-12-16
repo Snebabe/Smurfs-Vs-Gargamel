@@ -22,4 +22,5 @@ public class DefenceEntity extends Entity {
         getAttackStrategy().useAttack(this, lane, cellIndex);
     }
 
+
 }

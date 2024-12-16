@@ -1,5 +1,6 @@
 package com.group9.model.managers;
 
+import com.group9.model.AttackDeathObserver;
 import com.group9.model.Observer;
 import com.group9.model.board.Board;
 import com.group9.model.board.Lane;
@@ -55,6 +56,10 @@ public class ProjectileManager {
                 }
             }
         }
+    }
+
+    public void addAttackDeathOberver(AttackDeathObserver observer) {
+        attackDeathObservers.add(observer);
     }
 
     public void notifyAttackerDeath(AttackEntity attacker) {

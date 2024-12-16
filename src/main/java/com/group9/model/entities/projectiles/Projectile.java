@@ -45,8 +45,8 @@ import com.group9.model.movement.ProjectileMovementRule;
 }*/
 
 public class Projectile implements Movable {
-    private float laneProgress;
-    private AttackEntity target;
+    private float currentlaneProgress;
+    private float startingLaneProgress;
     private int speed;
     private int damage;
     private int range;
@@ -69,8 +69,8 @@ public class Projectile implements Movable {
         return damage;
     }
 
-    public AttackEntity getTarget() {
-        return target;
+    public int getRange() {
+        return range;
     }
 
     public float getStartingLaneProgress() {

@@ -56,7 +56,6 @@ public abstract class Entity  {
         return attackDamage;
     }
 
-
     public int getHealth() {
         return this.health;
     }

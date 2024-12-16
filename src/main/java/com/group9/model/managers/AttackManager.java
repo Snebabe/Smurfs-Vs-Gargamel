@@ -61,8 +61,11 @@ public class AttackManager implements Observer {
                 return;
             }
 
+
+            //ATTACK!
             defender.useAttack(lane, cellIndex);
-            //TODO: Fix this
+
+            // Remove dead attackers
             Iterator<AttackEntity> iterator = attackers.iterator();
             while (iterator.hasNext()) {
                 AttackEntity target = iterator.next();
