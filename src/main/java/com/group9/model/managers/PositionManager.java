@@ -4,9 +4,10 @@ import com.group9.model.Position;
 import com.group9.model.board.Board;
 import com.group9.model.board.GridCell;
 import com.group9.model.board.Lane;
-import com.group9.model.entities.Projectile;
+import com.group9.model.entities.projectiles.Projectile;
 import com.group9.model.entities.attackers.AttackEntity;
 import com.group9.model.entities.defenders.DefenceEntity;
+import com.group9.model.movement.Movable;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -17,10 +18,6 @@ public class PositionManager {
     private Board board;
 
     public PositionManager(Board board) {
-        this.board = board;
-    }
-
-    public void resetBoard(Board board) {
         this.board = board;
     }
 

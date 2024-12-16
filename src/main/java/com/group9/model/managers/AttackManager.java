@@ -3,12 +3,14 @@ package com.group9.model.managers;
 import com.group9.model.*;
 import com.group9.model.board.Board;
 import com.group9.model.board.Lane;
+import com.group9.model.entities.Entity;
 import com.group9.model.entities.EntityState;
-import com.group9.model.entities.Projectile;
 import com.group9.model.entities.attackers.AttackEntity;
 import com.group9.model.entities.defenders.DefenceEntity;
+import com.group9.model.entities.projectiles.Projectile;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 public class AttackManager implements Observer {
@@ -29,14 +31,10 @@ public class AttackManager implements Observer {
     }
 
     public void notifyAttackerDeath(AttackEntity attacker) {
+        System.out.println("Reward: " + attacker.getResourceReward());
         for(AttackDeathObserver observer : attackDeathObservers) {
             observer.onAttackerDeath(attacker);
         }
-    }
-
-
-    public void resetBoard(Board board) {
-        this.board = board;
     }
 
     @Override
@@ -63,27 +61,21 @@ public class AttackManager implements Observer {
                 return;
             }
 
-            AttackEntity firstAttacker = attackers.get(0);
-            float targetLaneProgress = firstAttacker.getLaneProgress();
-            float targetCellIndex = (1 - targetLaneProgress) * lane.getNumberOfCells();
-            float distance = targetCellIndex - cellIndex;
 
-            if (distance > 0 && distance <= defender.getAttackRange()) {
-                defender.setCurrentState(EntityState.ATTACK);
-                if (defender.isRanged()) {
-                    Projectile projectile = new Projectile((float)cellIndex/(lane.getNumberOfCells()-1), firstAttacker, 4, defender.getAttackDamage());
-                    lane.getProjectiles().add(projectile);
-                    board.addMovable(projectile, lane);
-                } else {
-                    defender.useAttack(firstAttacker);
-                }
-                if (firstAttacker.isDead()) {
-                    defender.setCurrentState(EntityState.IDLE);
-                    lane.removeAttacker(firstAttacker);
-                    notifyAttackerDeath(firstAttacker);
-                }
+            //ATTACK!
+            defender.useAttack(lane, cellIndex);
 
+            // Remove dead attackers
+            Iterator<AttackEntity> iterator = attackers.iterator();
+            while (iterator.hasNext()) {
+                AttackEntity target = iterator.next();
+                if (target.isDead()) {
+                    iterator.remove(); // Safely remove the element
+                    lane.removeAttacker(target); // Ensure the lane's state is updated
+                    notifyAttackerDeath(target);
+                }
             }
+
         }
     }
 
@@ -103,11 +95,10 @@ public class AttackManager implements Observer {
             int attackerCellIndex = (int) ((1 - attacker.getLaneProgress()) * lane.getNumberOfCells());
             // Get the defender at the attacker's position
             DefenceEntity defender = lane.getDefenderAtIndex(attackerCellIndex);
-
             if (defender != null) {
                 // Attack the defender
-                attacker.useAttack(defender);
                 attacker.setCurrentState(EntityState.ATTACK);
+                attacker.useAttack(defender);
 
                 // Remove the defender if it's dead
                 if (defender.isDead()) {

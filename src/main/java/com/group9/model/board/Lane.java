@@ -1,7 +1,8 @@
 package com.group9.model.board;
-import com.group9.model.entities.Projectile;
+import com.group9.model.entities.projectiles.Projectile;
 import com.group9.model.entities.attackers.AttackEntity;
 import com.group9.model.entities.defenders.DefenceEntity;
+import com.group9.model.movement.Movable;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -11,36 +12,59 @@ public class Lane {
     private List<AttackEntity> attackEntities;
     // List to store gridcells
     private List<GridCell> gridCells;
-    private int laneIndex;
 
     private List<Projectile> projectiles;
 
+    private List<Movable> movables;
 
-    // Constructor
+    private int laneIndex;
+
     public Lane(int laneSize, int laneIndex) {
         this.attackEntities = new ArrayList<>();
-        this.gridCells = new ArrayList<>();
+        this.projectiles = new ArrayList<>();
+        this.movables = new ArrayList<>();
+
+        // Generate grid cells
         this.laneIndex = laneIndex;
-
-
+        this.gridCells = new ArrayList<>();
         for (int cellIndex = 0; cellIndex < laneSize; cellIndex++) {
             this.gridCells.add(new GridCell(laneIndex,cellIndex));
         }
-
-        this.projectiles = new ArrayList<>();
     }
 
     public List<Projectile> getProjectiles() {
         return this.projectiles;
     }
+    public List<GridCell> getGridCells() {
+        return gridCells;
+    }
+
+    public List<AttackEntity> getAttackers() {
+        return this.attackEntities;
+    }
+    public List<Movable> getMovables() {
+        return this.movables;
+    }
 
     // Add an Attacker to the lane
     public void addAttacker(AttackEntity attackEntity) {
         attackEntities.add(attackEntity);
+        movables.add(attackEntity);
+    }
+
+    public void addProjectile(Projectile projectile) {
+        projectiles.add(projectile);
+        movables.add(projectile);
     }
 
     public void removeAttacker(AttackEntity attackEntity) {
         attackEntities.remove(attackEntity);
+        movables.remove(attackEntity);
+    }
+
+    public void removeProjectile(Projectile projectile) {
+        projectiles.remove(projectile);
+        movables.remove(projectile);
     }
 
     // Add a defender to the lane
@@ -84,11 +108,5 @@ public class Lane {
         }
     }
 
-    public List<GridCell> getGridCells() {
-        return gridCells;
-    }
 
-    public List<AttackEntity> getAttackers() {
-        return this.attackEntities;
-    }
 }

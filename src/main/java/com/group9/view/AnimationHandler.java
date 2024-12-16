@@ -26,7 +26,6 @@ public class AnimationHandler implements Observer {
         List<Image> frames = new ArrayList<>();
         try {
             // Get the folder inside resources
-            System.out.println(folderPath);
             File folder = new File(getClass().getResource(folderPath).toURI());
             File[] files = folder.listFiles((dir, name) -> name.endsWith(".png") || name.endsWith(".jpg") || name.endsWith(".jpeg"));
 
