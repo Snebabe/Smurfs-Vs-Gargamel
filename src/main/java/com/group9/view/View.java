@@ -24,6 +24,8 @@ public class View extends JFrame implements Observer, GameOverListener {
     private StartPanel startPanel;
     private AnimationHandler animationHandler;
     private GameOverPanel gameOverPanel;
+    private HelpPanel helpPanel;
+    private Font font;
 
     private final List<InputObserver> inputObservers = new ArrayList<>();
 
@@ -76,6 +78,22 @@ public class View extends JFrame implements Observer, GameOverListener {
         this.remove(gamePanel);
 
         this.add(gameOverPanel, BorderLayout.CENTER);
+        this.revalidate();
+        this.repaint();
+    }
+
+    public void switchToHelpView() {
+        this.remove(startPanel);
+        this.add(helpPanel, BorderLayout.CENTER);
+
+        this.revalidate();
+        this.repaint();
+    }
+
+    public void switchToStartView() {
+        this.getContentPane().removeAll();
+        this.add(startPanel, BorderLayout.CENTER);
+
         this.revalidate();
         this.repaint();
     }
