@@ -4,6 +4,7 @@ import com.group9.model.Model;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
+import javax.swing.border.TitledBorder;
 import java.awt.*;
 import java.io.File;
 import java.io.IOException;
@@ -22,9 +23,12 @@ public class InfoPanel extends JPanel {
     public InfoPanel(Model model, String backgroundImagePath) {
         this.model = model;
         setLayout(new BorderLayout());
-        setBorder(BorderFactory.createTitledBorder("Game Info"));
+        TitledBorder border = BorderFactory.createTitledBorder("Game Info");
+        setBorder(border);
+        border.setTitleColor(Color.white);
 
         wavePanel = new JPanel();
+        wavePanel.setOpaque(false);
 
         try {
             backgroundImage = ImageIO.read(new File(getClass().getResource(backgroundImagePath).toURI()));
@@ -36,6 +40,10 @@ public class InfoPanel extends JPanel {
         waveLabel = new JLabel("Current Wave: 0");
         attackersLeftLabel = new JLabel("Attackers Left: 0");
         resourcesLabel = new JLabel(" Resources: "+ model.getResourceManager().getResources());
+        waveLabel.setForeground(Color.WHITE);
+        attackersLeftLabel.setForeground(Color.WHITE);
+        resourcesLabel.setForeground(Color.WHITE);
+
 
         wavePanel.add(waveLabel);
         wavePanel.add(attackersLeftLabel);

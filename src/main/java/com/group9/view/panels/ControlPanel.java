@@ -63,10 +63,6 @@ public class ControlPanel extends JPanel implements WaveCompleteListener {
      */
     private void setupLayout() {
         setLayout(new FlowLayout(FlowLayout.CENTER, 10, 10));
-        TitledBorder borderTitle = BorderFactory.createTitledBorder("Controls");
-        borderTitle.setTitleColor(Color.white);
-        setBorder(borderTitle);
-
     }
 
     /**
