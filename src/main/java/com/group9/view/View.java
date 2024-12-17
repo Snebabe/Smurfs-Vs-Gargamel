@@ -70,7 +70,7 @@ public class View extends JFrame implements Observer, GameOverListener {
     }
 
     public void switchToEndView(int wavesCompleted) {
-        this.gameOverPanel = new GameOverPanel(wavesCompleted, e -> startNewGame(), e -> quitGame());
+        this.gameOverPanel = new GameOverPanel(wavesCompleted, e -> startNewGame(), e -> quitGame(), this.font);
 
         this.remove(controlPanel);
         this.remove(gamePanel);
