@@ -20,9 +20,8 @@ import java.util.*;
 
 public class Model implements Observer {
 
-    private static final int laneAmount = 5;
-    private static final int laneSize = 9;
-    private static final int cellSize = 100;
+    private final int laneAmount;
+    private final int laneSize;
 
     private Board board;
     private PositionManager positionManager;
@@ -36,9 +35,11 @@ public class Model implements Observer {
     private final int TICKS_PER_SECONDS;
     private ProjectileManager projectileManager;
 
-    public Model(int TICKS_PER_SECONDS) {
+    public Model(int TICKS_PER_SECONDS, int laneAmount, int laneSize) {
         this.TICKS_PER_SECONDS = TICKS_PER_SECONDS;
-        this.board = new Board(laneAmount, laneSize, cellSize);
+        this.laneAmount = laneAmount;
+        this.laneSize = laneSize;
+        this.board = new Board(laneAmount, laneSize);
         initializeManagers();
         registerObservers();
     }

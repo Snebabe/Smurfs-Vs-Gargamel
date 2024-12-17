@@ -5,22 +5,11 @@ import com.group9.model.entities.defenders.DefenceEntity;
 public class GridCell {
 
     private DefenceEntity defender;
-    private int size;
-    private int laneIndex;
     private int positionInLane;
 
-    GridCell(int laneIndex, int positionInLane) {
-        this.laneIndex = laneIndex;
+    GridCell(int positionInLane) {
         this.positionInLane = positionInLane;
 
-    }
-
-    public int getSize() {
-        return this.size;
-    }
-
-    public int getLaneIndex() {
-        return this.laneIndex;
     }
 
     public int getPositionInLane() {

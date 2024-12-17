@@ -14,20 +14,18 @@ public class Board {
     private List<Lane> lanes;
     private int laneSize;
     private int laneAmount;
-    private int cellSize;
 
 
-    public Board(int laneAmount, int laneSize, int cellSize) {
+    public Board(int laneAmount, int laneSize) {
         this.laneAmount = laneAmount;
         this.laneSize = laneSize;
-        this.cellSize = cellSize;
         resetBoard();
     }
 
     public void resetBoard() {
         this.lanes = new ArrayList<>();
         for (int i = 0; i < laneAmount; i++) {
-            this.lanes.add(new Lane(laneSize, cellSize));
+            this.lanes.add(new Lane(laneSize));
         }
     }
 
@@ -42,10 +40,6 @@ public class Board {
 
     public int getLaneSize() {
         return laneSize;
-    }
-
-    public int getCellSize() {
-        return cellSize;
     }
 
     public int getLaneAmount() {

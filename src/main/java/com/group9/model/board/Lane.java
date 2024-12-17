@@ -17,18 +17,16 @@ public class Lane {
 
     private List<Movable> movables;
 
-    private int laneIndex;
 
-    public Lane(int laneSize, int laneIndex) {
+    public Lane(int laneSize) {
         this.attackEntities = new ArrayList<>();
         this.projectiles = new ArrayList<>();
         this.movables = new ArrayList<>();
 
         // Generate grid cells
-        this.laneIndex = laneIndex;
         this.gridCells = new ArrayList<>();
         for (int cellIndex = 0; cellIndex < laneSize; cellIndex++) {
-            this.gridCells.add(new GridCell(laneIndex,cellIndex));
+            this.gridCells.add(new GridCell(cellIndex));
         }
     }
 

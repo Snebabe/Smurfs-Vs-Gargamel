@@ -11,8 +11,7 @@ public class App {
         // Initialize the MVC components
         int TICKS_PER_SECONDS = 120;
         Clock clock = new Clock(TICKS_PER_SECONDS);
-
-        Model model = new Model(TICKS_PER_SECONDS);
+        Model model = new Model(TICKS_PER_SECONDS,5,9);
         View view = new View(800, 480, model, clock);
         GameController controller = new GameController(model);
 
