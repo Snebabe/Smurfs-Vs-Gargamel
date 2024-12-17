@@ -16,6 +16,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class DefenderPanel extends JPanel {
+
+    private final List<JButton> buttons = new ArrayList<>(); // To track all buttons
+    private JButton selectedButton = null; // To track the selected button
+
     public DefenderPanel(List<InputObserver> observers) {
         setLayout(new FlowLayout(FlowLayout.CENTER, 30, 10));
         setOpaque(false);
@@ -37,6 +41,9 @@ public class DefenderPanel extends JPanel {
                 button.setFocusPainted(false);
                 button.setOpaque(false);
                 button.setToolTipText(type.getDescription());
+
+                // Add button to tracking list
+                buttons.add(button);
                 button.addActionListener(e -> {
                     selectedButton = button; // Mark this button as selected
                     for (InputObserver observer : observers) {
