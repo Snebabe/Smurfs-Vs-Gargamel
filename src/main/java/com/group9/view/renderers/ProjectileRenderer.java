@@ -27,10 +27,10 @@ public class ProjectileRenderer implements EntityRenderer {
 
             // Draw the projectile (using black color and small oval shape)
             g2d.drawImage(animationHandler.getFrame(projectile.getType(), EntityState.MOVE),
-                    projectileX + cellWidth / 4,
+                    projectileX + cellWidth,
                     projectileY + cellHeight / 3,
                     cellWidth/2,
-                    cellHeight/4,
+                    cellHeight/6,
                     null);
         }
     }

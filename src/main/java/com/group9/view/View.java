@@ -6,23 +6,19 @@ import com.group9.model.GameOverListener;
 import com.group9.model.Model;
 import com.group9.model.Observer;
 import com.group9.model.entities.EntityState;
-import com.group9.model.entities.attackers.AttackEntity;
 import com.group9.model.entities.attackers.AttackerType;
 import com.group9.model.entities.defenders.DefenderType;
 import com.group9.model.entities.projectiles.ProjectileType;
 import com.group9.view.panels.*;
+import com.group9.view.services.FontLoader;
 
 
-import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
-import java.io.File;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
 public class View extends JFrame implements Observer, GameOverListener {
-    private InfoPanel infoPanel;
     private GamePanel gamePanel;
     private ControlPanel controlPanel;
     private StartPanel startPanel;
@@ -38,16 +34,23 @@ public class View extends JFrame implements Observer, GameOverListener {
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setSize(new Dimension(WIDTH, HEIGHT));
         this.setLayout(new BorderLayout());
-
         this.animationHandler = new AnimationHandler();
+        this.setBackground(Color.getHSBColor(0.33f, 1.0f, 0.2f));
+
         initializeAnimationHandlers(animationHandler);
 
+        // Load custom font using FontLoader
+        font = FontLoader.loadFont("/GROBOLD.ttf");
+        UIManager.put("Label.font", font.deriveFont(Font.BOLD, 26));
+        UIManager.put("Button.font", font.deriveFont(Font.BOLD, 16));
+        UIManager.put("TextField.font", font.deriveFont(Font.BOLD, 26));
+        UIManager.put("TextArea.font", font.deriveFont(Font.BOLD, 26));
 
         // Initialize components
         gamePanel = new GamePanel(model, animationHandler, inputObservers);
-        controlPanel = new ControlPanel(model, inputObservers, "/images/controlPanelBackground.jpg");
-        infoPanel = new InfoPanel(model, "/images/controlPanelBackground.jpg");
-        startPanel = new StartPanel(e -> switchToNormalView());
+        controlPanel = new ControlPanel(model, inputObservers, "/images/backgrounds/controlPanelBg.jpg");
+        startPanel = new StartPanel(e -> switchToNormalView(), e -> switchToHelpView());
+        helpPanel = new HelpPanel(e -> switchToStartView());
 
         this.add(startPanel, BorderLayout.CENTER);
 
@@ -62,7 +65,6 @@ public class View extends JFrame implements Observer, GameOverListener {
         this.remove(startPanel);
         this.add(controlPanel, BorderLayout.SOUTH);
         this.add(gamePanel, BorderLayout.CENTER);
-        this.add(infoPanel, BorderLayout.EAST);
         this.revalidate();
         this.repaint();
     }
@@ -72,7 +74,6 @@ public class View extends JFrame implements Observer, GameOverListener {
 
         this.remove(controlPanel);
         this.remove(gamePanel);
-        this.remove(infoPanel);
 
         this.add(gameOverPanel, BorderLayout.CENTER);
         this.revalidate();
@@ -131,7 +132,7 @@ public class View extends JFrame implements Observer, GameOverListener {
     @Override
     public void update() {
         gamePanel.update();
-        infoPanel.update();
+        controlPanel.update();
     }
 
     public void addInputObserver(InputObserver observer) {

@@ -1,60 +1,51 @@
 package com.group9.view.panels;
 
-import javax.imageio.ImageIO;
+import com.group9.view.services.ImageButtonFactory;
+import com.group9.view.services.ImageLoader;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionListener;
-import java.io.IOException;
 
 public class GameOverPanel extends JPanel {
     private JLabel gameOverLabel;
     private JLabel wavesCompletedLabel;
     private JButton newGameButton;
     private JButton quitButton;
-
     private Image backgroundImage;
 
-    public GameOverPanel(int wavesCompleted, ActionListener newGameListener, ActionListener quitListener) {
-        try {
-            backgroundImage = ImageIO.read(getClass().getResource("/images/game_over_bg.jpg"));
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+    public GameOverPanel(int wavesCompleted, ActionListener newGameListener, ActionListener quitListener, Font font) {
+        backgroundImage = ImageLoader.loadImage("/images/backgrounds/gameOverBg.png");
 
         setLayout(new GridBagLayout());
         GridBagConstraints gbc = new GridBagConstraints();
 
         // Add "Game Over!" label
         gbc.gridx = 0;
-        gbc.gridy = 0;
         gbc.anchor = GridBagConstraints.CENTER;
-        gameOverLabel = new JLabel("Village destroyed!");
-        gameOverLabel.setFont(new Font("Arial", Font.BOLD, 48));
-        gameOverLabel.setForeground(Color.RED);
-        add(gameOverLabel, gbc);
 
         // Add waves completed label
-        gbc.gridy = 1;
+        gbc.gridy = 0;
         wavesCompletedLabel = new JLabel("Waves survived: " + wavesCompleted);
-        wavesCompletedLabel.setFont(new Font("Arial", Font.BOLD, 24));
-        wavesCompletedLabel.setForeground(Color.RED);
+        wavesCompletedLabel.setFont(getFont().deriveFont(Font.BOLD, 36));
+        wavesCompletedLabel.setForeground(Color.CYAN);
         add(wavesCompletedLabel, gbc);
 
         JPanel buttonPanel = new JPanel();
         buttonPanel.setOpaque(false); // Make button panel transparent to match background
 
         // Add new game button
-        newGameButton = new JButton("Restart game");
+        newGameButton = ImageButtonFactory.createImageButton("/images/buttons/restartBtn.png", 100, 50);
         newGameButton.addActionListener(newGameListener);
 
         // Add quit button
-        quitButton = new JButton("Exit game");
+        quitButton = ImageButtonFactory.createImageButton("/images/buttons/exitBtn.png", 100, 50);
         quitButton.addActionListener(quitListener);
 
         buttonPanel.add(newGameButton);
         buttonPanel.add(quitButton);
 
-        gbc.gridy = 2;
+        gbc.gridy = 1;
         add(buttonPanel, gbc);
     }
 

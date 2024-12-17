@@ -3,15 +3,11 @@ package com.group9.view.panels;
 import com.group9.controller.InputObserver;
 import com.group9.model.entities.defenders.DefenderType;
 
-import javax.imageio.ImageIO;
 import javax.swing.*;
 import javax.swing.border.CompoundBorder;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.LineBorder;
 import java.awt.*;
-import java.io.File;
-import java.io.IOException;
-import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -21,7 +17,7 @@ public class DefenderPanel extends JPanel {
     private JButton selectedButton = null; // To track the selected button
 
     public DefenderPanel(List<InputObserver> observers) {
-        setLayout(new FlowLayout(FlowLayout.CENTER, 30, 10));
+        setLayout(new FlowLayout(FlowLayout.CENTER, 10, 10));
         setOpaque(false);
 
         int ImageButtonWidth = 50;

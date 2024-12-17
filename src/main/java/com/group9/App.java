@@ -12,7 +12,7 @@ public class App {
         int TICKS_PER_SECONDS = 120;
         Clock clock = new Clock(TICKS_PER_SECONDS);
         Model model = new Model(TICKS_PER_SECONDS,5,9);
-        View view = new View(800, 480, model, clock);
+        View view = new View(960, 560, model, clock);
         GameController controller = new GameController(model);
 
         view.addInputObserver(controller);

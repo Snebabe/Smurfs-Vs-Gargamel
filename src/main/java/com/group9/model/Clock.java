@@ -11,11 +11,10 @@ public class Clock{
     private boolean paused;
     private final Map<Observer,TickCounter> observers;
 
-
-    private class TickCounter {
+    public class TickCounter {
         private int tickInterval;
         private int tickCounter;
-        public TickCounter(float seconds) {
+        private TickCounter(float seconds) {
             this.tickInterval = (int) (seconds*TICKS_PER_SECOND);
             this.tickCounter = 0;
         }

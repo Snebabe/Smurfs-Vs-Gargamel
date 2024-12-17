@@ -5,6 +5,7 @@ import com.group9.model.Model;
 import com.group9.model.Observer;
 import com.group9.view.AnimationHandler;
 import com.group9.view.renderers.*;
+import com.group9.view.services.ImageLoader;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
@@ -30,7 +31,7 @@ public class GamePanel extends JPanel implements Observer {
         this.rowCount = model.getLaneAmount();
         this.columnCount = model.getLaneSize();
         this.animationHandler = animationHandler;
-        this.setBackground(Color.WHITE);
+        this.setBackground(Color.getHSBColor(0.33f, 1.0f, 0.2f));
 
         // Initialize the list of entity renderers with direct access to the model
         entityRenderers = new ArrayList<>();
@@ -95,29 +96,22 @@ public class GamePanel extends JPanel implements Observer {
 
 
     private void drawGrid(Graphics2D g2d, int cellWidth, int cellHeight) {
-        try {
-            Image gridImage = ImageIO.read(new File(getClass().getResource("/images/gridcell.png").toURI()));
-            Image gridImage2 = ImageIO.read(new File(getClass().getResource("/images/gridcell2.png").toURI()));
+        Image gridImage = ImageLoader.loadImage("/images/backgrounds/gridcell.png");
+        Image gridImage2 = ImageLoader.loadImage("/images/backgrounds/gridcell2.png");
 
-            for (int row = 0; row < rowCount; row++) {
-                for (int col = 0; col < columnCount; col++) {
-                    int x = col * cellWidth;
-                    int y = row * cellHeight;
+        for (int row = 0; row < rowCount; row++) {
+            for (int col = 0; col < columnCount; col++) {
+                int x = col * cellWidth;
+                int y = row * cellHeight;
 
-                    // Alternate between gridImage and gridImage2
-                    Image currentImage = ((row + col) % 2 == 0) ? gridImage : gridImage2;
+                // Alternate between gridImage and gridImage2
+                Image currentImage = ((row + col) % 2 == 0) ? gridImage : gridImage2;
 
-                    //g2d.drawImage(currentImage, (int) (x * 0.99), (int) (y * 0.99), (int) (cellWidth * 1.4), (int) (cellHeight * 1.4), null);
-                    g2d.drawImage(currentImage,x, y, cellWidth, cellHeight, null);
+                //g2d.drawImage(currentImage, (int) (x * 0.99), (int) (y * 0.99), (int) (cellWidth * 1.4), (int) (cellHeight * 1.4), null);
+                g2d.drawImage(currentImage,x, y, cellWidth, cellHeight, null);
 
-                    //g2d.drawRect(x, y, cellWidth, cellHeight);
-                }
+                //g2d.drawRect(x, y, cellWidth, cellHeight);
             }
-        } catch (IOException e) {
-            e.printStackTrace();
-            System.err.println("Failed to load grid image.");
-        } catch (URISyntaxException e) {
-            throw new RuntimeException(e);
         }
     }
 

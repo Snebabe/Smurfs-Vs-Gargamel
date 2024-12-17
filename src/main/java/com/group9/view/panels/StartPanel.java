@@ -1,39 +1,37 @@
 package com.group9.view.panels;
 
+import com.group9.view.services.ImageButtonFactory;
+import com.group9.view.services.ImageLoader;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionListener;
-import java.io.IOException;
-import javax.imageio.ImageIO;
 
 public class StartPanel extends JPanel {
     private JButton startButton;
-    private JLabel titleLabel;
+    private JButton helpButton;
     private Image backgroundImage;
 
-    public StartPanel(ActionListener startButtonListener) {
-        try {
-            backgroundImage = ImageIO.read(getClass().getResource("/images/startPanelBg.png"));
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+    public StartPanel(ActionListener startButtonListener, ActionListener helpButtonListener) {
 
+        this.backgroundImage = ImageLoader.loadImage("/images/backgrounds/startPanelBg.png");
         setLayout(new GridBagLayout());
         GridBagConstraints gbc = new GridBagConstraints();
 
-        // Add title label
-        titleLabel = new JLabel("Smurfs vs. Gargamel");
-        titleLabel.setFont(new Font("Arial", Font.BOLD, 24));
-        titleLabel.setForeground(Color.BLACK);
-        gbc.gridx = 0;
-        gbc.gridy = 0;
-        gbc.anchor = GridBagConstraints.CENTER;
-        add(titleLabel, gbc);
+        JPanel buttonPanel = new JPanel();
+        buttonPanel.setLayout(new FlowLayout(FlowLayout.CENTER, 10, 10));
+        buttonPanel.setOpaque(false);
 
-        startButton = new JButton("Start");
+        startButton = ImageButtonFactory.createImageButton("/images/buttons/playBtn.png", 200, 80);
         startButton.addActionListener(startButtonListener);
-        gbc.gridy = 1; // Set gridy to 1 for the button to place it below the title
-        add(startButton, gbc);
+        buttonPanel.add(startButton);
+
+        helpButton = ImageButtonFactory.createImageButton("/images/buttons/helpBtn.png", 200, 80);
+        helpButton.addActionListener(helpButtonListener);
+        buttonPanel.add(helpButton);
+
+        gbc.gridy = 1;
+        add(buttonPanel, gbc);
     }
 
     @Override
