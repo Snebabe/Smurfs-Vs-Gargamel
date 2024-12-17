@@ -2,6 +2,7 @@ package com.group9.view.panels;
 
 import com.group9.controller.InputObserver;
 import com.group9.model.entities.defenders.DefenderType;
+import com.group9.view.services.ImageLoader;
 
 import javax.swing.*;
 import javax.swing.border.CompoundBorder;
@@ -24,54 +25,49 @@ public class DefenderPanel extends JPanel {
         int ImageButtonHeight = 50;
 
         for (DefenderType type : DefenderType.values()) {
-            try {
-                // Load the image
-                Image buttonIcon = ImageIO.read(new File(getClass().getResource("/images/defenders/" + type.toString().toLowerCase() + "/idle/0.png").toURI()));
+            // Load the image
+            Image defenderIcon = ImageLoader.loadResizedImage("/images/defenders/" + type.toString().toLowerCase() + "/idle/0.png", ImageButtonWidth, ImageButtonHeight);
 
-                // Scale the image to desired size
-                Image scaledIcon = buttonIcon.getScaledInstance(ImageButtonWidth, ImageButtonHeight, Image.SCALE_SMOOTH);
+            // Create a button that acts as the entire panel
+            JButton button = new JButton();
+            button.setLayout(new BoxLayout(button, BoxLayout.Y_AXIS));
+            button.setFocusPainted(false);
+            button.setOpaque(false);
+            button.setToolTipText(type.getDescription());
 
-                // Create a button that acts as the entire panel
-                JButton button = new JButton();
-                button.setLayout(new BoxLayout(button, BoxLayout.Y_AXIS));
-                button.setFocusPainted(false);
-                button.setOpaque(false);
-                button.setToolTipText(type.getDescription());
+            // Add button to tracking list
+            buttons.add(button);
+            button.addActionListener(e -> {
+                selectedButton = button; // Mark this button as selected
+                for (InputObserver observer : observers) {
+                    observer.onDefenderSelected(type);
+                }
+                repaint();
+            });
 
-                // Add button to tracking list
-                buttons.add(button);
-                button.addActionListener(e -> {
-                    selectedButton = button; // Mark this button as selected
-                    for (InputObserver observer : observers) {
-                        observer.onDefenderSelected(type);
-                    }
-                    repaint();
-                });
+            Font smallerLabelFont = button.getFont().deriveFont(Font.BOLD, 14);
+            // Cost label (above the image)
+            JLabel costLabel = new JLabel("Cost: " + type.getCost());
+            costLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
+            costLabel.setFont(smallerLabelFont);
 
-                // Cost label (above the image)
-                JLabel costLabel = new JLabel("Cost: " + type.getCost());
-                costLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
+            // Image icon
+            JLabel imageLabel = new JLabel(new ImageIcon(defenderIcon));
+            imageLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
 
-                // Image icon
-                JLabel imageLabel = new JLabel(new ImageIcon(scaledIcon));
-                imageLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
+            // Defender type label (below the image)
+            JLabel nameLabel = new JLabel(type.toString());
+            nameLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
+            nameLabel.setFont(smallerLabelFont);
 
-                // Defender type label (below the image)
-                JLabel nameLabel = new JLabel(type.toString());
-                nameLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
+            // Add components to the button
+            button.add(costLabel);
+            button.add(imageLabel);
+            button.add(nameLabel);
 
-                // Add components to the button
-                button.add(costLabel);
-                button.add(imageLabel);
-                button.add(nameLabel);
+            // Add the button to the panel
+            add(button);
 
-                // Add the button to the panel
-                add(button);
-
-            } catch (IOException | URISyntaxException e) {
-                e.printStackTrace();
-                System.err.println("Failed to load DefenderPanel image.");
-            }
         }
     }
     @Override

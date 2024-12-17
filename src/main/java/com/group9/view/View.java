@@ -32,7 +32,7 @@ public class View extends JFrame implements Observer, GameOverListener {
 
         this.setTitle("Smurfs vs. Gargamel");
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        this.setSize(new Dimension(WIDTH, HEIGHT));
+        this.setMinimumSize(new Dimension(WIDTH+200, HEIGHT+200));
         this.setLayout(new BorderLayout());
         this.animationHandler = new AnimationHandler();
         this.setBackground(Color.getHSBColor(0.33f, 1.0f, 0.2f));
