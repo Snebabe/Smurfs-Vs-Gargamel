@@ -6,7 +6,7 @@ public class DefenceEntityFactory {
         if (type == null) {
             throw new IllegalArgumentException("Invalid defender type");
         }
-        return new DefenceEntity(type.getName(), type.getMaxHealth(), type.getAttackDamage(), type.getRange(), type.getAttackSpeed(), type.getCost(), type.getAttackStrategy());
+        return new DefenceEntity(type.getName(), type.getMaxHealth(), type.getAttackDamage(), type.getRange(), type.getAttackSpeed(), type.getAttackStrategy());
     }
 
 

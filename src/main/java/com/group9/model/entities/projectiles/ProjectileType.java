@@ -26,7 +26,7 @@ public class ProjectileType extends EntityType {
 
     // Constructor to initialize name and speed, along with other properties
     public ProjectileType(String name, int speed) {
-        this.name = name;
+        super(name);
         this.speed = speed;
     }
 

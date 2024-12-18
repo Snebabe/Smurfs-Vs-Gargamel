@@ -46,15 +46,15 @@ public class EntityConfiguration {
     }
 
     public static List<DefenderType> getDefenderTypes() {
-        return DEFENDER_TYPE_LIST;
+        return new ArrayList<>(DEFENDER_TYPE_LIST);
     }
 
     public static List<AttackerType> getAttackerTypes() {
-        return ATTACKER_TYPE_LIST;
+        return new ArrayList<>(ATTACKER_TYPE_LIST);
     }
 
     public static List<ProjectileType> getProjectileTypes() {
-        return PROJECTILE_TYPE_LIST;
+        return new ArrayList<>(PROJECTILE_TYPE_LIST);
     }
 
 

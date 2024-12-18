@@ -2,8 +2,9 @@ package com.group9.model.entities.characters;
 
 import com.group9.model.attacks.AttackStrategy;
 import com.group9.model.entities.EntityState;
+import com.group9.model.entities.EntityType;
 
-public abstract class Character {
+public abstract class Character extends EntityType {
     private EntityState currentState;
     private float health;
     private float maxHealth;
@@ -11,7 +12,6 @@ public abstract class Character {
     private boolean isDead;
     private int attackRange;
     private float attackDelay;
-    private String name;
     private AttackStrategy attackStrategy;
 
     public Character(String name, float maxHealth, float attackDamage, int attackRange, float attackDelay, AttackStrategy attackStrategy) {
@@ -22,12 +22,7 @@ public abstract class Character {
         this.attackRange = attackRange;
         this.attackDelay = attackDelay;
         this.isDead = false;
-        this.name = name;
         this.attackStrategy = attackStrategy;
-    }
-
-    public String getName() {
-        return this.name;
     }
 
     public EntityState getCurrentState() {
@@ -39,7 +34,7 @@ public abstract class Character {
     }
 
     public void setCurrentState(EntityState state) {
-        this.currentState = state;
+        currentState = state;
     }
 
     public int getAttackRange() {
@@ -62,7 +57,7 @@ public abstract class Character {
     }
 
     public boolean isDead() {
-        return this.isDead;
+        return isDead;
     }
 
 

@@ -34,7 +34,10 @@ public class DefenderPanel extends JPanel {
             button.setLayout(new BoxLayout(button, BoxLayout.Y_AXIS));
             button.setFocusPainted(false);
             button.setOpaque(false);
-            //button.setToolTipText(type.getDescription());
+            button.setToolTipText("Health: " + type.getMaxHealth() + "; " +
+                    "Damage: " + type.getAttackDamage() + "; " +
+                    "Range: " + type.getRange() + "; " +
+                    "Attack Speed: " + type.getAttackSpeed());
 
             // Add button to tracking list
             buttons.add(button);
