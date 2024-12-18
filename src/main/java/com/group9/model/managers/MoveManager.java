@@ -21,6 +21,7 @@ public class MoveManager implements Observer {
         this.TICKS_PER_SECONDS = TICKS_PER_SECONDS;
     }
 
+    // Moves the entity if possible
     public void move(Movable movableEntity, Lane lane) {
         MovementRule rule = movableEntity.getMovementRule();
         if (rule.canMove(movableEntity, lane)) {
@@ -30,6 +31,7 @@ public class MoveManager implements Observer {
         }
     }
 
+    // Updates the position of all movable entities
     @Override
     public void update() {
         for(Lane lane : this.board.getLanes()) {

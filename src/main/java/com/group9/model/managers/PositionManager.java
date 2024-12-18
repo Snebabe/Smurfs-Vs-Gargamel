@@ -14,6 +14,12 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+
+/*
+ * Manages the positions of attackers, defenders, and projectiles on the board.
+ * Provides methods to get the current positions of these entities.
+ */
+
 public class PositionManager {
     private Board board;
 

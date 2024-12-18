@@ -41,6 +41,6 @@ public class GameStateManager {
                 }
             }
         }
-        return false;
+        return false;  // Return false if no attacker has reached the end
     }
 }

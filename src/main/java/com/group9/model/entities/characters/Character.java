@@ -6,7 +6,7 @@ import com.group9.model.entities.EntityType;
 
 public abstract class Character extends EntityType {
     private EntityState currentState;
-    private float health;
+    private float health; // Current health
     private float maxHealth;
     private float attackDamage;
     private boolean isDead;
@@ -15,13 +15,13 @@ public abstract class Character extends EntityType {
     private AttackStrategy attackStrategy;
 
     public Character(String name, float maxHealth, float attackDamage, int attackRange, float attackDelay, AttackStrategy attackStrategy) {
-        super(name);
+        super(name);  // Set character name
         this.health = maxHealth;
         this.maxHealth = maxHealth;
         this.attackDamage = attackDamage;
         this.attackRange = attackRange;
         this.attackDelay = attackDelay;
-        this.isDead = false;
+        this.isDead = false; // Start as alive
         this.attackStrategy = attackStrategy;
     }
 
@@ -67,6 +67,7 @@ public abstract class Character extends EntityType {
         target.takeDamage(this.getAttackDamage());
     }
 
+    // Reduce health when taking damage
     public void takeDamage(float damage) {
         health -= damage;
         if(health <= 0) {

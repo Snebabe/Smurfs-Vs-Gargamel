@@ -10,6 +10,12 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
+
+/*
+ * Manages the behavior and interactions of projectiles on the game board.
+ * Handles projectile collisions with attackers and updates their status (damage, removal).
+ */
+
 public class ProjectileManager {
     private Board board;
     private final List<AttackDeathObserver> attackDeathObservers;
@@ -19,6 +25,7 @@ public class ProjectileManager {
         this.board = board;
     }
 
+    // Handle projectile collisions with attackers
     public void handleProjectilesCollision() {
         for (Lane lane : this.board.getLanes()) {
             Iterator<Projectile> projectileIterator = lane.getProjectiles().iterator();
@@ -59,10 +66,12 @@ public class ProjectileManager {
         }
     }
 
+    // Add observer for attacker death
     public void addAttackDeathOberver(AttackDeathObserver observer) {
         attackDeathObservers.add(observer);
     }
 
+    // Notify observers about attacker death
     public void notifyAttackerDeath(AttackEntity attacker) {
         System.out.println("Reward: " + attacker.getResourceReward());
         for(AttackDeathObserver observer : attackDeathObservers) {

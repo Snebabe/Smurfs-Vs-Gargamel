@@ -7,14 +7,16 @@ import com.group9.model.entities.EntityState;
 
 public class DefenceEntity extends Character {
 
+    // Constructor to set up the defender
     public DefenceEntity(String name, float maxHealth, float attackDamage, int range, float attackDelay, AttackStrategy attackStrategy) {
-        super(name, maxHealth, attackDamage, range, attackDelay, attackStrategy);
-        this.setCurrentState(EntityState.IDLE);
+        super(name, maxHealth, attackDamage, range, attackDelay, attackStrategy);  // Initialize using Character constructor
+        this.setCurrentState(EntityState.IDLE);  // Set initial state to IDLE
 
     }
 
+    // Use the attack strategy to attack
     public boolean useAttack(Lane lane, int cellIndex) {
-        return getAttackStrategy().useAttack(this, lane, cellIndex);
+        return getAttackStrategy().useAttack(this, lane, cellIndex);  // Delegate to attack strategy
     }
 
 

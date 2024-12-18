@@ -34,6 +34,7 @@ public class GameContext {
         return targetsInRange;
     }
 
+    // Checks if a specific attacker is within range.
     private static boolean attackerInRange(AttackEntity attackEntity, Lane lane, int range, int cellIndex) {
         float targetCellIndex = PositionConverter.attackerToCellIndex(attackEntity.getLaneProgress(), lane.getNumberOfCells());;
         float distance = targetCellIndex - cellIndex;

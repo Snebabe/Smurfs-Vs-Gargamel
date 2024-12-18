@@ -4,10 +4,11 @@ import com.group9.model.entities.characters.defenders.DefenceEntity;
 
 public class GridCell {
 
-    private DefenceEntity defender;
-    private int positionInLane;
+    private DefenceEntity defender;  // Reference to the defender entity placed in the grid cell
+    private final int positionInLane;      // Position of the cell within its lane
 
-    GridCell(int positionInLane) {
+    // Constructor to initialize the position of the cell in its lane
+    public GridCell(int positionInLane) {
         this.positionInLane = positionInLane;
 
     }
@@ -17,6 +18,9 @@ public class GridCell {
     }
 
     public void setDefender(DefenceEntity defender) {
+        if (defender == null) {
+            throw new IllegalArgumentException("Defender cannot be null.");
+        }
         this.defender = defender;
     }
 

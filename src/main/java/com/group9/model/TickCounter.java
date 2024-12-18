@@ -1,5 +1,11 @@
 package com.group9.model;
 
+/*
+ * Helper class to track the number of ticks for a specific interval.
+ * It is used to manage periodic events by counting ticks and triggering
+ * actions when a specified number of ticks (based on seconds) has passed.
+ */
+
 public class TickCounter {
 
     private int tickInterval;

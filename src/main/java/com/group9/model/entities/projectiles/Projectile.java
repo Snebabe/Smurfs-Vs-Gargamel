@@ -47,7 +47,7 @@ public class Projectile implements Movable {
     private float currentlaneProgress;
     private float startingLaneProgress;
     private int speed;
-    private float damage;
+    private float damage; // Damage dealt by the projectile
     private int range;
     private String name;
 

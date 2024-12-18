@@ -7,21 +7,20 @@ import java.util.List;
 
 public class Board {
 
-    // Board har X lanes.
-    // Lane har Y rutor.
-    // Borde det vara 🤓☝️
 
-    private List<Lane> lanes;
-    private int laneSize;
-    private int laneAmount;
+    private List<Lane> lanes; // Represents all the lanes on the board.
+    private final int laneSize; // Number of cells per lane.
+    private final int laneAmount; // Number of lanes on the board.
 
 
+    // Initializes the board with a specified number of lanes and lane size.
     public Board(int laneAmount, int laneSize) {
         this.laneAmount = laneAmount;
         this.laneSize = laneSize;
         resetBoard();
     }
 
+    // Resets the board by creating new lanes with the specified size.
     public void resetBoard() {
         this.lanes = new ArrayList<>();
         for (int i = 0; i < laneAmount; i++) {
@@ -29,7 +28,11 @@ public class Board {
         }
     }
 
+    // Places a defender in the specified row and column.
     public void setDefender(DefenceEntity defender, int row, int col) {
+        if (row < 0 || row >= laneAmount || col < 0 || col >= laneSize) {
+            throw new IllegalArgumentException("Invalid row or column index.");
+        }
         Lane lane = this.lanes.get(row);
         lane.setDefender(defender, col);
     }

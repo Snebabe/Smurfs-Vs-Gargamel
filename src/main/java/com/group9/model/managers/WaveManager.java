@@ -11,6 +11,11 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
+
+/*
+ * Manages the spawning of attackers in waves. Controls the timing of each wave
+ * and its size. Also tracks wave rewards and notifies listeners when a wave is complete.
+ */
 public class WaveManager implements Observer {
     private int waveNumber;
     private int waveSize;
@@ -74,6 +79,7 @@ public class WaveManager implements Observer {
         }
     }
 
+    // Spawn an attacker at a random lane
     private void spawnAttackerRandomly() {
         Random random = new Random();
         int randomLaneIndex = random.nextInt(board.getLanes().size());
@@ -103,6 +109,7 @@ public class WaveManager implements Observer {
 
     }
 
+    // Check if all attackers are cleared from the lanes
     private void checkWaveCompletion() {
         boolean allAttackersCleared = true;
         for (Lane lane : board.getLanes()) {

@@ -12,10 +12,12 @@ import com.group9.model.entities.projectiles.ProjectileType;
 public class RangedAttack implements AttackStrategy {
     private final ProjectileType projectileType;
 
+    // Constructor to set the type of projectile used
     public RangedAttack(ProjectileType projectileType) {
         this.projectileType = projectileType;
     }
 
+    // Perform the ranged attack
     @Override
     public boolean useAttack(DefenceEntity defender, Lane lane, int cellIndex) {
         AttackEntity target = GameContext.getSingleTarget(lane, defender.getAttackRange(), cellIndex);

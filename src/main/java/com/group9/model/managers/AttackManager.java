@@ -15,7 +15,7 @@ import java.util.*;
 public class AttackManager implements Observer {
     private Board board;
     private List<AttackDeathObserver> attackDeathObservers;
-    private Map<Character, TickCounter> attackCounters;
+    private Map<Character, TickCounter> attackCounters;  // Map to track attack timing for characters
     private int TICKS_PER_SECOND;
 
     public AttackManager(Board board, int TICKS_PER_SECOND) {
@@ -23,7 +23,7 @@ public class AttackManager implements Observer {
         this.TICKS_PER_SECOND = TICKS_PER_SECOND;
         this.attackDeathObservers = new ArrayList<>();
         this.attackCounters = new HashMap<>();
-        GameContext.setTicksPerSecond(TICKS_PER_SECOND);
+        GameContext.setTicksPerSecond(TICKS_PER_SECOND);  // Set global ticks per second
     }
 
     public void addAttackDeathOberver(AttackDeathObserver observer) {
@@ -89,6 +89,7 @@ public class AttackManager implements Observer {
         }
     }
 
+    // Remove dead attackers from the lane
     private void removeDeadAttackers(Lane lane){
         List<AttackEntity> attackers = lane.getAttackers();
         Iterator<AttackEntity> iterator = attackers.iterator();

@@ -8,22 +8,24 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Lane {
-    // List to store attackers, sorted by their xPosition
+    // List to store attackers, sorted by their lane progress
     private List<AttackEntity> attackEntities;
-    // List to store gridcells
+
+    // List to store grid cells, each holding information about positions and defenders
     private List<GridCell> gridCells;
 
     private List<Projectile> projectiles;
 
-    private List<Movable> movables;
+    private List<Movable> movables; // List of all movable entities (attackers and projectiles)
 
 
+    // Constructor to initialize the lane with grid cells and empty entity lists
     public Lane(int laneSize) {
         this.attackEntities = new ArrayList<>();
         this.projectiles = new ArrayList<>();
         this.movables = new ArrayList<>();
 
-        // Generate grid cells
+        // Initialize grid cells based on lane size
         this.gridCells = new ArrayList<>();
         for (int cellIndex = 0; cellIndex < laneSize; cellIndex++) {
             this.gridCells.add(new GridCell(cellIndex));
@@ -44,28 +46,31 @@ public class Lane {
         return this.movables;
     }
 
-    // Add an Attacker to the lane
+    // Add an attacker to the lane and mark as movable
     public void addAttacker(AttackEntity attackEntity) {
         attackEntities.add(attackEntity);
         movables.add(attackEntity);
     }
 
+    // Add a projectile to the lane and mark as movable
     public void addProjectile(Projectile projectile) {
         projectiles.add(projectile);
         movables.add(projectile);
     }
 
+    // Remove an attacker from the lane and movables list
     public void removeAttacker(AttackEntity attackEntity) {
         attackEntities.remove(attackEntity);
         movables.remove(attackEntity);
     }
 
+    // Remove a projectile from the lane and movables list
     public void removeProjectile(Projectile projectile) {
         projectiles.remove(projectile);
         movables.remove(projectile);
     }
 
-    // Add a defender to the lane
+    // Add a defender to the specified grid cell in the lane
     public void setDefender(DefenceEntity defender, int col) {
         GridCell cell = this.gridCells.get(col);
         cell.setDefender(defender);
@@ -78,22 +83,21 @@ public class Lane {
     public DefenceEntity getDefenderAtIndex(int index) {
         GridCell gridcell = gridCells.get(index);
         if (gridcell != null) {
-            return gridCells.get(index).getDefender();
+            return gridCells.get(index).getDefender(); // Return the defender, if present
         }
         return null;
     }
 
-    // Sort the attackers by lane progress using Insertion Sort with a margin
-    // Margin is used to prevent defenders from swapping target because the attackers lane progress might
-    // be very slightly different depending on the attacker's speed
+    // Sort attackers based on their progress in the lane using Insertion Sort
+    // A margin is used to prevent swapping if the attackers progress is very close
     public void sortAttackers() {
-        final double MARGIN = 0.001; // Adjust the margin as needed
+        final double MARGIN = 0.001; // Margin to avoid minor differences in lane progres
 
         for (int i = 1; i < attackEntities.size(); i++) {
             AttackEntity key = attackEntities.get(i);
             int j = i - 1;
 
-            // Move attackers that are ahead of the key back by one position
+            // Move attackers ahead of the key to the right if they are behind
             while (j >= 0 && shouldMoveForward(attackEntities.get(j), key, MARGIN)) {
                 attackEntities.set(j + 1, attackEntities.get(j));
                 j--;
@@ -103,14 +107,13 @@ public class Lane {
         }
     }
 
-    // Helper function to compare with a margin
+    // Helper function to determine if an attacker should move ahead based on lane progress
     private boolean shouldMoveForward(AttackEntity current, AttackEntity key, double margin) {
-        // Move only if the current lane progress is strictly less than the key's by the margin
         return current.getLaneProgress() + margin < key.getLaneProgress();
     }
 
 
-    // Debugging method to print the current state of attackEntities
+    // Debugging method
     public void printAttackEntities() {
         System.out.println("Current Order of Attack Entities:");
         for (int i = 0; i < attackEntities.size(); i++) {

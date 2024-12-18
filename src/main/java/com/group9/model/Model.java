@@ -18,6 +18,14 @@ import com.group9.model.managers.MoveManager;
 
 import java.util.*;
 
+
+
+/*
+ * Central class that manages the overall game logic. Coordinates various managers
+ * such as WaveManager, AttackManager, ResourceManager, etc., and handles game state.
+ * Responsible for updating the game entities and maintaining the flow of the game.
+ */
+
 public class Model implements Observer {
 
     private final int laneAmount;
@@ -41,9 +49,10 @@ public class Model implements Observer {
         this.laneSize = laneSize;
         this.board = new Board(laneAmount, laneSize);
         initializeManagers();
-        registerObservers();
+        registerObservers(); // Register observers for relevant events
     }
 
+    // Initialize the different game managers
     private void initializeManagers() {
         this.waveManager = new WaveManager(new AttackEntityFactory(), board, TICKS_PER_SECONDS);
         this.attackManager = new AttackManager(board, TICKS_PER_SECONDS);
@@ -55,6 +64,7 @@ public class Model implements Observer {
         this.projectileManager = new ProjectileManager(board);
     }
 
+    // Register observers for the managers that need to listen for events
     private void registerObservers() {
         this.waveManager.addWaveCompleteListener(resourceManager);
         this.attackManager.addAttackDeathOberver(resourceManager);
@@ -69,21 +79,25 @@ public class Model implements Observer {
         this.gameStateManager.addGameOverListener(listener);
     }
 
+    // Reset the game state and resources
     public void resetGame() {
         board.resetBoard();
         waveManager.resetWaveManager();
         resourceManager.resetResources();
     }
 
+    // Update the game logic, called every game loop tick
+
     public void update() {
         if (gameStateManager.isGameOver()) {
             resetGame();
         } // Reset game
 
+        // Update all managers
         waveManager.update();
         moveManager.update();
         attackManager.update();
-        projectileManager.handleProjectilesCollision();
+        projectileManager.handleProjectilesCollision();  // Check for projectile collisions
     }
 
     public WaveManager getWaveManager() {
@@ -97,6 +111,7 @@ public class Model implements Observer {
         return attackManager;
     }
 
+    // Start the next wave of attackers
     public void startWave() {
         waveManager.startWave();
     }
@@ -121,6 +136,7 @@ public class Model implements Observer {
         return positionManager.getAllProjectilesPosition();
     }
 
+    // Place a defender at a given position on the board
     public void placeDefender(DefenderType defenderType, Position position) {
         defenderManager.placeDefender(defenderType, position);
     }
