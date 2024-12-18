@@ -1,4 +1,5 @@
 #set page("a4")
+#show link: underline
 
 #align(center, text(17pt)[
 	*TDA367 System Design Document*
@@ -41,20 +42,22 @@ The high-level diagram may be decomposed into smaller, more detailed diagrams. F
 
 #figure(
   caption: [Starting the App],
-  image("res/cd_app.png", width: 100%)
+  image("res/app.svg", width: 100%)
 )
 
 Within `View`, the user interface is initialized. The software makes use of two categories of views. These are panels and renderers. In short, a panel is a part of the screen, holding some set of information or functionality. All panels make use of the Java Swing component `JPanel`. Three main panels exist: `InfoPanel`, `GamePanel`, and `ControlPanel`. `InfoPanel` displays relevant metrics about the game. It includes information about the wave (such as wave number and remaining attackers) as well as the player's current resources. `ControlPanel` displays the controls available to the player. In the controls there exists a shop, with the options to purchase different defenders, and also the ability to start the next wave. `GamePanel` is the main comoponent in the view. Here, the board is displayed, including all entities that comes with it. It is within `GamePanel` that renderers exist. Here are also three main renderers: `AttackRenderer`, `DefenceRenderer`, and `ProjectileRenderer`. The job for all renderers is the same, render the different elements on the screen. The information to render is fetched from the model. When composed into a class diagram, the result becomes: 
 
 #figure(
   caption: [Initializing the View],
-  image("res/cd_view.png", width: 110%)
+  image("res/view.svg", width: 110%)
 )
 
-The final part to showcase is the model, and its communication with the board, the managers, and the entities. The diagram looks like:
+The final part to showcase is the model, and its communication with the board, the managers, and the entities. `Model` is a facade for the game logic. Here lies methods to retrieve and alter information about the state of the game. To split up the responsibilities, `Model` uses a set of managers. It is through the managers that `Model` controls the game. Within the game logic, there also exist some factories. They are used to create entities of varying categories, namely: `AttackEntityFactory` and `DefenceEntityFactory`. Here, the different entities are created to be added into the model. The last main component of the model is `Board`. `Board` represents the main game area. It is the grid on which players place their defenders. Inside the board class, there is logic to handle each lane and its contents. A lane keeps track of its attackers, as well as a number of gridcells. To help the board, there is a `Lane` class, and a `GridCell` class. `GridCell` also stores any placed defender.
+In diagram:
 
 #figure(
   caption: [The model with dependencies],
-  image("res/cd_model.drawio.png", width: 90%)
+  image("res/model.svg", width: 90%)
 )
 
+Here is a link to the entire class diagram: #link("https://drive.google.com/file/d/1kq7qttL2lHiat5O7zG5Pt80yQYPJfsbr/view?usp=sharing")[Diagram]

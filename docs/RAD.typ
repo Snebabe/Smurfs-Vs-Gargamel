@@ -24,6 +24,15 @@ Here follows some of our epic user stories:
     _As a Player, I want to enjoy an interactive UI with engaging graphics and sounds, so I feel immersed in the Smurf universe._
 ]
 
+The mockups should emphasize the core mechanics of the game. The board should be visible, together with the controls for purchasing smurfs. Here is an early GUI mockup of the game:
+
+#figure(
+    caption: [GUI mockup],
+    image("res/mockup1.jpg", width: 60%)
+)
+
+#pagebreak()
+
 == Requirements Overview
 
 To define our requirements, we first start by defining the scope. We want to highlight these four key features of our game. The game should include:
@@ -83,8 +92,6 @@ There are also some technical interfaces, as the game is designed as a desktop-b
         ]
     )
 )
-
-#pagebreak()
 
 Based on our current user feedback, we represent the following stakeholders:
 
@@ -187,17 +194,10 @@ Below is the domain model for Smurfs vs. Gargamel:
 
 #figure(
     caption: [Domain model for Smurfs vs. Gargamel],
-    image("res/domain_model.png", width: 90%)
+    image("res/domain_model2.svg", width: 90%)
 )
 
-The mockups should emphasize the core mechanics of the game. The board should be visible, together with the controls for purchasing smurfs. n early GUI mockup of the game:
-
-#figure(
-    caption: [GUI mockup],
-    image("res/mockup1.jpg", width: 60%)
-)
-
-The early rendering mockups should prioritize rendering a board, and the ability to place smurfs. After that, the existance of attackers should be added. Here follows an early rendering, together with an as of now, current rendering: 
+The early rendering mockups should prioritize rendering a board, and the ability to place smurfs. After that, the existance of attackers should be added. Here follows an early rendering, together with an as of now, current rendering:
 
 #figure(
     caption: [Early rendering of the game],
@@ -205,6 +205,6 @@ The early rendering mockups should prioritize rendering a board, and the ability
 )
 
 #figure(
-    caption: [Current rendering of the game],
+    caption: [Week 6 rendering of the game],
     image("res/current_rendering.png", width: 100%)
 )
