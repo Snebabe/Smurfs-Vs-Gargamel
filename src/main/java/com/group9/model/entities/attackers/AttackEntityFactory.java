@@ -7,10 +7,10 @@ public class AttackEntityFactory {
     public AttackEntity createAttacker(AttackerType type) {
         switch (type) {
             case GARGAMEL:
-                return new AttackEntity(AttackerType.GARGAMEL, 100, 10, 1, 1, 50) {
+                return new AttackEntity(AttackerType.GARGAMEL, 100, 10, 1, 1f, 1, 50) {
                 };
             case FASTGARGAMEL:
-                return new AttackEntity(AttackerType.FASTGARGAMEL, 100, 10, 1, 2, 50);
+                return new AttackEntity(AttackerType.FASTGARGAMEL, 100, 6, 1, 0.5f, 2, 50);
             default:
                 throw new IllegalArgumentException("Invalid attacker type: " + type);
         }

@@ -46,7 +46,7 @@ public class Model implements Observer {
 
     private void initializeManagers() {
         this.waveManager = new WaveManager(new AttackEntityFactory(), board, TICKS_PER_SECONDS);
-        this.attackManager = new AttackManager(board);
+        this.attackManager = new AttackManager(board, TICKS_PER_SECONDS);
         this.gameStateManager = new GameStateManager(board, waveManager);
         this.resourceManager = new ResourceManager();
         this.positionManager = new PositionManager(board);
@@ -82,6 +82,7 @@ public class Model implements Observer {
 
         waveManager.update();
         moveManager.update();
+        attackManager.update();
         projectileManager.handleProjectilesCollision();
     }
 

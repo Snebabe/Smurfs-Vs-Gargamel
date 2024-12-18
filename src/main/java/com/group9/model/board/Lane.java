@@ -83,28 +83,43 @@ public class Lane {
         return null;
     }
 
-    // Sort the attackers by lane progress using Insertion Sort
+    // Sort the attackers by lane progress using Insertion Sort with a margin
+    // Margin is used to prevent defenders from swapping target because the attackers lane progress might
+    // be very slightly different depending on the attacker's speed
     public void sortAttackers() {
+        final double MARGIN = 0.001; // Adjust the margin as needed
+
         for (int i = 1; i < attackEntities.size(); i++) {
             AttackEntity key = attackEntities.get(i);
             int j = i - 1;
 
             // Move attackers that are ahead of the key back by one position
-            while (j >= 0 && attackEntities.get(j).getLaneProgress() < key.getLaneProgress()) {
+            while (j >= 0 && shouldMoveForward(attackEntities.get(j), key, MARGIN)) {
                 attackEntities.set(j + 1, attackEntities.get(j));
                 j--;
             }
+            // Place the key in its correct position
             attackEntities.set(j + 1, key);
         }
     }
 
-    // For debugging: Print the state of attacker in the lane
-    public void printAttacker() {
-        System.out.println("Attacker in the lane:");
-        for (AttackEntity attacker : attackEntities) {
-            System.out.println("Attacker at position: " + attacker.getLaneProgress());
-        }
+    // Helper function to compare with a margin
+    private boolean shouldMoveForward(AttackEntity current, AttackEntity key, double margin) {
+        // Move only if the current lane progress is strictly less than the key's by the margin
+        return current.getLaneProgress() + margin < key.getLaneProgress();
     }
+
+
+    // Debugging method to print the current state of attackEntities
+    public void printAttackEntities() {
+        System.out.println("Current Order of Attack Entities:");
+        for (int i = 0; i < attackEntities.size(); i++) {
+            AttackEntity entity = attackEntities.get(i);
+            System.out.println("Index: " + i + ", Health: " + entity.getHealth() + ", Lane Progress: " + entity.getLaneProgress());
+        }
+        System.out.println("------------------------------------");
+    }
+
 
 
 }
