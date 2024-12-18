@@ -17,6 +17,7 @@ public class WaveManager implements Observer {
     private int waveReward;
     private int attackersToSpawn;
     private int spawnIntervalInTicks;
+    private int defaultSpawnIntervalInTicks;
     private int ticksSinceLastSpawn;
     private int TICKS_PER_SECONDS;
     private AttackEntityFactory factory;
@@ -32,6 +33,7 @@ public class WaveManager implements Observer {
         this.board = board;
         this.TICKS_PER_SECONDS = TICKS_PER_SECONDS;
         this.spawnIntervalInTicks = TICKS_PER_SECONDS*5; // Set the interval to spawn attackers
+        this.defaultSpawnIntervalInTicks = spawnIntervalInTicks;
         this.ticksSinceLastSpawn = 0;
         this.listeners = new ArrayList<>();
         this.waveCompleted = false;
@@ -54,6 +56,7 @@ public class WaveManager implements Observer {
         waveReward = 0;
         attackersToSpawn = 0;
         ticksSinceLastSpawn = 0;
+        spawnIntervalInTicks = defaultSpawnIntervalInTicks;
         this.waveCompleted = false;
     }
 

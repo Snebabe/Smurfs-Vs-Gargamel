@@ -1,6 +1,32 @@
 package com.group9.model.entities.characters.defenders;
 
-public enum DefenderType {
+import com.group9.model.attacks.AttackStrategy;
+import com.group9.model.entities.characters.CharacterType;
+
+public class DefenderType extends CharacterType {
+    private final int cost;
+    private final AttackStrategy attackStrategy;
+
+    public DefenderType(String name, int maxHealth, int attackDamage, int range, float attackSpeed, int cost, AttackStrategy attackStrategy) {
+        super(name, maxHealth, attackDamage, range, attackSpeed);
+        this.cost = cost;
+        this.attackStrategy = attackStrategy;
+    }
+
+    public int getCost() {
+        return cost;
+    }
+
+    public AttackStrategy getAttackStrategy() {
+        return attackStrategy;
+    }
+
+}
+
+
+
+
+/*public enum DefenderType {
     SHROOM(100,"A durable defender with high health, the Shroom blocks enemies and absorbs damage, protecting other defenders."),
     BOXER(100, "A close-combat fighter who uses powerful punches to knock back and damage enemies up close."),
     ARCHER(150, "A skilled long-range attacker, the Archer strikes from a distance to deal damage before enemies get close."),
@@ -24,27 +50,3 @@ public enum DefenderType {
     }
 }
 
-/*
-public class DefenderType {
-    private String name;
-    private String imagePath; // Path to the image file
-    private int cost;
-
-    public DefenderType(String name, String imagePath, int cost) {
-        this.name = name;
-        this.imagePath = imagePath;
-        this.cost = cost;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public String getImagePath() {
-        return imagePath;
-    }
-
-    public int getCost() {
-        return cost;
-    }
-}*/

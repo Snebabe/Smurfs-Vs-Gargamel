@@ -11,7 +11,7 @@ public class DefenceEntityFactory {
             case ARCHER:
                 return new DefenceEntity(DefenderType.ARCHER, 50, 20, 3, 1f, type.getCost(), laneProgress, new RangedAttack(ProjectileType.ARROW));
             case SHOOTER:
-                return new DefenceEntity(DefenderType.SHOOTER, 50, 20, 5, 0.5f, type.getCost(), laneProgress, new RangedAttack(ProjectileType.BULLET));
+                return new DefenceEntity(DefenderType.SHOOTER, 50, 20, 5, 0.5f, type.getCost(), new RangedAttack(ProjectileType.BULLET));
             default:
                 throw new IllegalArgumentException("Invalid defender type: " + type);
         }

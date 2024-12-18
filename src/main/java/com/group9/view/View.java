@@ -6,8 +6,9 @@ import com.group9.model.GameOverListener;
 import com.group9.model.Model;
 import com.group9.model.Observer;
 import com.group9.model.entities.EntityState;
-import com.group9.model.entities.attackers.AttackerType;
-import com.group9.model.entities.defenders.DefenderType;
+import com.group9.model.entities.characters.attackers.AttackerType;
+import com.group9.model.entities.EntityConfiguration;
+import com.group9.model.entities.characters.defenders.DefenderType;
 import com.group9.model.entities.projectiles.ProjectileType;
 import com.group9.view.panels.*;
 import com.group9.view.services.FontLoader;
@@ -110,30 +111,30 @@ public class View extends JFrame implements Observer, GameOverListener {
     }
 
     public void initializeAnimationHandlers(AnimationHandler animationHandler) {
-        for(DefenderType defenderType : DefenderType.values()) {
+        for(DefenderType defenderType : EntityConfiguration.getDefenderTypes()) {
             animationHandler.registerEntityAnimations(
                     defenderType,
                     EntityState.IDLE,
-                    "/images/defenders/" + defenderType.toString().toLowerCase() + "/idle/"
+                    "/images/defenders/" + defenderType.getName().toLowerCase() + "/idle/"
             );
 
             animationHandler.registerEntityAnimations(
                     defenderType,
                     EntityState.ATTACK,
-                    "/images/defenders/" + defenderType.toString().toLowerCase() + "/attack/"
+                    "/images/defenders/" + defenderType.getName().toLowerCase() + "/attack/"
             );
         }
 
-        for(AttackerType attackerType: AttackerType.values()){
+        for(AttackerType attackerType: EntityConfiguration.getAttackerTypes()){
             animationHandler.registerEntityAnimations(
                     attackerType,
                     EntityState.ATTACK,
-                    "/images/attackers/" + attackerType.toString().toLowerCase() + "/attack/"
+                    "/images/attackers/" + attackerType.getName().toLowerCase() + "/attack/"
             );
             animationHandler.registerEntityAnimations(
                     attackerType,
                     EntityState.MOVE,
-                    "/images/attackers/" + attackerType.toString().toLowerCase() + "/move/"
+                    "/images/attackers/" + attackerType.getName().toLowerCase() + "/move/"
             );
         }
 

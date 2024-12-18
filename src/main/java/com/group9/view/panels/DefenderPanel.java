@@ -31,11 +31,17 @@ public class DefenderPanel extends JPanel {
             Image defenderIcon = ImageLoader.loadResizedImage("/images/defenders/" + type.getName().toLowerCase() + "/idle/0.png", ImageButtonWidth, ImageButtonHeight);
 
             // Create a button that acts as the entire panel
+            /*JButton button = new JButton() {
+                @Override
+                public JToolTip createToolTip() {
+                    return new DefenderToolTip(type);
+                }
+            };*/
             JButton button = new JButton();
             button.setLayout(new BoxLayout(button, BoxLayout.Y_AXIS));
             button.setFocusPainted(false);
             button.setOpaque(false);
-            button.setToolTipText(type.getDescription());
+            //button.setToolTipText(type.getDescription());
 
             // Add button to tracking list
             buttons.add(button);
