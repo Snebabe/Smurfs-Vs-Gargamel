@@ -22,10 +22,6 @@ public class Clock{
         observers.put(observer, new TickCounter(seconds, TICKS_PER_SECOND));
     }
 
-    public int getTicksPerSecond() {
-        return TICKS_PER_SECOND;
-    }
-
     public void start() {
         Thread gameLoop = new Thread(() -> {
 

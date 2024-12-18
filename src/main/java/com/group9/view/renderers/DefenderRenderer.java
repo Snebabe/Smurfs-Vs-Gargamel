@@ -6,6 +6,7 @@ import com.group9.model.Model;
 import com.group9.view.AnimationHandler;
 
 import java.awt.*;
+import java.awt.image.BufferedImage;
 import java.util.Map;
 
 public class DefenderRenderer implements EntityRenderer {
@@ -31,9 +32,16 @@ public class DefenderRenderer implements EntityRenderer {
             int xOffset = (int) (cellWidth * 0.1);
             int yOffset = (int) (cellHeight * 0.1);
 
-            // Draw defender image, filling the grid cell
-            g2d.drawImage(animationHandler.getFrame(defender.getName(), defender.getCurrentState()),
-                    x + xOffset, y + yOffset, cellWidth - xOffset, cellHeight - yOffset, null);
+            BufferedImage defenderImage = (BufferedImage) animationHandler.getFrame(defender.getName(), defender.getCurrentState());
+
+            // For frames that take up 3 grid spaces
+            int defenderWidth = (defenderImage.getWidth() > 350)
+                    ? cellWidth * 3
+                    : cellWidth;
+
+                    // Draw defender image, filling the grid cell
+            g2d.drawImage(defenderImage,
+                    x + xOffset, y + yOffset, defenderWidth - xOffset, cellHeight - yOffset, null);
 
             // Use HealthBarUtils to draw the health bar
             healthBarUtils.drawHealthBar(g2d, Color.GREEN, defender.getHealth(), defender.getMaxHealth(),

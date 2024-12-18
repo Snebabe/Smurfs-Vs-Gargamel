@@ -28,7 +28,7 @@ public class EntityConfiguration {
         DefenderType BOXER = new DefenderType("BOXER", 150, 10, 1, 0.5f, 100, new MeleeAttack());
         DefenderType ARCHER = new DefenderType("ARCHER",  50, 20, 3, 1f, 150, new RangedAttack(ARROW));
         DefenderType SHOOTER = new DefenderType("SHOOTER",  50, 20, 5, 0.5f, 400, new RangedAttack(BULLET));
-        DefenderType ARSONIST = new DefenderType("ARSONIST",  100, 10, 2, 0f, 500, new MaxHealthAOEAttack());
+        DefenderType ARSONIST = new DefenderType("ARSONIST",  100, 20, 2, 0f, 500, new MaxHealthAOEAttack());
 
         DEFENDER_TYPE_LIST.add(SHROOM);
         DEFENDER_TYPE_LIST.add(BOXER);

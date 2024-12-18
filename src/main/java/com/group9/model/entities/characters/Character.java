@@ -5,9 +5,9 @@ import com.group9.model.entities.EntityState;
 
 public abstract class Character {
     private EntityState currentState;
-    private int health;
-    private int maxHealth;
-    private int attackDamage;
+    private float health;
+    private float maxHealth;
+    private float attackDamage;
     private boolean isDead;
     private int attackRange;
     private float attackDelay;
@@ -49,7 +49,7 @@ public abstract class Character {
         return attackDelay;
     }
 
-    public int getAttackDamage() {
+    public float getAttackDamage() {
         return attackDamage;
     }
 
@@ -57,8 +57,8 @@ public abstract class Character {
         return this.health;
     }
 
-    public int getMaxHealth() {
-        return this.maxHealth;
+    public float getMaxHealth() {
+        return maxHealth;
     }
 
     public boolean isDead() {

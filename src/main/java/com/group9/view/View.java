@@ -5,6 +5,7 @@ import com.group9.model.Clock;
 import com.group9.model.GameOverListener;
 import com.group9.model.Model;
 import com.group9.model.Observer;
+import com.group9.model.attacks.GameContext;
 import com.group9.model.entities.EntityState;
 import com.group9.model.entities.characters.attackers.AttackerType;
 import com.group9.model.entities.EntityConfiguration;
@@ -38,10 +39,10 @@ public class View extends JFrame implements Observer, GameOverListener {
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setMinimumSize(new Dimension(WIDTH+200, HEIGHT+200));
         this.setLayout(new BorderLayout());
-        this.animationHandler = new AnimationHandler(clock.getTicksPerSecond());
+        this.animationHandler = new AnimationHandler(GameContext.getTicksPerSecond());
         this.setBackground(Color.getHSBColor(0.33f, 1.0f, 0.2f));
         this.villagePanel = new VillagePanel();
-        villagePanel.setPreferredSize(new Dimension(WIDTH/(model.getLaneSize()+1), HEIGHT));
+        villagePanel.setPreferredSize(new Dimension(WIDTH/(model.getLaneSize()), HEIGHT));
 
         initializeAnimationHandlers(animationHandler);
 
@@ -118,13 +119,13 @@ public class View extends JFrame implements Observer, GameOverListener {
 
     public void initializeAnimationHandlers(AnimationHandler animationHandler) {
         for(DefenderType defenderType : EntityConfiguration.getDefenderTypes()) {
-            animationHandler.registerEntityAnimations(
+            animationHandler.registerCharacterAnimations(
                     defenderType,
                     EntityState.IDLE,
                     "/images/defenders/" + defenderType.getName().toLowerCase() + "/idle/"
             );
 
-            animationHandler.registerEntityAnimations(
+            animationHandler.registerCharacterAnimations(
                     defenderType,
                     EntityState.ATTACK,
                     "/images/defenders/" + defenderType.getName().toLowerCase() + "/attack/"
@@ -132,12 +133,12 @@ public class View extends JFrame implements Observer, GameOverListener {
         }
 
         for(AttackerType attackerType: EntityConfiguration.getAttackerTypes()){
-            animationHandler.registerEntityAnimations(
+            animationHandler.registerCharacterAnimations(
                     attackerType,
                     EntityState.ATTACK,
                     "/images/attackers/" + attackerType.getName().toLowerCase() + "/attack/"
             );
-            animationHandler.registerEntityAnimations(
+            animationHandler.registerCharacterAnimations(
                     attackerType,
                     EntityState.MOVE,
                     "/images/attackers/" + attackerType.getName().toLowerCase() + "/move/"

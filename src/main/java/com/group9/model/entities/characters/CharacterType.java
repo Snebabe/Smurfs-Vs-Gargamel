@@ -1,9 +1,10 @@
 package com.group9.model.entities.characters;
 
-public class CharacterType {
-    private String name;
-    private int maxHealth;
-    private int attackDamage;
+import com.group9.model.entities.EntityType;
+
+public class CharacterType extends EntityType {
+    private float maxHealth;
+    private float attackDamage;
     private int range;
     private float attackSpeed;
 
@@ -16,11 +17,7 @@ public class CharacterType {
         this.attackSpeed = attackDelay;
     }
 
-    public String getName() {
-        return name;
-    }
-
-    public int getMaxHealth() {
+    public float getMaxHealth() {
         return maxHealth;
     }
 

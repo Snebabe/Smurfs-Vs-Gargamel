@@ -67,7 +67,7 @@ public class AttackManager implements Observer {
                 setAllDefendersToIDLE(lane);
                 return;
             }
-            System.out.println(attackCounters.get(defender).getTicks());
+
             // Attack if the defender is ready
             if (attackCounters.get(defender).getTicks() == 0) {
                 //ATTACK!

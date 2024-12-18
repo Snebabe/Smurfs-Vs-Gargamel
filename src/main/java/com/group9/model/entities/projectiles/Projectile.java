@@ -47,11 +47,11 @@ public class Projectile implements Movable {
     private float currentlaneProgress;
     private float startingLaneProgress;
     private int speed;
-    private int damage;
+    private float damage;
     private int range;
     private String name;
 
-    public Projectile(String name, float laneProgress, int range, int speed, int damage) {
+    public Projectile(String name, float laneProgress, int range, int speed, float damage) {
         this.currentlaneProgress = laneProgress;
         this.startingLaneProgress = laneProgress;
         this.speed = speed;
@@ -64,7 +64,7 @@ public class Projectile implements Movable {
         return name;
     }
 
-    public int getDamage() {
+    public float getDamage() {
         return damage;
     }
 

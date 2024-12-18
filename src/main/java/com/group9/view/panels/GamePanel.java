@@ -39,8 +39,8 @@ public class GamePanel extends JPanel implements Observer {
 
         HealthBarUtils healthBarUtils = new HealthBarUtils();
 
-        entityRenderers.add(new DefenderRenderer(healthBarUtils));
         entityRenderers.add(new AttackerRenderer(healthBarUtils));
+        entityRenderers.add(new DefenderRenderer(healthBarUtils));
         entityRenderers.add(new ProjectileRenderer());
 
         addMouseListener(createMouseHandler(inputObservers));

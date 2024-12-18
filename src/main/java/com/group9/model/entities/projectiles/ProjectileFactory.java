@@ -1,7 +1,7 @@
 package com.group9.model.entities.projectiles;
 
 public class ProjectileFactory {
-    public static Projectile createProjectile(ProjectileType type, float projectileLaneProgress, int range, int damage) {
+    public static Projectile createProjectile(ProjectileType type, float projectileLaneProgress, int range, float damage) {
         if (type == null) {
             throw new IllegalArgumentException("Invalid projectile type");
         }

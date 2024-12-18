@@ -37,7 +37,8 @@ public class PositionManager {
         Map<DefenceEntity, Position> map = new HashMap<>();
         for (int row = 0; row < board.getLaneAmount(); row++) {
             Lane lane = board.getLanes().get(row);
-            for (int col = 0; col < lane.getNumberOfCells(); col++) {
+            // Iterate columns in reverse order
+            for (int col = lane.getNumberOfCells() - 1; col >= 0; col--) {
                 GridCell cell = lane.getGridCells().get(col);
                 if (cell.hasDefender()) {
                     map.put(cell.getDefender(), new Position(row, col));
@@ -45,6 +46,7 @@ public class PositionManager {
             }
         }
         return map;
+
     }
 
     public Map<Projectile, Position> getAllProjectilesPosition() {

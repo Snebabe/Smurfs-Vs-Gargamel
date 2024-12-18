@@ -19,8 +19,7 @@ public class MaxHealthAOEAttack implements AttackStrategy {
                 target.takeDamage(damage);
             }
             return true;
-        }
-        else {
+        } else {
             defender.setCurrentState(EntityState.IDLE);
             return false;
         }

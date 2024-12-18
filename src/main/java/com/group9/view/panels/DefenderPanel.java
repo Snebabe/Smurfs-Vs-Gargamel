@@ -3,7 +3,6 @@ package com.group9.view.panels;
 import com.group9.controller.InputObserver;
 import com.group9.model.entities.EntityConfiguration;
 import com.group9.model.entities.characters.defenders.DefenderType;
-import com.group9.view.DefenderToolTip;
 import com.group9.view.services.ImageLoader;
 
 import javax.swing.*;
@@ -31,12 +30,6 @@ public class DefenderPanel extends JPanel {
             Image defenderIcon = ImageLoader.loadResizedImage("/images/defenders/" + type.getName().toLowerCase() + "/idle/0.png", ImageButtonWidth, ImageButtonHeight);
 
             // Create a button that acts as the entire panel
-            /*JButton button = new JButton() {
-                @Override
-                public JToolTip createToolTip() {
-                    return new DefenderToolTip(type);
-                }
-            };*/
             JButton button = new JButton();
             button.setLayout(new BoxLayout(button, BoxLayout.Y_AXIS));
             button.setFocusPainted(false);

@@ -5,7 +5,7 @@ import java.awt.*;
 public class HealthBarUtils {
 
     // Instance method for drawing a health bar
-    public void drawHealthBar(Graphics2D g2d, Color healthBarColor, int health, int maxHealth, int barX, int barY, int cellWidth, int cellHeight) {
+    public void drawHealthBar(Graphics2D g2d, Color healthBarColor, float health, float maxHealth, int barX, int barY, int cellWidth, int cellHeight) {
         barX += (cellWidth/4);
         cellWidth = cellWidth * 2 / 4;
         cellHeight = cellHeight / 10;
