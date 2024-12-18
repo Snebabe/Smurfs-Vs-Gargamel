@@ -26,6 +26,7 @@ public class View extends JFrame implements Observer, GameOverListener {
     private AnimationHandler animationHandler;
     private GameOverPanel gameOverPanel;
     private HelpPanel helpPanel;
+    private VillagePanel villagePanel;
     private Font font;
 
     private final List<InputObserver> inputObservers = new ArrayList<>();
@@ -39,6 +40,8 @@ public class View extends JFrame implements Observer, GameOverListener {
         this.setLayout(new BorderLayout());
         this.animationHandler = new AnimationHandler(clock.getTicksPerSecond());
         this.setBackground(Color.getHSBColor(0.33f, 1.0f, 0.2f));
+        this.villagePanel = new VillagePanel();
+        villagePanel.setPreferredSize(new Dimension(WIDTH/(model.getLaneSize()+1), HEIGHT));
 
         initializeAnimationHandlers(animationHandler);
 
@@ -67,7 +70,9 @@ public class View extends JFrame implements Observer, GameOverListener {
     private void switchToNormalView() {
         this.remove(startPanel);
         this.add(controlPanel, BorderLayout.SOUTH);
+        this.add(villagePanel, BorderLayout.WEST);
         this.add(gamePanel, BorderLayout.CENTER);
+
         this.revalidate();
         this.repaint();
     }
@@ -77,6 +82,7 @@ public class View extends JFrame implements Observer, GameOverListener {
 
         this.remove(controlPanel);
         this.remove(gamePanel);
+        this.remove(villagePanel);
 
         this.add(gameOverPanel, BorderLayout.CENTER);
         this.revalidate();
@@ -152,6 +158,7 @@ public class View extends JFrame implements Observer, GameOverListener {
     public void update() {
         gamePanel.update();
         controlPanel.update();
+        villagePanel.update();
     }
 
     public void addInputObserver(InputObserver observer) {

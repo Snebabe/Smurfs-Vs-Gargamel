@@ -1,6 +1,7 @@
 package com.group9.model.entities.characters.defenders;
 
 import com.group9.model.attacks.AttackStrategy;
+import com.group9.model.entities.characters.Character;
 import com.group9.model.entities.characters.CharacterType;
 
 public class DefenderType extends CharacterType {

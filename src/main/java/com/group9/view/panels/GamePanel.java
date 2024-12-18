@@ -102,8 +102,8 @@ public class GamePanel extends JPanel implements Observer {
 
 
     private void drawGrid(Graphics2D g2d, int cellWidth, int cellHeight) {
-        Image gridImage = ImageLoader.loadImage("/images/backgrounds/gridcell.png");
-        Image gridImage2 = ImageLoader.loadImage("/images/backgrounds/gridcell2.png");
+        Image gridImage = ImageLoader.loadImage("/images/backgrounds/gridcell2.png");
+        Image gridImage2 = ImageLoader.loadImage("/images/backgrounds/gridcell.png");
 
         for (int row = 0; row < rowCount; row++) {
             for (int col = 0; col < columnCount; col++) {
