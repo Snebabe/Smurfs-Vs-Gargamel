@@ -9,8 +9,8 @@ public class CharacterType extends EntityType {
     private float attackSpeed;
 
     // Superclass for DefenderType and AttackerType
-    public CharacterType(String name, int maxHealth, int attackDamage, int range, float attackDelay) {
-        this.name = name;
+    public CharacterType(String name, float maxHealth, float attackDamage, int range, float attackDelay) {
+        super(name);
         this.maxHealth = maxHealth;
         this.attackDamage = attackDamage;
         this.range = range;
@@ -21,7 +21,7 @@ public class CharacterType extends EntityType {
         return maxHealth;
     }
 
-    public int getAttackDamage() {
+    public float getAttackDamage() {
         return attackDamage;
     }
 

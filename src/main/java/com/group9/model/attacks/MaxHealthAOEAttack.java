@@ -15,7 +15,12 @@ public class MaxHealthAOEAttack implements AttackStrategy {
         if (!targets.isEmpty()) {
             defender.setCurrentState(EntityState.ATTACK);
             for (AttackEntity target : targets) {
-                int damage = target.getMaxHealth()*defender.getAttackDamage()/1000;
+
+                // Get ticks per second from GameContext
+                int TICKS_PER_SECOND = GameContext.getTicksPerSecond();
+                // Calculate damage per tick
+                float damagePercentagePerTick = defender.getAttackDamage() / (100 * TICKS_PER_SECOND);
+                float damage = (target.getMaxHealth()*damagePercentagePerTick);
                 target.takeDamage(damage);
             }
             return true;

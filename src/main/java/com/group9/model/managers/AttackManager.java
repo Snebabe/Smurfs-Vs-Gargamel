@@ -2,6 +2,7 @@ package com.group9.model.managers;
 
 import com.group9.model.*;
 import com.group9.model.Observer;
+import com.group9.model.attacks.GameContext;
 import com.group9.model.board.Board;
 import com.group9.model.board.Lane;
 import com.group9.model.entities.characters.Character;
@@ -22,6 +23,7 @@ public class AttackManager implements Observer {
         this.TICKS_PER_SECOND = TICKS_PER_SECOND;
         this.attackDeathObservers = new ArrayList<>();
         this.attackCounters = new HashMap<>();
+        GameContext.setTicksPerSecond(TICKS_PER_SECOND);
     }
 
     public void addAttackDeathOberver(AttackDeathObserver observer) {
@@ -74,7 +76,9 @@ public class AttackManager implements Observer {
                 if (defender.useAttack(lane, cellIndex)){
                     // Remove dead attackers
                     removeDeadAttackers(lane);
-                    attackCounters.get(defender).increment();
+                    if (attackCounters.get(defender).getTickInterval()!=0) {
+                        attackCounters.get(defender).increment();
+                    }
                 }
             } else if (attackCounters.get(defender).getTicks() >= attackCounters.get(defender).getTickInterval()) {
                 attackCounters.get(defender).reset();

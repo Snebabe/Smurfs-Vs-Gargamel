@@ -10,6 +10,7 @@ import java.util.List;
 
 public class GameContext {
 
+    private static int TICKS_PER_SECOND;
     // Retrieve a specific target (for melee attacks)
     public static AttackEntity getSingleTarget(Lane lane, int range, int cellIndex) {
         List<AttackEntity> targetsInRange = getTargetsInRange(lane, range, cellIndex);
@@ -38,4 +39,13 @@ public class GameContext {
         float distance = targetCellIndex - cellIndex;
         return distance > 0 && distance <= range;
     }
+
+    public static void setTicksPerSecond(int ticksPerSecond) {
+        TICKS_PER_SECOND = ticksPerSecond;
+    }
+
+    public static int getTicksPerSecond() {
+        return TICKS_PER_SECOND;
+    }
+
 }

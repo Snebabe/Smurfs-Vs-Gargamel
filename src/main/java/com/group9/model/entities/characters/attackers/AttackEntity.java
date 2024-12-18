@@ -12,9 +12,8 @@ public class AttackEntity extends Character implements Movable {
     private int speed;
     private float laneProgress;
     private int resourceReward;
-    private Lane lane;
 
-    public AttackEntity(String name, int maxHealth, int attackDamage, int range, float attackDelay, int speed, int resourceReward) {
+    public AttackEntity(String name, float maxHealth, float attackDamage, int range, float attackDelay, int speed, int resourceReward) {
         super(name, maxHealth, attackDamage, range, attackDelay, new MeleeAttack());
         this.speed = speed;
         this.laneProgress = 0;

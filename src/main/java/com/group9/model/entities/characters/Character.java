@@ -14,8 +14,8 @@ public abstract class Character {
     private String name;
     private AttackStrategy attackStrategy;
 
-    public Character(String name, int maxHealth, int attackDamage, int attackRange, float attackDelay, AttackStrategy attackStrategy) {
-
+    public Character(String name, float maxHealth, float attackDamage, int attackRange, float attackDelay, AttackStrategy attackStrategy) {
+        super(name);
         this.health = maxHealth;
         this.maxHealth = maxHealth;
         this.attackDamage = attackDamage;
@@ -53,8 +53,8 @@ public abstract class Character {
         return attackDamage;
     }
 
-    public int getHealth() {
-        return this.health;
+    public float getHealth() {
+        return health;
     }
 
     public float getMaxHealth() {
@@ -72,7 +72,7 @@ public abstract class Character {
         target.takeDamage(this.getAttackDamage());
     }
 
-    public void takeDamage(int damage) {
+    public void takeDamage(float damage) {
         health -= damage;
         if(health <= 0) {
             isDead = true;

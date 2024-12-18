@@ -7,9 +7,7 @@ import com.group9.model.entities.EntityState;
 
 public class DefenceEntity extends Character {
 
-    private int cost;
-
-    public DefenceEntity(String name, int maxHealth, int attackDamage, int range, float attackDelay, int cost, AttackStrategy attackStrategy) {
+    public DefenceEntity(String name, float maxHealth, float attackDamage, int range, float attackDelay, AttackStrategy attackStrategy) {
         super(name, maxHealth, attackDamage, range, attackDelay, attackStrategy);
         this.setCurrentState(EntityState.IDLE);
 
