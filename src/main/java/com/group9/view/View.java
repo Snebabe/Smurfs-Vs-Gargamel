@@ -138,8 +138,8 @@ public class View extends JFrame implements Observer, GameOverListener {
             );
         }
 
-        for(ProjectileType projectileType: ProjectileType.values()){
-            animationHandler.registerEntityAnimations(
+        for(ProjectileType projectileType: EntityConfiguration.getProjectileTypes()){
+            animationHandler.registerProjectileAnimations(
                     projectileType,
                     EntityState.MOVE,
                     "/images/projectiles/" + projectileType.getName().toLowerCase() + "/"

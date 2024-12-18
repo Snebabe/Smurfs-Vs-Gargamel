@@ -29,9 +29,9 @@ public class HelpPanel extends JPanel {
                 Welcome to Smurfs vs. Gargamel!
                 
                 Objective:
-                The goal of the game is to protect the Smurf village from Gargamel's minions.
-                You can place defenders on the board to prevent Gargamel´s minions from reaching the village.
-                You can see your resources in the bottom right corner and how much each of the defenders cost.
+                The goal of the game is to protect the Smurf village from Gargamels minions.
+                You can place defenders on the board to prevent Gargamels minions from reaching the village.
+                You can see your resources in the bottom left corner and how much each of the defenders cost.
                 You can also see the current wave and how many attackers are left in the wave.
                 
                 Controls:

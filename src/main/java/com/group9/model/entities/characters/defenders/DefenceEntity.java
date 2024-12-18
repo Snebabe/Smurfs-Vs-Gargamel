@@ -9,8 +9,8 @@ public class DefenceEntity extends Character {
 
     private int cost;
 
-    public DefenceEntity(Enum type, int maxHealth, int attackDamage, int range, float attackSpeed, int cost, float laneProgess, AttackStrategy attackStrategy) {
-        super(type, maxHealth, attackDamage, range, attackSpeed, laneProgess, attackStrategy);
+    public DefenceEntity(String name, int maxHealth, int attackDamage, int range, float attackSpeed, int cost, AttackStrategy attackStrategy) {
+        super(name, maxHealth, attackDamage, range, attackSpeed, attackStrategy);
         this.setCurrentState(EntityState.IDLE);
 
     }

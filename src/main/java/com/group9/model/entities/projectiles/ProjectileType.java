@@ -17,7 +17,7 @@ import com.group9.model.entities.characters.CharacterType;
         return speed;
     }
 
-}
+}*/
 
 public class ProjectileType {
 

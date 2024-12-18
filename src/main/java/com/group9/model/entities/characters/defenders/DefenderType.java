@@ -48,5 +48,5 @@ public class DefenderType extends CharacterType {
     public String getDescription() {
         return description;
     }
-}
+}*/
 

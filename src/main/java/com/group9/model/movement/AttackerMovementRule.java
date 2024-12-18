@@ -1,5 +1,6 @@
 package com.group9.model.movement;
 
+import com.group9.model.PositionConverter;
 import com.group9.model.board.GridCell;
 import com.group9.model.board.Lane;
 
@@ -7,7 +8,7 @@ public class AttackerMovementRule implements MovementRule {
     @Override
     public boolean canMove(Movable movable, Lane lane) {
         // Calculate the attacker's cell index
-        int attackerCellIndex = (int) ((1 - movable.getLaneProgress()) * lane.getNumberOfCells());
+        int attackerCellIndex = (int) PositionConverter.attackerToCellIndex(movable.getLaneProgress(), lane.getNumberOfCells());
 
         // Attackers spawn initially outside the grid bounds
         if (attackerCellIndex >= lane.getNumberOfCells()) {
