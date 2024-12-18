@@ -10,17 +10,17 @@ public abstract class Character {
     private int attackDamage;
     private boolean isDead;
     private int attackRange;
-    private float attackSpeed;
+    private float attackDelay;
     private String name;
     private AttackStrategy attackStrategy;
 
-    public Character(String name, int maxHealth, int attackDamage, int attackRange, float attackSpeed, AttackStrategy attackStrategy) {
+    public Character(String name, int maxHealth, int attackDamage, int attackRange, float attackDelay, AttackStrategy attackStrategy) {
 
         this.health = maxHealth;
         this.maxHealth = maxHealth;
         this.attackDamage = attackDamage;
         this.attackRange = attackRange;
-        this.attackSpeed = attackSpeed;
+        this.attackDelay = attackDelay;
         this.isDead = false;
         this.name = name;
         this.attackStrategy = attackStrategy;
@@ -45,8 +45,8 @@ public abstract class Character {
     public int getAttackRange() {
         return attackRange;
     }
-    public float getAttackSpeed() {
-        return attackSpeed;
+    public float getAttackDelay() {
+        return attackDelay;
     }
 
     public int getAttackDamage() {

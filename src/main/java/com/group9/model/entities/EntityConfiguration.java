@@ -1,4 +1,5 @@
 package com.group9.model.entities;
+import com.group9.model.attacks.MaxHealthAOEAttack;
 import com.group9.model.attacks.MeleeAttack;
 import com.group9.model.attacks.RangedAttack;
 import com.group9.model.entities.characters.attackers.AttackerType;
@@ -27,11 +28,13 @@ public class EntityConfiguration {
         DefenderType BOXER = new DefenderType("BOXER", 150, 10, 1, 0.5f, 100, new MeleeAttack());
         DefenderType ARCHER = new DefenderType("ARCHER",  50, 20, 3, 1f, 150, new RangedAttack(ARROW));
         DefenderType SHOOTER = new DefenderType("SHOOTER",  50, 20, 5, 0.5f, 400, new RangedAttack(BULLET));
+        DefenderType ARSONIST = new DefenderType("ARSONIST",  100, 10, 2, 0f, 500, new MaxHealthAOEAttack());
 
         DEFENDER_TYPE_LIST.add(SHROOM);
         DEFENDER_TYPE_LIST.add(BOXER);
         DEFENDER_TYPE_LIST.add(ARCHER);
         DEFENDER_TYPE_LIST.add(SHOOTER);
+        DEFENDER_TYPE_LIST.add(ARSONIST);
 
         // Register AttackerTypes
         AttackerType GARGAMEL = new AttackerType("GARGAMEL",  100, 10, 0, 1f, 1, 25);

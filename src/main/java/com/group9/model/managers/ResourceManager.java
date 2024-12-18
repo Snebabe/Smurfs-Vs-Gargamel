@@ -5,7 +5,7 @@ import com.group9.model.WaveCompleteListener;
 import com.group9.model.entities.characters.attackers.AttackEntity;
 
 public class ResourceManager implements AttackDeathObserver, WaveCompleteListener {
-    private int startResources = 450;
+    private int startResources = 4500;
     private int resources;
 
     public ResourceManager(){

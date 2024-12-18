@@ -8,12 +8,12 @@ public class CharacterType {
     private float attackSpeed;
 
     // Superclass for DefenderType and AttackerType
-    public CharacterType(String name, int maxHealth, int attackDamage, int range, float attackSpeed) {
+    public CharacterType(String name, int maxHealth, int attackDamage, int range, float attackDelay) {
         this.name = name;
         this.maxHealth = maxHealth;
         this.attackDamage = attackDamage;
         this.range = range;
-        this.attackSpeed = attackSpeed;
+        this.attackSpeed = attackDelay;
     }
 
     public String getName() {

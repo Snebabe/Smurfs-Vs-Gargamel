@@ -7,8 +7,8 @@ public class DefenderType extends CharacterType {
     private final int cost;
     private final AttackStrategy attackStrategy;
 
-    public DefenderType(String name, int maxHealth, int attackDamage, int range, float attackSpeed, int cost, AttackStrategy attackStrategy) {
-        super(name, maxHealth, attackDamage, range, attackSpeed);
+    public DefenderType(String name, int maxHealth, int attackDamage, int range, float attackDelay, int cost, AttackStrategy attackStrategy) {
+        super(name, maxHealth, attackDamage, range, attackDelay);
         this.cost = cost;
         this.attackStrategy = attackStrategy;
     }

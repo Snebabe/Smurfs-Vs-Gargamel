@@ -60,14 +60,14 @@ public class AttackManager implements Observer {
 
             // Add a new counter for the defender if it doesn't exist
             if (!attackCounters.containsKey(defender)) {
-                attackCounters.put(defender, new TickCounter(defender.getAttackSpeed(),TICKS_PER_SECOND));
+                attackCounters.put(defender, new TickCounter(defender.getAttackDelay(),TICKS_PER_SECOND));
             }
 
             if (attackers.isEmpty()) {
                 setAllDefendersToIDLE(lane);
                 return;
             }
-
+            System.out.println(attackCounters.get(defender).getTicks());
             // Attack if the defender is ready
             if (attackCounters.get(defender).getTicks() == 0) {
                 //ATTACK!
@@ -76,7 +76,7 @@ public class AttackManager implements Observer {
                     removeDeadAttackers(lane);
                     attackCounters.get(defender).increment();
                 }
-            } else if (attackCounters.get(defender).getTicks() == attackCounters.get(defender).getTickInterval()) {
+            } else if (attackCounters.get(defender).getTicks() >= attackCounters.get(defender).getTickInterval()) {
                 attackCounters.get(defender).reset();
             } else {
                 attackCounters.get(defender).increment();
@@ -121,7 +121,7 @@ public class AttackManager implements Observer {
 
                 // Add a new counter for the attacker if it doesn't exist
                 if (!attackCounters.containsKey(attacker)) {
-                    attackCounters.put(attacker, new TickCounter(attacker.getAttackSpeed(), TICKS_PER_SECOND));
+                    attackCounters.put(attacker, new TickCounter(attacker.getAttackDelay(), TICKS_PER_SECOND));
                 }
                 // Attack if the attacker is ready
                 if (attackCounters.get(attacker).getTicks() == 0) {
