@@ -14,20 +14,14 @@ public class GameContext {
 
     // Retrieve a specific target (for melee attacks)
     public static AttackEntity getSingleTarget(Lane lane, int range, int cellIndex) {
+        List<AttackEntity> targetsInRange = getTargetsInRange(lane, range, cellIndex);
         // Check if the attackers list is empty
-        if (lane.getAttackers().isEmpty()) {
+        if (targetsInRange.isEmpty()) {
             return null; // No attackers, so no target can be found
         }
 
         // Get the first attacker in the list
-        AttackEntity attacker = lane.getAttackers().getFirst();
-
-        // Check if the attacker is within range
-        if (attacker != null && attackerInRange(attacker, lane, range, cellIndex)) {
-            return attacker;
-        }
-
-        return null; // No valid target
+        return targetsInRange.get(0);
     }
 
 

@@ -4,7 +4,7 @@ public enum DefenderType {
     SHROOM(100,"A durable defender with high health, the Shroom blocks enemies and absorbs damage, protecting other defenders."),
     BOXER(100, "A close-combat fighter who uses powerful punches to knock back and damage enemies up close."),
     ARCHER(150, "A skilled long-range attacker, the Archer strikes from a distance to deal damage before enemies get close."),
-    SHOOTER(200, "A ruthless mercenary that has a perticular distaste for Gargamels...");
+    SHOOTER(400, "A ruthless mercenary that has a perticular distaste for Gargamels...");
 
     private final int cost;
 

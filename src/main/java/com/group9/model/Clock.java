@@ -11,27 +11,6 @@ public class Clock{
     private boolean paused;
     private final Map<Observer,TickCounter> observers;
 
-    public class TickCounter {
-        private int tickInterval;
-        private int tickCounter;
-        private TickCounter(float seconds) {
-            this.tickInterval = (int) (seconds*TICKS_PER_SECOND);
-            this.tickCounter = 0;
-        }
-        public void increment() {
-            tickCounter++;
-        }
-        public int getTicks() {
-            return tickCounter;
-        }
-        public int getTickInterval() {
-            return tickInterval;
-        }
-        public void reset() {
-            tickCounter = 0;
-        }
-    }
-
     public Clock(int TICKS_PER_SECOND) {
         this.TICKS_PER_SECOND = TICKS_PER_SECOND;
         this.MS_PER_TICK = 1000 / TICKS_PER_SECOND;
@@ -40,7 +19,7 @@ public class Clock{
     }
 
     public void addObserver(Observer observer, float seconds) {
-        observers.put(observer, new TickCounter(seconds));
+        observers.put(observer, new TickCounter(seconds, TICKS_PER_SECOND));
     }
 
     public void start() {

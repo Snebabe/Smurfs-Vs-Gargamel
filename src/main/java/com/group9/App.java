@@ -18,8 +18,6 @@ public class App {
         view.addInputObserver(controller);
 
         clock.addObserver(model,0);
-        // Attacks are updated every second
-        clock.addObserver(model.getAttackManager(),1f);
         clock.start();
     }
 }

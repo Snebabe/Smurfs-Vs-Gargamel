@@ -18,8 +18,8 @@ public class AttackEntity extends Entity implements Movable {
     private int resourceReward;
     private Lane lane;
 
-    public AttackEntity(AttackerType type, int maxHealth, int attackDamage, int range, int speed, int resourceReward) {
-        super(type, maxHealth, attackDamage, range, 0, new MeleeAttack());
+    public AttackEntity(AttackerType type, int maxHealth, int attackDamage, int range, float attackSpeed, int speed, int resourceReward) {
+        super(type, maxHealth, attackDamage, range, attackSpeed, 0, new MeleeAttack());
         this.speed = speed;
         //this.laneProgress = 0;
         this.resourceReward = resourceReward;

@@ -7,6 +7,6 @@ import com.group9.model.entities.defenders.DefenceEntity;
 import java.util.List;
 
 public interface AttackStrategy {
-    void useAttack(DefenceEntity defender, Lane lane, int cellIndex);
+    boolean useAttack(DefenceEntity defender, Lane lane, int cellIndex);
 
 }

@@ -12,14 +12,14 @@ public class DefenceEntity extends Entity {
 
     private int cost;
 
-    public DefenceEntity(Enum type, int maxHealth, int attackDamage, int range, int cost, float laneProgess, AttackStrategy attackStrategy) {
-        super(type, maxHealth, attackDamage, range, laneProgess, attackStrategy);
+    public DefenceEntity(Enum type, int maxHealth, int attackDamage, int range, float attackSpeed, int cost, float laneProgess, AttackStrategy attackStrategy) {
+        super(type, maxHealth, attackDamage, range, attackSpeed, laneProgess, attackStrategy);
         this.setCurrentState(EntityState.IDLE);
 
     }
 
-    public void useAttack(Lane lane, int cellIndex) {
-        getAttackStrategy().useAttack(this, lane, cellIndex);
+    public boolean useAttack(Lane lane, int cellIndex) {
+        return getAttackStrategy().useAttack(this, lane, cellIndex);
     }
 
 

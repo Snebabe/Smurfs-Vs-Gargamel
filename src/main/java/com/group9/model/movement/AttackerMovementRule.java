@@ -17,7 +17,7 @@ public class AttackerMovementRule implements MovementRule {
         }
         // Check if there's a defender at the same cell index
         GridCell gridcell = lane.getGridCells().get(attackerCellIndex);
-        if (gridcell != null) {
+        if (gridcell != null ) {
             return !gridcell.hasDefender();
         }
 

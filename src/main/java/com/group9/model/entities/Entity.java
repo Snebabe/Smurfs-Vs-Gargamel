@@ -9,16 +9,18 @@ public abstract class Entity  {
     private int attackDamage;
     private boolean isDead;
     private int attackRange;
+    private float attackSpeed;
     private Enum type;
     private AttackStrategy attackStrategy;
     private float laneProgress;
 
-    public Entity(Enum type, int maxHealth, int attackDamage, int attackRange, float laneProgress, AttackStrategy attackStrategy) {
+    public Entity(Enum type, int maxHealth, int attackDamage, int attackRange, float attackSpeed, float laneProgress, AttackStrategy attackStrategy) {
 
         this.health = maxHealth;
         this.maxHealth = maxHealth;
         this.attackDamage = attackDamage;
         this.attackRange = attackRange;
+        this.attackSpeed = attackSpeed;
         this.isDead = false;
         this.type = type;
         this.laneProgress = laneProgress;
@@ -50,6 +52,9 @@ public abstract class Entity  {
 
     public int getAttackRange() {
         return attackRange;
+    }
+    public float getAttackSpeed() {
+        return attackSpeed;
     }
 
     public int getAttackDamage() {

@@ -1,6 +1,7 @@
 package com.group9.model.managers;
 
 import com.group9.model.*;
+import com.group9.model.Observer;
 import com.group9.model.board.Board;
 import com.group9.model.board.Lane;
 import com.group9.model.entities.Entity;
@@ -9,17 +10,19 @@ import com.group9.model.entities.attackers.AttackEntity;
 import com.group9.model.entities.defenders.DefenceEntity;
 import com.group9.model.entities.projectiles.Projectile;
 
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
+import java.util.*;
 
 public class AttackManager implements Observer {
     private Board board;
     private List<AttackDeathObserver> attackDeathObservers;
+    private Map<Entity, TickCounter> attackCounters;
+    private int TICKS_PER_SECOND;
 
-    public AttackManager(Board board) {
+    public AttackManager(Board board, int TICKS_PER_SECOND) {
         this.board = board;
+        this.TICKS_PER_SECOND = TICKS_PER_SECOND;
         this.attackDeathObservers = new ArrayList<>();
+        this.attackCounters = new HashMap<>();
     }
 
     public void addAttackDeathOberver(AttackDeathObserver observer) {
@@ -56,26 +59,43 @@ public class AttackManager implements Observer {
 
             if (defender == null) continue;
 
+            // Add a new counter for the defender if it doesn't exist
+            if (!attackCounters.containsKey(defender)) {
+                attackCounters.put(defender, new TickCounter(defender.getAttackSpeed(),TICKS_PER_SECOND));
+            }
+
             if (attackers.isEmpty()) {
                 setAllDefendersToIDLE(lane);
                 return;
             }
 
-
-            //ATTACK!
-            defender.useAttack(lane, cellIndex);
-
-            // Remove dead attackers
-            Iterator<AttackEntity> iterator = attackers.iterator();
-            while (iterator.hasNext()) {
-                AttackEntity target = iterator.next();
-                if (target.isDead()) {
-                    iterator.remove(); // Safely remove the element
-                    lane.removeAttacker(target); // Ensure the lane's state is updated
-                    notifyAttackerDeath(target);
+            // Attack if the defender is ready
+            if (attackCounters.get(defender).getTicks() == 0) {
+                //ATTACK!
+                if (defender.useAttack(lane, cellIndex)){
+                    // Remove dead attackers
+                    removeDeadAttackers(lane);
+                    attackCounters.get(defender).increment();
                 }
+            } else if (attackCounters.get(defender).getTicks() == attackCounters.get(defender).getTickInterval()) {
+                attackCounters.get(defender).reset();
+            } else {
+                attackCounters.get(defender).increment();
             }
 
+        }
+    }
+
+    private void removeDeadAttackers(Lane lane){
+        List<AttackEntity> attackers = lane.getAttackers();
+        Iterator<AttackEntity> iterator = attackers.iterator();
+        while (iterator.hasNext()) {
+            AttackEntity target = iterator.next();
+            if (target.isDead()) {
+                iterator.remove(); // Safely remove the element
+                lane.removeAttacker(target); // Ensure the lane's state is updated
+                notifyAttackerDeath(target);
+            }
         }
     }
 
@@ -95,16 +115,33 @@ public class AttackManager implements Observer {
             int attackerCellIndex = (int) ((1 - attacker.getLaneProgress()) * lane.getNumberOfCells());
             // Get the defender at the attacker's position
             DefenceEntity defender = lane.getDefenderAtIndex(attackerCellIndex);
+
             if (defender != null) {
                 // Attack the defender
                 attacker.setCurrentState(EntityState.ATTACK);
-                attacker.useAttack(defender);
 
-                // Remove the defender if it's dead
-                if (defender.isDead()) {
-                    attacker.setCurrentState(EntityState.MOVE);
-                    lane.setDefender(null, attackerCellIndex);
+                // Add a new counter for the attacker if it doesn't exist
+                if (!attackCounters.containsKey(attacker)) {
+                    attackCounters.put(attacker, new TickCounter(attacker.getAttackSpeed(), TICKS_PER_SECOND));
                 }
+                // Attack if the attacker is ready
+                if (attackCounters.get(attacker).getTicks() == 0) {
+                    attacker.useAttack(defender);
+
+                    // Remove the defender if it's dead
+                    if (defender.isDead()) {
+                        attacker.setCurrentState(EntityState.MOVE);
+                        lane.setDefender(null, attackerCellIndex);
+                    }
+                    attackCounters.get(attacker).increment();
+                } else if (attackCounters.get(attacker).getTicks() == attackCounters.get(attacker).getTickInterval()) {
+                    attackCounters.get(attacker).reset();
+
+                } else {
+                    attackCounters.get(attacker).increment();
+                }
+
+
             }
         }
     }
