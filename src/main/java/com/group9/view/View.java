@@ -40,7 +40,7 @@ public class View extends JFrame implements Observer, GameOverListener {
         this.setLayout(new BorderLayout());
         this.animationHandler = new AnimationHandler(clock.getTicksPerSecond());
         this.setBackground(Color.getHSBColor(0.33f, 1.0f, 0.2f));
-        this.villagePanel = new VillagePanel();
+        this.villagePanel = new VillagePanel(model.getLaneAmount());
         villagePanel.setPreferredSize(new Dimension(WIDTH/(model.getLaneSize()+1), HEIGHT));
 
         initializeAnimationHandlers(animationHandler);
