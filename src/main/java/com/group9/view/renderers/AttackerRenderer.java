@@ -1,13 +1,10 @@
 package com.group9.view.renderers;
 
-import com.group9.model.entities.attackers.AttackEntity;
+import com.group9.model.PositionConverter;
+import com.group9.model.entities.characters.attackers.AttackEntity;
 import com.group9.model.Position;
 import com.group9.model.Model;
 import com.group9.view.AnimationHandler;
-
-import javax.imageio.ImageIO;
-import java.awt.image.BufferedImage;
-import java.io.File;
 
 import java.awt.*;
 import java.util.Map;
@@ -30,14 +27,15 @@ public class AttackerRenderer implements EntityRenderer {
 
             // Calculate the attacker's progress along the lane and position
             double progress = attacker.getLaneProgress();
-            int x = (int) (cellWidth * model.getLaneSize() * (1 - progress)); // Horizontal position based on progress
+            int x = (int) (cellWidth * PositionConverter.attackerToCellIndex(attacker.getLaneProgress(), model.getLaneSize()));
+
             int y = position.getRow() * cellHeight; // Vertical position based on row
 
             int xOffset = (int) (cellWidth * 0.1);
             int yOffset = (int) (cellHeight * 0.1);
 
             // Draw defender image, filling the grid cell
-            g2d.drawImage(animationHandler.getFrame(attacker.getType(), attacker.getCurrentState()),
+            g2d.drawImage(animationHandler.getFrame(attacker.getName(), attacker.getCurrentState()),
                     x + xOffset, y + yOffset, cellWidth - xOffset, cellHeight - yOffset, null);
 
             // Use HealthBarUtils to draw the health bar

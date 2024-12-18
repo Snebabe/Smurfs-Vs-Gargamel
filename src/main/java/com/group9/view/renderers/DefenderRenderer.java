@@ -1,6 +1,6 @@
 package com.group9.view.renderers;
 
-import com.group9.model.entities.defenders.DefenceEntity;
+import com.group9.model.entities.characters.defenders.DefenceEntity;
 import com.group9.model.Position;
 import com.group9.model.Model;
 import com.group9.view.AnimationHandler;
@@ -32,7 +32,7 @@ public class DefenderRenderer implements EntityRenderer {
             int yOffset = (int) (cellHeight * 0.1);
 
             // Draw defender image, filling the grid cell
-            g2d.drawImage(animationHandler.getFrame(defender.getType(), defender.getCurrentState()),
+            g2d.drawImage(animationHandler.getFrame(defender.getName(), defender.getCurrentState()),
                     x + xOffset, y + yOffset, cellWidth - xOffset, cellHeight - yOffset, null);
 
             // Use HealthBarUtils to draw the health bar

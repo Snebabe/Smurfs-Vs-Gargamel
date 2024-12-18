@@ -14,8 +14,16 @@ public final class PositionConverter {
         return new Point(row, column);
     }
 
-    public static int attackerToCellIndex(double laneProgress, int columnCount) {
-        return (int) ((1 - laneProgress) * columnCount);
+    public static float attackerToCellIndex(double laneProgress, int columnCount) {
+        return (float) ((1 - laneProgress) * columnCount);
+    }
+
+    public static int projectileToCellIndex(double laneProgress, int columnCount) {
+        return (int) (laneProgress * columnCount);
+    }
+
+    public static float defenderToLaneProgress(int cellIndex, int columnCount) {
+        return (float) cellIndex/columnCount;
     }
 
 

@@ -1,8 +1,9 @@
-package com.group9.model.entities;
+package com.group9.model.entities.characters;
 
 import com.group9.model.attacks.AttackStrategy;
+import com.group9.model.entities.EntityState;
 
-public abstract class Entity  {
+public abstract class Character {
     private EntityState currentState;
     private int health;
     private int maxHealth;
@@ -10,11 +11,10 @@ public abstract class Entity  {
     private boolean isDead;
     private int attackRange;
     private float attackSpeed;
-    private Enum type;
+    private String name;
     private AttackStrategy attackStrategy;
-    private float laneProgress;
 
-    public Entity(Enum type, int maxHealth, int attackDamage, int attackRange, float attackSpeed, float laneProgress, AttackStrategy attackStrategy) {
+    public Character(String name, int maxHealth, int attackDamage, int attackRange, float attackSpeed, AttackStrategy attackStrategy) {
 
         this.health = maxHealth;
         this.maxHealth = maxHealth;
@@ -22,20 +22,12 @@ public abstract class Entity  {
         this.attackRange = attackRange;
         this.attackSpeed = attackSpeed;
         this.isDead = false;
-        this.type = type;
-        this.laneProgress = laneProgress;
+        this.name = name;
         this.attackStrategy = attackStrategy;
     }
 
-    public float getLaneProgress() {
-        return this.laneProgress;
-    }
-    public void setLaneProgress(float laneProgress) {
-        this.laneProgress = laneProgress;
-    }
-
-    public Enum getType() {
-        return this.type;
+    public String getName() {
+        return this.name;
     }
 
     public EntityState getCurrentState() {
@@ -74,7 +66,7 @@ public abstract class Entity  {
     }
 
 
-    public void useAttack(Entity target) {
+    public void useAttack(Character target) {
         // setAnimationState("attacking")
         //target.takeDamage(this.getAttackDamage());
         target.takeDamage(this.getAttackDamage());

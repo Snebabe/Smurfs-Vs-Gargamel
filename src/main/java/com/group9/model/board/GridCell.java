@@ -1,6 +1,6 @@
 package com.group9.model.board;
 
-import com.group9.model.entities.defenders.DefenceEntity;
+import com.group9.model.entities.characters.defenders.DefenceEntity;
 
 public class GridCell {
 

@@ -1,7 +1,9 @@
 package com.group9.view.panels;
 
 import com.group9.controller.InputObserver;
-import com.group9.model.entities.defenders.DefenderType;
+import com.group9.model.entities.EntityConfiguration;
+import com.group9.model.entities.characters.defenders.DefenderType;
+import com.group9.view.DefenderToolTip;
 import com.group9.view.services.ImageLoader;
 
 import javax.swing.*;
@@ -24,9 +26,9 @@ public class DefenderPanel extends JPanel {
         int ImageButtonWidth = 50;
         int ImageButtonHeight = 50;
 
-        for (DefenderType type : DefenderType.values()) {
+        for (DefenderType type : EntityConfiguration.getDefenderTypes()) {
             // Load the image
-            Image defenderIcon = ImageLoader.loadResizedImage("/images/defenders/" + type.toString().toLowerCase() + "/idle/0.png", ImageButtonWidth, ImageButtonHeight);
+            Image defenderIcon = ImageLoader.loadResizedImage("/images/defenders/" + type.getName().toLowerCase() + "/idle/0.png", ImageButtonWidth, ImageButtonHeight);
 
             // Create a button that acts as the entire panel
             JButton button = new JButton();
@@ -56,7 +58,7 @@ public class DefenderPanel extends JPanel {
             imageLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
 
             // Defender type label (below the image)
-            JLabel nameLabel = new JLabel(type.toString());
+            JLabel nameLabel = new JLabel(type.getName());
             nameLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
             nameLabel.setFont(smallerLabelFont);
 

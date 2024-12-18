@@ -1,13 +1,13 @@
 package com.group9.model.managers;
 
 import com.group9.model.Position;
+import com.group9.model.PositionConverter;
 import com.group9.model.board.Board;
 import com.group9.model.board.GridCell;
 import com.group9.model.board.Lane;
 import com.group9.model.entities.projectiles.Projectile;
-import com.group9.model.entities.attackers.AttackEntity;
-import com.group9.model.entities.defenders.DefenceEntity;
-import com.group9.model.movement.Movable;
+import com.group9.model.entities.characters.attackers.AttackEntity;
+import com.group9.model.entities.characters.defenders.DefenceEntity;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -26,7 +26,7 @@ public class PositionManager {
         for (int row = 0; row < board.getLaneAmount(); row++) {
             Lane lane = board.getLanes().get(row);
             for (AttackEntity attacker : lane.getAttackers()) {
-                int col = (int) ((1 - attacker.getLaneProgress()) * lane.getNumberOfCells());
+                int col = (int) PositionConverter.attackerToCellIndex(attacker.getLaneProgress(), lane.getNumberOfCells());
                 map.put(attacker, new Position(row, col));
             }
         }
@@ -53,7 +53,7 @@ public class PositionManager {
             Lane lane = board.getLanes().get(row);
             List<Projectile> snapshot = new ArrayList<>(lane.getProjectiles());
             for (Projectile projectile : snapshot) {
-                int col = (int) (projectile.getLaneProgress() * lane.getNumberOfCells());
+                int col = PositionConverter.projectileToCellIndex(projectile.getLaneProgress(), lane.getNumberOfCells());
                 map.put(projectile, new Position(row, col));
             }
         }

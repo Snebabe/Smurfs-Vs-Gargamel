@@ -4,18 +4,17 @@ import com.group9.model.*;
 import com.group9.model.Observer;
 import com.group9.model.board.Board;
 import com.group9.model.board.Lane;
-import com.group9.model.entities.Entity;
+import com.group9.model.entities.characters.Character;
 import com.group9.model.entities.EntityState;
-import com.group9.model.entities.attackers.AttackEntity;
-import com.group9.model.entities.defenders.DefenceEntity;
-import com.group9.model.entities.projectiles.Projectile;
+import com.group9.model.entities.characters.attackers.AttackEntity;
+import com.group9.model.entities.characters.defenders.DefenceEntity;
 
 import java.util.*;
 
 public class AttackManager implements Observer {
     private Board board;
     private List<AttackDeathObserver> attackDeathObservers;
-    private Map<Entity, TickCounter> attackCounters;
+    private Map<Character, TickCounter> attackCounters;
     private int TICKS_PER_SECOND;
 
     public AttackManager(Board board, int TICKS_PER_SECOND) {
@@ -112,8 +111,7 @@ public class AttackManager implements Observer {
     private void handleMeleeAttacks(Lane lane) {
 
         for (AttackEntity attacker : lane.getAttackers()) {
-            //int attackerCellIndex = (int) ((1 - attacker.getLaneProgress()) * lane.getNumberOfCells());
-            int attackerCellIndex = PositionConverter.attackerToCellIndex(attacker.getLaneProgress(), lane.getNumberOfCells());
+            int attackerCellIndex = (int) PositionConverter.attackerToCellIndex(attacker.getLaneProgress(), lane.getNumberOfCells());
             // Get the defender at the attacker's position
             DefenceEntity defender = lane.getDefenderAtIndex(attackerCellIndex);
 

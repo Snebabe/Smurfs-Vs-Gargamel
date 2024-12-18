@@ -2,8 +2,7 @@ package com.group9.model.managers;
 
 import com.group9.model.AttackDeathObserver;
 import com.group9.model.WaveCompleteListener;
-import com.group9.model.entities.attackers.AttackEntity;
-import com.group9.model.entities.defenders.DefenceEntity;
+import com.group9.model.entities.characters.attackers.AttackEntity;
 
 public class ResourceManager implements AttackDeathObserver, WaveCompleteListener {
     private int startResources = 450;

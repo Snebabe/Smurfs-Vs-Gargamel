@@ -6,8 +6,8 @@ import java.util.Map;
 import java.util.Set;
 
 public class Clock{
-    final int TICKS_PER_SECOND;
-    final long MS_PER_TICK;
+    private final int TICKS_PER_SECOND;
+    private final long MS_PER_TICK;
     private boolean paused;
     private final Map<Observer,TickCounter> observers;
 
@@ -20,6 +20,10 @@ public class Clock{
 
     public void addObserver(Observer observer, float seconds) {
         observers.put(observer, new TickCounter(seconds, TICKS_PER_SECOND));
+    }
+
+    public int getTicksPerSecond() {
+        return TICKS_PER_SECOND;
     }
 
     public void start() {

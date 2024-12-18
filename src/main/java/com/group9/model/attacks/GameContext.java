@@ -1,11 +1,9 @@
 package com.group9.model.attacks;
 
 
-import com.group9.model.board.Board;
+import com.group9.model.PositionConverter;
 import com.group9.model.board.Lane;
-import com.group9.model.entities.Entity;
-import com.group9.model.entities.attackers.AttackEntity;
-import com.group9.model.entities.defenders.DefenceEntity;
+import com.group9.model.entities.characters.attackers.AttackEntity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -36,7 +34,7 @@ public class GameContext {
     }
 
     private static boolean attackerInRange(AttackEntity attackEntity, Lane lane, int range, int cellIndex) {
-        float targetCellIndex = (1 - attackEntity.getLaneProgress()) * lane.getNumberOfCells();
+        float targetCellIndex = PositionConverter.attackerToCellIndex(attackEntity.getLaneProgress(), lane.getNumberOfCells());;
         float distance = targetCellIndex - cellIndex;
         return distance > 0 && distance <= range;
     }

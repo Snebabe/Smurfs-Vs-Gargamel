@@ -9,10 +9,10 @@ package com.group9.model;
 import com.group9.model.managers.AttackManager;
 import com.group9.model.board.Board;
 import com.group9.model.entities.projectiles.Projectile;
-import com.group9.model.entities.attackers.AttackEntity;
-import com.group9.model.entities.attackers.AttackEntityFactory;
-import com.group9.model.entities.defenders.DefenceEntity;
-import com.group9.model.entities.defenders.DefenderType;
+import com.group9.model.entities.characters.attackers.AttackEntity;
+import com.group9.model.entities.characters.attackers.AttackEntityFactory;
+import com.group9.model.entities.characters.defenders.DefenceEntity;
+import com.group9.model.entities.characters.defenders.DefenderType;
 import com.group9.model.managers.*;
 import com.group9.model.managers.MoveManager;
 

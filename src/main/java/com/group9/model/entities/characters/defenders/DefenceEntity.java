@@ -1,14 +1,11 @@
-package com.group9.model.entities.defenders;
+package com.group9.model.entities.characters.defenders;
 
 import com.group9.model.attacks.AttackStrategy;
-import com.group9.model.attacks.GameContext;
 import com.group9.model.board.Lane;
-import com.group9.model.entities.Entity;
+import com.group9.model.entities.characters.Character;
 import com.group9.model.entities.EntityState;
 
-import java.util.List;
-
-public class DefenceEntity extends Entity {
+public class DefenceEntity extends Character {
 
     private int cost;
 

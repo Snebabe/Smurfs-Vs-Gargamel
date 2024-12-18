@@ -1,7 +1,7 @@
 package com.group9.model.board;
 import com.group9.model.entities.projectiles.Projectile;
-import com.group9.model.entities.attackers.AttackEntity;
-import com.group9.model.entities.defenders.DefenceEntity;
+import com.group9.model.entities.characters.attackers.AttackEntity;
+import com.group9.model.entities.characters.defenders.DefenceEntity;
 import com.group9.model.movement.Movable;
 
 import java.util.ArrayList;

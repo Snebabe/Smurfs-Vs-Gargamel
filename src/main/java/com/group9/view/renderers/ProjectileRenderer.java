@@ -6,9 +6,7 @@ import com.group9.model.entities.EntityState;
 import com.group9.model.entities.projectiles.Projectile;
 import com.group9.view.AnimationHandler;
 
-import javax.imageio.ImageIO;
 import java.awt.*;
-import java.io.File;
 import java.util.Map;
 
 public class ProjectileRenderer implements EntityRenderer {
@@ -26,7 +24,7 @@ public class ProjectileRenderer implements EntityRenderer {
             int projectileY = position.getRow() * cellHeight; // Y position based on row
 
             // Draw the projectile (using black color and small oval shape)
-            g2d.drawImage(animationHandler.getFrame(projectile.getType(), EntityState.MOVE),
+            g2d.drawImage(animationHandler.getFrame(projectile.getName(), EntityState.MOVE),
                     projectileX + cellWidth,
                     projectileY + cellHeight / 3,
                     cellWidth/2,

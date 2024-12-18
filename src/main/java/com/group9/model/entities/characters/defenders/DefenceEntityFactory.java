@@ -1,8 +1,4 @@
-package com.group9.model.entities.defenders;
-
-import com.group9.model.attacks.MeleeAttack;
-import com.group9.model.attacks.RangedAttack;
-import com.group9.model.entities.projectiles.ProjectileType;
+package com.group9.model.entities.characters.defenders;
 
 public class DefenceEntityFactory {
 

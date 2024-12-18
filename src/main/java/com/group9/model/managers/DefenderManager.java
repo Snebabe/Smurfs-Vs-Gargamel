@@ -2,9 +2,9 @@ package com.group9.model.managers;
 
 import com.group9.model.Position;
 import com.group9.model.board.Board;
-import com.group9.model.entities.defenders.DefenceEntity;
-import com.group9.model.entities.defenders.DefenceEntityFactory;
-import com.group9.model.entities.defenders.DefenderType;
+import com.group9.model.entities.characters.defenders.DefenceEntity;
+import com.group9.model.entities.characters.defenders.DefenceEntityFactory;
+import com.group9.model.entities.characters.defenders.DefenderType;
 
 public class DefenderManager {
     private Board board;

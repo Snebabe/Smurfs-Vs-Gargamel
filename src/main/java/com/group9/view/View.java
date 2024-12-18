@@ -36,7 +36,7 @@ public class View extends JFrame implements Observer, GameOverListener {
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setMinimumSize(new Dimension(WIDTH+200, HEIGHT+200));
         this.setLayout(new BorderLayout());
-        this.animationHandler = new AnimationHandler();
+        this.animationHandler = new AnimationHandler(clock.getTicksPerSecond());
         this.setBackground(Color.getHSBColor(0.33f, 1.0f, 0.2f));
 
         initializeAnimationHandlers(animationHandler);
@@ -57,7 +57,7 @@ public class View extends JFrame implements Observer, GameOverListener {
         this.add(startPanel, BorderLayout.CENTER);
 
         clock.addObserver(this,0);
-        clock.addObserver(animationHandler, 1/4f);
+        clock.addObserver(animationHandler, 0);
         model.addGameOverListener(this);
 
         this.setVisible(true);
@@ -141,7 +141,7 @@ public class View extends JFrame implements Observer, GameOverListener {
             animationHandler.registerEntityAnimations(
                     projectileType,
                     EntityState.MOVE,
-                    "/images/projectiles/" + projectileType.toString().toLowerCase() + "/"
+                    "/images/projectiles/" + projectileType.getName().toLowerCase() + "/"
             );
         }
 

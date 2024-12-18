@@ -4,8 +4,8 @@ import com.group9.model.board.Board;
 import com.group9.model.board.Lane;
 import com.group9.model.Observer;
 import com.group9.model.WaveCompleteListener;
-import com.group9.model.entities.attackers.AttackEntity;
-import com.group9.model.entities.attackers.AttackEntityFactory;
+import com.group9.model.entities.characters.attackers.AttackEntity;
+import com.group9.model.entities.characters.attackers.AttackEntityFactory;
 
 import java.util.ArrayList;
 import java.util.List;

@@ -1,6 +1,5 @@
 package com.group9.model.entities.projectiles;
 
-import com.group9.model.entities.attackers.AttackEntity;
 import com.group9.model.movement.Movable;
 import com.group9.model.movement.MovementRule;
 import com.group9.model.movement.ProjectileMovementRule;
@@ -50,19 +49,19 @@ public class Projectile implements Movable {
     private int speed;
     private int damage;
     private int range;
-    private ProjectileType projectileType;
+    private String name;
 
-    public Projectile(ProjectileType projectileType, float laneProgress, int range, int speed, int damage) {
+    public Projectile(String name, float laneProgress, int range, int speed, int damage) {
         this.currentlaneProgress = laneProgress;
         this.startingLaneProgress = laneProgress;
         this.speed = speed;
         this.damage = damage;
         this.range = range;
-        this.projectileType = projectileType;
+        this.name = name;
     }
 
-    public ProjectileType getType() {
-        return projectileType;
+    public String getName() {
+        return name;
     }
 
     public int getDamage() {

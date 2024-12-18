@@ -1,13 +1,9 @@
 package com.group9.model.attacks;
 
-import com.group9.model.attacks.AttackStrategy;
 import com.group9.model.board.Lane;
-import com.group9.model.entities.Entity;
 import com.group9.model.entities.EntityState;
-import com.group9.model.entities.attackers.AttackEntity;
-import com.group9.model.entities.defenders.DefenceEntity;
-
-import java.util.List;
+import com.group9.model.entities.characters.attackers.AttackEntity;
+import com.group9.model.entities.characters.defenders.DefenceEntity;
 
 public class MeleeAttack implements AttackStrategy {
 

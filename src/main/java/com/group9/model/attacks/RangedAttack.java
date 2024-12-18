@@ -1,17 +1,13 @@
 package com.group9.model.attacks;
 
-import com.group9.model.attacks.AttackStrategy;
+import com.group9.model.PositionConverter;
 import com.group9.model.board.Lane;
-import com.group9.model.entities.Entity;
 import com.group9.model.entities.EntityState;
-import com.group9.model.entities.attackers.AttackEntity;
-import com.group9.model.entities.defenders.DefenceEntity;
+import com.group9.model.entities.characters.attackers.AttackEntity;
+import com.group9.model.entities.characters.defenders.DefenceEntity;
 import com.group9.model.entities.projectiles.Projectile;
 import com.group9.model.entities.projectiles.ProjectileFactory;
 import com.group9.model.entities.projectiles.ProjectileType;
-
-import java.lang.annotation.Target;
-import java.util.List;
 
 public class RangedAttack implements AttackStrategy {
     private final ProjectileType projectileType;

@@ -1,4 +1,4 @@
-package com.group9.model.entities.defenders;
+package com.group9.model.entities.characters.defenders;
 
 public enum DefenderType {
     SHROOM(100,"A durable defender with high health, the Shroom blocks enemies and absorbs damage, protecting other defenders."),
