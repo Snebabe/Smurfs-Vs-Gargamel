@@ -61,3 +61,12 @@ In diagram:
 )
 
 Here is a link to the entire class diagram: #link("https://drive.google.com/file/d/1kq7qttL2lHiat5O7zG5Pt80yQYPJfsbr/view?usp=sharing")[Diagram]
+
+== Design Patterns
+The system takes advantage of several different design patterns. 
+
+=== Observer Pattern
+During the game, there are multiple events that are interesting to more than one component. To communicate when such an event happens, we make use of the observer pattern. There are three main observers implemented: `Observer`, `AttackDeathObserver`, and `WaveCompleteListener`. The latter two are descriptive, but the first one is not explicit. `Observer` is implemented by every class that should be updated every tick. That means, whenever a new tick is stepped, `GameModel` notifies all classes that have implemented `Observer` that it is time to update. Same applies for the other interfaces: they are notified when an attacker dies, and when a wave is complete, respectively. 
+
+=== Factory Pattern
+To make the creation of entities more flexible, there are implementations of two factory classes. 
