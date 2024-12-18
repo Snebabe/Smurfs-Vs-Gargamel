@@ -3,6 +3,7 @@ package com.group9.view.panels;
 import com.group9.controller.InputObserver;
 import com.group9.model.Model;
 import com.group9.model.Observer;
+import com.group9.model.PositionConverter;
 import com.group9.view.AnimationHandler;
 import com.group9.view.renderers.*;
 import com.group9.view.services.ImageLoader;
@@ -50,13 +51,18 @@ public class GamePanel extends JPanel implements Observer {
         return new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
-                Point point = e.getPoint();
+                Point cell = PositionConverter.mapToGrid(e.getPoint(), getWidth(), getHeight(), rowCount, columnCount);
+
+                int row = cell.x;
+                int column = cell.y;
+
+                /*Point point = e.getPoint();
                 int cellWidth = getWidth() / columnCount;
                 int cellHeight = getHeight() / rowCount;
 
                 // Calculate clicked cell
                 int column = point.x / cellWidth;
-                int row = point.y / cellHeight;
+                int row = point.y / cellHeight;*/
 
                 // Check if the clicked cell is within bounds
                 if (row >= 0 && row < rowCount && column >= 0 && column < columnCount) {

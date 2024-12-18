@@ -92,7 +92,8 @@ public class AttackManager implements Observer {
     private void handleMeleeAttacks(Lane lane) {
 
         for (AttackEntity attacker : lane.getAttackers()) {
-            int attackerCellIndex = (int) ((1 - attacker.getLaneProgress()) * lane.getNumberOfCells());
+            //int attackerCellIndex = (int) ((1 - attacker.getLaneProgress()) * lane.getNumberOfCells());
+            int attackerCellIndex = PositionConverter.attackerToCellIndex(attacker.getLaneProgress(), lane.getNumberOfCells());
             // Get the defender at the attacker's position
             DefenceEntity defender = lane.getDefenderAtIndex(attackerCellIndex);
             if (defender != null) {
