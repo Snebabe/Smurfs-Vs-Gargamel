@@ -24,7 +24,6 @@ public class GameContext {
         return targetsInRange.get(0);
     }
 
-
     // Retrieve targets within range (for ranged attacks)
     public static List<AttackEntity> getTargetsInRange(Lane lane, int range, int cellIndex) {
         List<AttackEntity> targetsInRange = new ArrayList<>();
