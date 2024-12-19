@@ -46,7 +46,6 @@ public class AttackerType extends CharacterType {
 
     @Override
     public String toString() {
-        // Call the toString() method of the superclass (CharacterType) to include general character properties
         return super.toString() + ", Speed: " + speed + ", Resource Reward: " + resourceReward;
     }
 

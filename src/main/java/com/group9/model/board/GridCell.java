@@ -14,10 +14,10 @@ public class GridCell {
     }
 
     public boolean hasDefender() {
-        return this.defender!=null;
+        return defender!=null;
     }
 
     public DefenceEntity getDefender() {
-        return this.defender;
+        return defender;
     }
 }

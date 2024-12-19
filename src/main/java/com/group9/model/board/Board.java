@@ -14,7 +14,6 @@ public class Board {
     private final int laneSize; // Number of cells per lane.
     private final int laneAmount; // Number of lanes on the board.
 
-
     /**
      * Initializes the board with a specified number of lanes and lane size.
      *
@@ -31,9 +30,9 @@ public class Board {
      * Resets the board by creating new empty lanes.
      */
     public void resetBoard() {
-        this.lanes = new ArrayList<>();
+        lanes = new ArrayList<>();
         for (int i = 0; i < laneAmount; i++) {
-            this.lanes.add(new Lane(laneSize));
+            lanes.add(new Lane(laneSize));
         }
     }
 
@@ -49,7 +48,7 @@ public class Board {
         if (row < 0 || row >= laneAmount || col < 0 || col >= laneSize) {
             throw new IllegalArgumentException("Invalid row or column index.");
         }
-        Lane lane = this.lanes.get(row);
+        Lane lane = lanes.get(row);
         lane.setDefender(defender, col);
     }
 

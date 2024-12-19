@@ -24,12 +24,12 @@ public class Lane {
      * @param laneSize the number of cells in the lane
      */
     public Lane(int laneSize) {
-        this.attackEntities = new ArrayList<>();
-        this.projectiles = new ArrayList<>();
-        this.movables = new ArrayList<>();
+        attackEntities = new ArrayList<>();
+        projectiles = new ArrayList<>();
+        movables = new ArrayList<>();
 
         // Initialize grid cells based on lane size
-        this.gridCells = new ArrayList<>();
+        gridCells = new ArrayList<>();
         for (int cellIndex = 0; cellIndex < laneSize; cellIndex++) {
             gridCells.add(new GridCell());
         }
@@ -63,6 +63,16 @@ public class Lane {
     public void removeAttacker(AttackEntity attackEntity) {
         attackEntities.remove(attackEntity);
         movables.remove(attackEntity);
+    }
+
+    /**
+     * Removes a projectile from the lane and the movables list.
+     *
+     * @param projectile the projectile to remove
+     */
+    public void removeProjectile(Projectile projectile) {
+        projectiles.remove(projectile);
+        movables.remove(projectile);
     }
 
     /**

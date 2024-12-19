@@ -36,17 +36,13 @@ public class DefenderManager {
         // Check if there are enough resources and if the position is free
         if (resourceManager.getResources() >= defenderType.getCost() && !isDefenderAt(position)) {
 
-            // Create a new defender and place it on the board
             DefenceEntity newDefenceEntity = DefenceEntityFactory.createDefender(defenderType);
             board.setDefender(newDefenceEntity, position.getRow(), position.getCol());
 
-            // Deduct the cost of the defender from resources
             resourceManager.changeResources(-defenderType.getCost());
         } else if (isDefenderAt(position)) {
-            // Notify if there is already a defender at the specified position
             System.out.println("Defender already in place");
         } else {
-            // Notify if there are not enough resources
             System.out.println("Not enough money");
         }
     }

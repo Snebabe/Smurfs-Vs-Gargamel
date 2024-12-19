@@ -16,7 +16,6 @@ public class MaxHealthAOEAttack implements AttackStrategy {
 
     @Override
     public boolean useAttack(DefenceEntity defender, Lane lane, int cellIndex) {
-        // Get all targets in the lane
         List<AttackEntity> targets = GameContext.getTargetsInRange(lane, defender.getAttackRange(), cellIndex);
 
         if (!targets.isEmpty()) {
@@ -24,6 +23,7 @@ public class MaxHealthAOEAttack implements AttackStrategy {
             for (AttackEntity target : targets) {
 
                 int TICKS_PER_SECOND = GameContext.getTicksPerSecond();
+
                 // Calculate damage per tick
                 float damagePercentagePerTick = defender.getAttackDamage() / (100 * TICKS_PER_SECOND);
                 float damage = (target.getMaxHealth()*damagePercentagePerTick);

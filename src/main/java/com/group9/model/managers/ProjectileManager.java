@@ -110,8 +110,7 @@ public class ProjectileManager {
         lane.removeProjectile(projectile);
     }
 
-    // Add observer for attacker death
-    public void addAttackDeathOberver(AttackDeathObserver observer) {
+    public void addAttackDeathObserver(AttackDeathObserver observer) {
         attackDeathObservers.add(observer);
     }
 

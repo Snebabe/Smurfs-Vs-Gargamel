@@ -90,8 +90,8 @@ public class AttackManager implements Observer {
         while (iterator.hasNext()) {
             AttackEntity target = iterator.next();
             if (target.isDead()) {
-                iterator.remove(); // Safely remove the element
-                lane.removeAttacker(target); // Ensure the lane's state is updated
+                iterator.remove();
+                lane.removeAttacker(target);
                 notifyAttackerDeath(target);
             }
         }
@@ -121,7 +121,6 @@ public class AttackManager implements Observer {
 
         for (AttackEntity attacker : lane.getAttackers()) {
             int attackerCellIndex = (int) PositionConverter.attackerToCellIndex(attacker.getLaneProgress(), lane.getNumberOfCells());
-            // Get the defender at the attacker's position
             DefenceEntity defender = lane.getDefenderAtIndex(attackerCellIndex);
 
             if (defender != null) {
@@ -135,7 +134,6 @@ public class AttackManager implements Observer {
                 if (attackCounters.get(attacker).getTicks() == 0) {
                     attacker.useAttack(defender);
 
-                    // Remove the defender if it's dead
                     if (defender.isDead()) {
                         attacker.setCurrentEntityState(EntityState.MOVE);
                         lane.setDefender(null, attackerCellIndex);

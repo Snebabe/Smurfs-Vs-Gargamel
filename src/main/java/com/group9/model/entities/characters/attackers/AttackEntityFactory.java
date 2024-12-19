@@ -18,7 +18,6 @@ public class AttackEntityFactory {
      * @throws IllegalArgumentException if the type is null
      */
     public static AttackEntity createAttacker(AttackerType type) {
-        // Validate that the type is not null
         if (type == null) {
             throw new IllegalArgumentException("Invalid attacker type");
         }
@@ -43,12 +42,9 @@ public class AttackEntityFactory {
     public static AttackEntity createRandomAttacker() {
         List<AttackerType> attackerTypeList = EntityConfiguration.getAttackerTypes();
 
-        // Generate a random index to select an attacker type
         int randomIndex = new Random().nextInt(attackerTypeList.size());
-
         AttackerType randomType = attackerTypeList.get(randomIndex);
 
-        // Create and return an attacker of the randomly selected type
         return createAttacker(randomType);
     }
 

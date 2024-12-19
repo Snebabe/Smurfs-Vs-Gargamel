@@ -10,6 +10,5 @@ import com.group9.model.entities.characters.attackers.AttackEntity;
 
 public interface AttackDeathObserver {
 
-    // This method is called when an attacker dies, allowing observers to react
     void onAttackerDeath(AttackEntity attackEntity);
 }

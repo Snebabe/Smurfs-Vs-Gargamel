@@ -44,7 +44,6 @@ public class GetAllPositionsService {
             }
         }
         return map;
-
     }
 
     public static Map<Projectile, Position> getAllProjectilesPosition(Board board) {

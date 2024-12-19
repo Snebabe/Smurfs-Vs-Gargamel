@@ -29,10 +29,14 @@ public class RangedAttack implements AttackStrategy {
     @Override
     public boolean useAttack(DefenceEntity defender, Lane lane, int cellIndex) {
         AttackEntity target = GameContext.getSingleTarget(lane, defender.getAttackRange(), cellIndex);
+
         if (target != null) {
             defender.setCurrentEntityState(EntityState.ATTACK);
             float projectileStartLaneProgress = PositionConverter.defenderToLaneProgress(cellIndex, lane.getNumberOfCells());
-            Projectile projectile = ProjectileFactory.createProjectile(projectileType, projectileStartLaneProgress, defender.getAttackRange(), defender.getAttackDamage());
+            Projectile projectile = ProjectileFactory.createProjectile(projectileType,
+                    projectileStartLaneProgress,
+                    defender.getAttackRange(),
+                    defender.getAttackDamage());
             lane.addProjectile(projectile);
             return true;
         }

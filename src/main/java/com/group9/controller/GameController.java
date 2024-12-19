@@ -28,14 +28,14 @@ public class GameController implements InputObserver {
         Position clickedPosition = new Position(row, col);
 
         // Add a new defender to the model
-        if (this.chosenDefender != null) {
+        if (chosenDefender != null) {
             model.placeDefender(chosenDefender, clickedPosition);
         }
     }
 
     @Override
     public void onDefenderSelected(DefenderType defender) {
-        this.chosenDefender = defender;
+        chosenDefender = defender;
     }
 
     @Override

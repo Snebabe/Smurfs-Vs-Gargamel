@@ -8,13 +8,22 @@ import com.group9.model.movement.ProjectileMovementRule;
  * Represents a projectile that can be fired by a defence entity.
  */
 public class Projectile implements Movable {
-    private float currentlaneProgress;
-    private float startingLaneProgress;
-    private int speed;
-    private float damage; // Damage dealt by the projectile
-    private int range;
-    private String name;
+    private float currentLaneProgress;
+    private final float startingLaneProgress;
+    private final int speed;
+    private final float damage;
+    private final int range;
+    private final String name;
 
+    /**
+     * Constructs a projectile with the specified attributes.
+     *
+     * @param name the name of the projectile
+     * @param laneProgress the progress of the projectile along the lane
+     * @param range the range of the projectile
+     * @param speed the speed of the projectile
+     * @param damage the damage dealt by the projectile
+     */
     public Projectile(String name, float laneProgress, int range, int speed, float damage) {
         currentLaneProgress = laneProgress;
         startingLaneProgress = laneProgress;
@@ -42,7 +51,7 @@ public class Projectile implements Movable {
 
     @Override
     public float getLaneProgress() {
-        return currentlaneProgress;
+        return currentLaneProgress;
     }
 
     @Override

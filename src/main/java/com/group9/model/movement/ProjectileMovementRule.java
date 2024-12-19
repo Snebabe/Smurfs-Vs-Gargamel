@@ -2,7 +2,9 @@ package com.group9.model.movement;
 
 import com.group9.model.board.Lane;
 
-// Defines the movement rule for projectiles
+/**
+ * Defines the movement rule for projectiles.
+ */
 public class ProjectileMovementRule implements MovementRule {
 
     @Override

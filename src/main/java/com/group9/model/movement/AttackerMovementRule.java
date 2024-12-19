@@ -11,7 +11,6 @@ public class AttackerMovementRule implements MovementRule {
 
     @Override
     public boolean canMove(Movable movable, Lane lane) {
-        // Calculate the attacker's cell index
         int attackerCellIndex = (int) PositionConverter.attackerToCellIndex(movable.getLaneProgress(), lane.getNumberOfCells());
 
         // Attackers spawn initially outside the grid bounds
