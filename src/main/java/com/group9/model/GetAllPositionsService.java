@@ -1,4 +1,4 @@
-package com.group9.model.managers;
+package com.group9.model;
 
 import com.group9.model.Position;
 import com.group9.model.PositionConverter;
@@ -16,18 +16,12 @@ import java.util.Map;
 
 
 /*
- * Manages the positions of attackers, defenders, and projectiles on the board.
- * Provides methods to get the current positions of these entities.
+ * Provides methods to get the current positions of attackers, defenders, and projectiles on the board.
  */
 
-public class PositionManager {
-    private Board board;
+public class GetAllPositionsService {
 
-    public PositionManager(Board board) {
-        this.board = board;
-    }
-
-    public Map<AttackEntity, Position> getAllAttackersPosition() {
+    public static Map<AttackEntity, Position> getAllAttackersPosition(Board board) {
         Map<AttackEntity, Position> map = new HashMap<>();
         for (int row = 0; row < board.getLaneAmount(); row++) {
             Lane lane = board.getLanes().get(row);
@@ -39,7 +33,7 @@ public class PositionManager {
         return map;
     }
 
-    public Map<DefenceEntity, Position> getAllDefendersPosition() {
+    public static Map<DefenceEntity, Position> getAllDefendersPosition(Board board) {
         Map<DefenceEntity, Position> map = new HashMap<>();
         for (int row = 0; row < board.getLaneAmount(); row++) {
             Lane lane = board.getLanes().get(row);
@@ -55,7 +49,7 @@ public class PositionManager {
 
     }
 
-    public Map<Projectile, Position> getAllProjectilesPosition() {
+    public static Map<Projectile, Position> getAllProjectilesPosition(Board board) {
         Map<Projectile, Position> map = new HashMap<>();
         for (int row = 0; row < board.getLaneAmount(); row++) {
             Lane lane = board.getLanes().get(row);

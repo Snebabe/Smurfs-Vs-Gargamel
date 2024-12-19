@@ -17,7 +17,7 @@ import java.util.List;
  */
 
 public class ProjectileManager {
-    private Board board;
+    private final Board board;
     private final List<AttackDeathObserver> attackDeathObservers;
 
     public ProjectileManager(Board board) {
