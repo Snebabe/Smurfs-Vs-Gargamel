@@ -79,7 +79,7 @@ public class AnimationHandler implements Observer {
      * @param state the state of the character
      * @param folderPath the path to the folder containing the animation frames
      */
-    public void registerCharacterAnimations(CharacterType characterType, EntityState state, String folderPath) {
+    public void registerAnimations(CharacterType characterType, EntityState state, String folderPath) {
         List<Image> frames = loadImagesFromFolder(folderPath);
         setUpStateAnimations(characterType, state, frames);
 
@@ -94,7 +94,7 @@ public class AnimationHandler implements Observer {
      * @param state the state of the projectile
      * @param folderPath the path to the folder containing the animation frames
      */
-    public void registerProjectileAnimations(ProjectileType projectileType, EntityState state, String folderPath) {
+    public void registerAnimations(ProjectileType projectileType, EntityState state, String folderPath) {
         List<Image> frames = loadImagesFromFolder(folderPath);
         setUpStateAnimations(projectileType, state, frames);
 

@@ -3,19 +3,15 @@ package com.group9.view.panels;
 import com.group9.controller.InputObserver;
 import com.group9.model.Model;
 import com.group9.model.Observer;
-import com.group9.model.PositionConverter;
+import com.group9.model.services.PositionConverter;
 import com.group9.view.AnimationHandler;
 import com.group9.view.renderers.*;
 import com.group9.view.services.ImageLoader;
 
-import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.io.File;
-import java.io.IOException;
-import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.List;
 

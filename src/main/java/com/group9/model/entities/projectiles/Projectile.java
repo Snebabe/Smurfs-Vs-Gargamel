@@ -4,7 +4,9 @@ import com.group9.model.movement.Movable;
 import com.group9.model.movement.MovementRule;
 import com.group9.model.movement.ProjectileMovementRule;
 
-
+/**
+ * Represents a projectile that can be fired by a defence entity.
+ */
 public class Projectile implements Movable {
     private float currentlaneProgress;
     private float startingLaneProgress;

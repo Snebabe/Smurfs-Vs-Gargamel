@@ -1,6 +1,6 @@
 package com.group9.view.renderers;
 
-import com.group9.model.PositionConverter;
+import com.group9.model.services.PositionConverter;
 import com.group9.model.entities.characters.attackers.AttackEntity;
 import com.group9.model.Position;
 import com.group9.model.Model;
@@ -35,7 +35,7 @@ public class AttackerRenderer implements EntityRenderer {
             int yOffset = (int) (cellHeight * 0.1);
 
             // Draw defender image, filling the grid cell
-            g2d.drawImage(animationHandler.getFrame(attacker.getName(), attacker.getCurrentState()),
+            g2d.drawImage(animationHandler.getFrame(attacker.getName(), attacker.getCurrentEntityState()),
                     x + xOffset, y + yOffset, cellWidth - xOffset, cellHeight - yOffset, null);
 
             // Use HealthBarUtils to draw the health bar

@@ -17,19 +17,12 @@ public class GameController implements InputObserver {
     /**
      * Constructs a GameController with the specified game model.
      *
-     * @param model the game model to be controlled
+     * @param model the game model to be sending updates signals to
      */
     public GameController(Model model) {
         this.model = model;
     }
 
-    /**
-     * Handles the event when a grid cell is clicked.
-     * If a defender type is selected, place the defender at the clicked position in the grid.
-     *
-     * @param row the row index of the clicked cell
-     * @param col the column index of the clicked cell
-     */
     @Override
     public void onGridCellClicked(int row, int col) {
         Position clickedPosition = new Position(row, col);
@@ -40,31 +33,17 @@ public class GameController implements InputObserver {
         }
     }
 
-    /**
-     * Handles the event when a defender is selected.
-     * Sets the chosen defender type to the selected defender.
-     *
-     * @param defender the selected defender type
-     */
     @Override
     public void onDefenderSelected(DefenderType defender) {
         this.chosenDefender = defender;
     }
 
-    /**
-     * Handles the event when the start wave button is clicked.
-     * Initiates the spawning of a new wave in the game model.
-     */
     @Override
     public void onStartWaveClicked() {
         System.out.println("Spawning Wave");
         model.startWave();
     }
 
-    /**
-     * Handles the event when the reset game button is clicked.
-     * Resets the game model to its initial state.
-     */
     @Override
     public void onResetGameClicked() {
         System.out.println("Resetting game...");

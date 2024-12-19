@@ -15,6 +15,7 @@ import com.group9.model.entities.characters.defenders.DefenceEntity;
 import com.group9.model.entities.characters.defenders.DefenderType;
 import com.group9.model.managers.*;
 import com.group9.model.managers.MoveManager;
+import com.group9.model.services.GetAllPositionsService;
 
 import java.util.*;
 

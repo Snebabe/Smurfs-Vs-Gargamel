@@ -8,6 +8,9 @@ import com.group9.model.entities.characters.attackers.AttackEntity;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Manages the game state by checking if the game is over
+ */
 public class GameStateManager {
     private Board board;
     private WaveManager waveManager;
@@ -21,26 +24,27 @@ public class GameStateManager {
 
     /**
      * Checks if any attacker has reached the end of the grid (index 0).
-     * If so, it triggers the game over logic in the Model.
+     * If so, it sends out game over events to its listeners
+     *
+     * @return true if the game is over, false otherwise
      */
-
-    public void addGameOverListener(GameOverListener listener) {
-        this.gameOverListeners.add(listener);
-    }
-
     public boolean isGameOver() {
         for (Lane lane : board.getLanes()) {
             for (AttackEntity attacker : lane.getAttackers()) {
-                // Check if the attacker has reached the end of the grid (index 0)
                 if (attacker.getLaneProgress() >= 1.0) {
                     // Notify all listeners that the game is over
                     for (GameOverListener listener : gameOverListeners) {
                         listener.onGameOver(waveManager.getWaveNumber()-1);
                     }
-                    return true; // Exit as the game is over
+                    return true; // Return true as the game is over
                 }
             }
         }
         return false;  // Return false if no attacker has reached the end
     }
+
+    public void addGameOverListener(GameOverListener listener) {
+        gameOverListeners.add(listener);
+    }
+
 }

@@ -11,8 +11,28 @@ import com.group9.model.entities.characters.defenders.DefenderType;
  */
 public interface InputObserver {
 
-    void onGridCellClicked(int row, int col);   // Handles grid cell click events.
-    void onDefenderSelected(DefenderType type); // Handles defender selection events.
-    void onStartWaveClicked();  // Starts a wave.
-    void onResetGameClicked();  // Resets the game.
+    /**
+     * Handles the event when a grid cell is clicked.
+     *
+     * @param row the row index of the clicked cell
+     * @param col the column index of the clicked cell
+     */
+    void onGridCellClicked(int row, int col);
+
+    /**
+     * Handles the event when a defender is selected.
+     *
+     * @param type the selected defender type
+     */
+    void onDefenderSelected(DefenderType type);
+
+    /**
+     * Handles the event when the start wave button is clicked.
+     */
+    void onStartWaveClicked();
+
+    /**
+     * Handles the event when the reset game button is clicked.
+     */
+    void onResetGameClicked();
 }

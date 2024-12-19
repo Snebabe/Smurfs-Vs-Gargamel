@@ -5,6 +5,9 @@ import com.group9.model.board.Lane;
 import com.group9.model.entities.characters.Character;
 import com.group9.model.entities.EntityState;
 
+/**
+ * Represents a defender entity in the game.
+ */
 public class DefenceEntity extends Character {
 
     // Constructor to set up the defender
@@ -18,6 +21,5 @@ public class DefenceEntity extends Character {
     public boolean useAttack(Lane lane, int cellIndex) {
         return getAttackStrategy().useAttack(this, lane, cellIndex);  // Delegate to attack strategy
     }
-
 
 }

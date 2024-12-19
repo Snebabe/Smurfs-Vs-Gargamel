@@ -1,7 +1,6 @@
-package com.group9.model.attacks;
+package com.group9.model.services;
 
 
-import com.group9.model.PositionConverter;
 import com.group9.model.board.Lane;
 import com.group9.model.entities.characters.attackers.AttackEntity;
 

@@ -12,7 +12,7 @@ import java.util.List;
 import java.util.Random;
 
 
-/*
+/**
  * Manages the spawning of attackers in waves. Controls the timing of each wave
  * and its size. Also tracks wave rewards and notifies listeners when a wave is complete.
  */
@@ -44,10 +44,14 @@ public class WaveManager implements Observer {
         this.waveCompleted = false;
     }
 
+    /**
+     * Starts a new wave with an increased wave number, size, and reward.
+     * Decreases the spawn interval for attackers.
+     */
     public void startWave() {
         waveNumber++;
         waveSize += 3;
-        waveReward = 300 + (waveNumber -1) *50; // Start at 300 and increment by 50 each wave
+        waveReward = 300 + (waveNumber -1) * 50; // Start at 300 and increment by 50 each wave
         if(spawnIntervalInTicks > TICKS_PER_SECONDS/2) { // Minimum spawn rate 0.5 seconds
             spawnIntervalInTicks -= TICKS_PER_SECONDS/2; // Decrease the spawn interval by 0.5 seconds each wave;
         }
@@ -55,6 +59,9 @@ public class WaveManager implements Observer {
         waveCompleted = false;
     }
 
+    /**
+     * Resets the wave manager to its initial state.
+     */
     public void resetWaveManager() {
         waveNumber = 0;
         waveSize = 0;
@@ -65,6 +72,9 @@ public class WaveManager implements Observer {
         this.waveCompleted = false;
     }
 
+    /**
+     * Each update cycles spawns attackers at intervals and checks for wave completion.
+     */
     @Override
     public void update() {
         if (attackersToSpawn > 0) {
@@ -79,37 +89,9 @@ public class WaveManager implements Observer {
         }
     }
 
-    // Spawn an attacker at a random lane
-    private void spawnAttackerRandomly() {
-        Random random = new Random();
-        int randomLaneIndex = random.nextInt(board.getLanes().size());
-        Lane selectedLane = board.getLanes().get(randomLaneIndex);
-        AttackEntity attacker = factory.createRandomAttacker();
-        selectedLane.addAttacker(attacker);
-    }
-
-
-    // Observer management
-    public void addWaveCompleteListener(WaveCompleteListener listener) {
-        listeners.add(listener);
-    }
-
-    public void removeWaveCompleteListener(WaveCompleteListener listener) {
-        listeners.remove(listener);
-    }
-
-    // Notify observers when a wave is complete
-    private void notifyWaveComplete() {
-        if (!waveCompleted) {
-            waveCompleted = true;
-            for (WaveCompleteListener listener : listeners) {
-                listener.onWaveComplete(getWaveReward());
-            }
-        }
-
-    }
-
-    // Check if all attackers are cleared from the lanes
+    /**
+     * Checks if all attackers are cleared from the lanes and notifies listeners if the wave is complete.
+     */
     private void checkWaveCompletion() {
         boolean allAttackersCleared = true;
         for (Lane lane : board.getLanes()) {
@@ -123,6 +105,33 @@ public class WaveManager implements Observer {
         }
     }
 
+
+    private void spawnAttackerRandomly() {
+        Random random = new Random();
+        int randomLaneIndex = random.nextInt(board.getLanes().size());
+        Lane selectedLane = board.getLanes().get(randomLaneIndex);
+        AttackEntity attacker = AttackEntityFactory.createRandomAttacker();
+        selectedLane.addAttacker(attacker);
+    }
+
+    public void addWaveCompleteListener(WaveCompleteListener listener) {
+        listeners.add(listener);
+    }
+
+    public void removeWaveCompleteListener(WaveCompleteListener listener) {
+        listeners.remove(listener);
+    }
+
+    private void notifyWaveComplete() {
+        if (!waveCompleted) {
+            waveCompleted = true;
+            for (WaveCompleteListener listener : listeners) {
+                listener.onWaveComplete(getWaveReward());
+            }
+        }
+
+    }
+
     public int getWaveNumber() {
         return waveNumber;
     }
@@ -134,6 +143,7 @@ public class WaveManager implements Observer {
     public int getAttackersToSpawn() {
         return attackersToSpawn;
     }
+
     public int getWaveReward() {
         return waveReward;
     }

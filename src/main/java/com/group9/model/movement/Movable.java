@@ -4,6 +4,7 @@ package com.group9.model.movement;
 // Provides methods to track progress, set speed, and get movement rules
 
 public interface Movable {
+
     float getLaneProgress();
     void setLaneProgress(float laneProgress);
     int getSpeed();

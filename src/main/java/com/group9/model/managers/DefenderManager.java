@@ -6,6 +6,9 @@ import com.group9.model.entities.characters.defenders.DefenceEntity;
 import com.group9.model.entities.characters.defenders.DefenceEntityFactory;
 import com.group9.model.entities.characters.defenders.DefenderType;
 
+/**
+ * Manages the placement of defenders on the game board.
+ */
 public class DefenderManager {
     private Board board;
     private ResourceManager resourceManager;  // Reference to the resource manager for tracking available resources
@@ -15,7 +18,13 @@ public class DefenderManager {
         this.resourceManager = resourceManager;
     }
 
-    // Method to place a defender on the board at a specific position
+    /**
+     * Places a defender of the specified defender type at the given position on the board.
+     * Checks if there are enough resources and if the position is free before placing the defender.
+     *
+     * @param defenderType the type of defender to place
+     * @param position the position to place the defender at
+     */
     public void placeDefender(DefenderType defenderType, Position position) {
         // Check if there are enough resources and if the position is free
         if (resourceManager.getResources() >= defenderType.getCost() && !isDefenderAt(position)) {

@@ -101,7 +101,8 @@ public class DefenderPanel extends JPanel {
         }
     }
 
-
-
+    public Map<JButton, DefenderType> getButtonMap() {
+        return buttonMap;
+    }
 
 }

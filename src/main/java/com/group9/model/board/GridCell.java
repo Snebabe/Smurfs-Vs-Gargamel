@@ -2,27 +2,15 @@ package com.group9.model.board;
 
 import com.group9.model.entities.characters.defenders.DefenceEntity;
 
+/**
+ * Represents a single cell in a lane on the game board.
+ */
 public class GridCell {
 
-    private DefenceEntity defender;  // Reference to the defender entity placed in the grid cell
-    private final int positionInLane;      // Position of the cell within its lane
-
-    // Constructor to initialize the position of the cell in its lane
-    public GridCell(int positionInLane) {
-        this.positionInLane = positionInLane;
-
-    }
-
-    public int getPositionInLane() {
-        return this.positionInLane;
-    }
+    private DefenceEntity defender;  // Reference to the defence entity placed in the grid cell
 
     public void setDefender(DefenceEntity defender) {
         this.defender = defender;
-    }
-
-    public void removeDefender() {
-        this.defender = null;
     }
 
     public boolean hasDefender() {

@@ -32,7 +32,7 @@ public class DefenderRenderer implements EntityRenderer {
             int xOffset = (int) (cellWidth * 0.1);
             int yOffset = (int) (cellHeight * 0.1);
 
-            BufferedImage defenderImage = (BufferedImage) animationHandler.getFrame(defender.getName(), defender.getCurrentState());
+            BufferedImage defenderImage = (BufferedImage) animationHandler.getFrame(defender.getName(), defender.getCurrentEntityState());
 
             // For frames that take up 3 grid spaces
             int defenderWidth = (defenderImage.getWidth() > 350)

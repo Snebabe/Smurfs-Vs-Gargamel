@@ -2,19 +2,31 @@ package com.group9.model.entities.characters;
 
 import com.group9.model.entities.EntityType;
 
-public class CharacterType extends EntityType {
-    private float maxHealth;
-    private float attackDamage;
-    private int range;
-    private float attackSpeed; // delay between attacks
+/**
+ * The CharacterType is an abstract class representing a general character type in the game.
+ * It extends the EntityType class and includes attributes specific to characters.
+ */
+public abstract class CharacterType extends EntityType {
+    private final float maxHealth;
+    private final float attackDamage;
+    private final int range;
+    private final float attackDelay;
 
-    // Superclass for DefenderType and AttackerType
+    /**
+     * Constructs a CharacterType with the specified attributes.
+     *
+     * @param name the name of the character type
+     * @param maxHealth the maximum health of the character type
+     * @param attackDamage the attack damage of the character type
+     * @param range the attack range of the character type
+     * @param attackDelay the delay between attacks
+     */
     public CharacterType(String name, float maxHealth, float attackDamage, int range, float attackDelay) {
-        super(name); // Set the name from the parent class
+        super(name);
         this.maxHealth = maxHealth;
         this.attackDamage = attackDamage;
         this.range = range;
-        this.attackSpeed = attackDelay;
+        this.attackDelay = attackDelay;
     }
 
     public float getMaxHealth() {
@@ -29,9 +41,8 @@ public class CharacterType extends EntityType {
         return range;
     }
 
-    public float getAttackSpeed() {
-        return attackSpeed;
+    public float getAttackDelay() {
+        return attackDelay;
     }
-
 
 }

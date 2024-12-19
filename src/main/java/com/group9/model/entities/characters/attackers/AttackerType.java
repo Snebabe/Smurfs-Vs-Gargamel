@@ -2,6 +2,10 @@ package com.group9.model.entities.characters.attackers;
 
 import com.group9.model.entities.characters.CharacterType;
 
+/**
+ * The AttackerType class represents a specific type of attacker character.
+ * It extends the CharacterType class and includes additional attributes specific to attackers.
+ */
 public class AttackerType extends CharacterType {
     // Fields specific to the attacker type
     private int resourceReward;  // Resource rewarded when the attacker is defeated

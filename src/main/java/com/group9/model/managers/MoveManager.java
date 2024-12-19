@@ -3,14 +3,13 @@ package com.group9.model.managers;
 import com.group9.model.board.Board;
 import com.group9.model.board.Lane;
 import com.group9.model.Observer;
-import com.group9.model.entities.projectiles.Projectile;
 import com.group9.model.movement.Movable;
 import com.group9.model.movement.MovementRule;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
+/**
+ * Manages the movement of entities on the game board.
+ * Implements the Observer interface to listen for when to update the positions of movable entities.
+ */
 public class MoveManager implements Observer {
     private int TICKS_PER_SECONDS;
 
@@ -21,8 +20,13 @@ public class MoveManager implements Observer {
         this.TICKS_PER_SECONDS = TICKS_PER_SECONDS;
     }
 
-    // Moves the entity if possible
-    public void move(Movable movableEntity, Lane lane) {
+    /**
+     * Helper function to move the specified movable entity in the given lane if possible.
+     *
+     * @param movableEntity the entity to move
+     * @param lane the lane in which the entity is moving
+     */
+    private void move(Movable movableEntity, Lane lane) {
         MovementRule rule = movableEntity.getMovementRule();
         if (rule.canMove(movableEntity, lane)) {
             float laneProgress = movableEntity.getLaneProgress();
@@ -31,7 +35,9 @@ public class MoveManager implements Observer {
         }
     }
 
-    // Updates the position of all movable entities
+    /**
+     * Updates the positions of all movable entities on the board.
+     */
     @Override
     public void update() {
         for(Lane lane : this.board.getLanes()) {

@@ -1,4 +1,4 @@
-package com.group9.model;
+package com.group9.model.services;
 
 import java.awt.*;
 

@@ -2,6 +2,9 @@ package com.group9.model.entities.projectiles;
 
 import com.group9.model.entities.EntityType;
 
+/**
+ * Class representing a projectile type.
+ */
 public class ProjectileType extends EntityType {
 
     private int speed;
