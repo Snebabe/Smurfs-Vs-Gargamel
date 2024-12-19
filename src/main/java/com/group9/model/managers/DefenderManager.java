@@ -10,9 +10,16 @@ import com.group9.model.entities.characters.defenders.DefenderType;
  * Manages the placement of defenders on the game board.
  */
 public class DefenderManager {
-    private Board board;
-    private ResourceManager resourceManager;  // Reference to the resource manager for tracking available resources
+    private final Board board;
+    private final ResourceManager resourceManager;
 
+
+    /**
+     * Constructs a DefenderManager with the specified game board and resource manager.
+     *
+     * @param board the game board
+     * @param resourceManager the resource manager
+     */
     public DefenderManager(Board board, ResourceManager resourceManager) {
         this.board = board;
         this.resourceManager = resourceManager;

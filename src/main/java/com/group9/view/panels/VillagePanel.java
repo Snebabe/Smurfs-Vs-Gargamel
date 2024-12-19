@@ -1,8 +1,6 @@
 package com.group9.view.panels;
 
-import com.group9.model.Model;
 import com.group9.view.services.ImageLoader;
-
 import javax.swing.*;
 import java.awt.*;
 
@@ -11,16 +9,15 @@ public class VillagePanel extends JPanel {
     //The two different village images
     Image villageImage1;
     Image villageImage2;
-    private int rowCount;
+    private final int rowCount;
 
     public VillagePanel(int rowCount) {
         // Load the two village images
         villageImage1 = ImageLoader.loadImage("/images/backgrounds/village1.png");
         villageImage2 = ImageLoader.loadImage("/images/backgrounds/village2.png");
         this.rowCount = rowCount;
-        this.setBackground(Color.getHSBColor(0.33f, 1.0f, 0.2f)); // Set the background color of the panel
+        setBackground(Color.getHSBColor(0.33f, 1.0f, 0.2f)); // Set the background color of the panel
     }
-
 
     // Override paintComponent to render the village background images
     @Override

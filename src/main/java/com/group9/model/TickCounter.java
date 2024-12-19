@@ -8,11 +8,11 @@ package com.group9.model;
 
 public class TickCounter {
 
-    private int tickInterval;
+    private final int tickInterval;
     private int tickCounter;
     public TickCounter(float seconds, int TICKS_PER_SECOND) {
-        this.tickInterval = (int) (seconds*TICKS_PER_SECOND);
-        this.tickCounter = 0;
+        tickInterval = (int) (seconds*TICKS_PER_SECOND);
+        tickCounter = 0;
     }
     public void increment() {
         tickCounter++;

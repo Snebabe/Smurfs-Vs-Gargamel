@@ -25,7 +25,7 @@ public class ProjectileManager {
      * @param board the game board
      */
     public ProjectileManager(Board board) {
-        this.attackDeathObservers = new ArrayList<>();
+        attackDeathObservers = new ArrayList<>();
         this.board = board;
     }
 
@@ -33,25 +33,31 @@ public class ProjectileManager {
      * Handles projectile collisions with attackers for all lanes on the board.
      */
     public void handleProjectilesCollision() {
-        for (Lane lane : this.board.getLanes()) {
-            Iterator<Projectile> projectileIterator = lane.getProjectiles().iterator();
+        for (Lane lane : board.getLanes()) {
+            handleLaneProjectiles(lane);
+        }
+    }
 
-            while (projectileIterator.hasNext()) {
-                Projectile projectile = projectileIterator.next();
+    /**
+     * Helper method to handle projectile collisions with attackers for a specific lane.
+     *
+     * @param lane the lane to handle projectiles for
+     */
+    private void handleLaneProjectiles(Lane lane) {
+        List<Projectile> projectiles = lane.getProjectiles();
+        Iterator<Projectile> projectileIterator = projectiles.iterator();
 
-                // If projectile out of range (Needs testing)
-                float laneProgressTraveled = projectile.getLaneProgress() - projectile.getStartingLaneProgress();
-                float cellRangeInLaneProgress = (float) projectile.getRange() / lane.getNumberOfCells();
-                if (projectile.getLaneProgress() >= 1 || laneProgressTraveled > cellRangeInLaneProgress) {
-                    lane.getMovables().remove(projectile);
-                    projectileIterator.remove();
-                    continue;
-                }
+        while (projectileIterator.hasNext()) {
+            Projectile projectile = projectileIterator.next();
 
-                // Check if attackers list is empty before accessing the first attacker
-                if (lane.getAttackers().isEmpty()) {
-                    break;
-                }
+            if (isProjectileOutOfRange(projectile, lane)) {
+                removeProjectile(projectileIterator, lane, projectile);
+                continue;
+            }
+
+            if (lane.getAttackers().isEmpty()) {
+                break;
+            }
 
             handleProjectileCollisionWithAttacker(projectileIterator, lane, projectile);
         }

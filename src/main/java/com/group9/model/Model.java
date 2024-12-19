@@ -32,8 +32,7 @@ public class Model implements Observer {
     private final int laneAmount;
     private final int laneSize;
 
-    private Board board;
-    private PositionManager positionManager;
+    private final Board board;
     private WaveManager waveManager;
     private AttackManager attackManager;
     private DefenderManager defenderManager;
@@ -48,28 +47,27 @@ public class Model implements Observer {
         this.TICKS_PER_SECONDS = TICKS_PER_SECONDS;
         this.laneAmount = laneAmount;
         this.laneSize = laneSize;
-        this.board = new Board(laneAmount, laneSize);
+        board = new Board(laneAmount, laneSize);
         initializeManagers();
         registerObservers(); // Register observers for relevant events
     }
 
     // Initialize the different game managers
     private void initializeManagers() {
-        this.waveManager = new WaveManager(new AttackEntityFactory(), board, TICKS_PER_SECONDS);
-        this.attackManager = new AttackManager(board, TICKS_PER_SECONDS);
-        this.gameStateManager = new GameStateManager(board, waveManager);
-        this.resourceManager = new ResourceManager();
-        this.positionManager = new PositionManager(board);
-        this.defenderManager = new DefenderManager(board, resourceManager);
-        this.moveManager = new MoveManager(board, TICKS_PER_SECONDS);
-        this.projectileManager = new ProjectileManager(board);
+        waveManager = new WaveManager(board, TICKS_PER_SECONDS);
+        attackManager = new AttackManager(board, TICKS_PER_SECONDS);
+        gameStateManager = new GameStateManager(board, waveManager);
+        resourceManager = new ResourceManager();
+        defenderManager = new DefenderManager(board, resourceManager);
+        moveManager = new MoveManager(board, TICKS_PER_SECONDS);
+        projectileManager = new ProjectileManager(board);
     }
 
     // Register observers for the managers that need to listen for events
     private void registerObservers() {
-        this.waveManager.addWaveCompleteListener(resourceManager);
-        this.attackManager.addAttackDeathOberver(resourceManager);
-        this.projectileManager.addAttackDeathOberver(resourceManager);
+        waveManager.addWaveCompleteListener(resourceManager);
+        attackManager.addAttackDeathObserver(resourceManager);
+        projectileManager.addAttackDeathObserver(resourceManager);
     }
 
     public Board getBoard() {
@@ -77,7 +75,7 @@ public class Model implements Observer {
     }
 
     public void addGameOverListener(GameOverListener listener) {
-        this.gameStateManager.addGameOverListener(listener);
+        gameStateManager.addGameOverListener(listener);
     }
 
     // Reset the game state and resources
@@ -126,15 +124,15 @@ public class Model implements Observer {
     }
 
     public Map<AttackEntity, Position> getAllAttackersPosition() {
-        return positionManager.getAllAttackersPosition();
+        return GetAllPositionsService.getAllAttackersPosition(board);
     }
 
     public Map<DefenceEntity, Position> getAllDefendersPosition() {
-        return positionManager.getAllDefendersPosition();
+        return GetAllPositionsService.getAllDefendersPosition(board);
     }
 
     public Map<Projectile, Position> getAllProjectilesPosition() {
-        return positionManager.getAllProjectilesPosition();
+        return GetAllPositionsService.getAllProjectilesPosition(board);
     }
 
     // Place a defender at a given position on the board

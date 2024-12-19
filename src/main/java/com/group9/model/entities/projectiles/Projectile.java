@@ -16,8 +16,8 @@ public class Projectile implements Movable {
     private String name;
 
     public Projectile(String name, float laneProgress, int range, int speed, float damage) {
-        this.currentlaneProgress = laneProgress;
-        this.startingLaneProgress = laneProgress;
+        currentLaneProgress = laneProgress;
+        startingLaneProgress = laneProgress;
         this.speed = speed;
         this.damage = damage;
         this.range = range;
@@ -47,7 +47,7 @@ public class Projectile implements Movable {
 
     @Override
     public void setLaneProgress(float laneProgress) {
-        this.currentlaneProgress = laneProgress;
+        currentLaneProgress = laneProgress;
     }
 
     @Override

@@ -12,14 +12,20 @@ import java.util.List;
  * Manages the game state by checking if the game is over
  */
 public class GameStateManager {
-    private Board board;
-    private WaveManager waveManager;
-    private List<GameOverListener> gameOverListeners;
+    private final Board board;
+    private final WaveManager waveManager;
+    private final List<GameOverListener> gameOverListeners;
 
+    /**
+     * Constructs a GameStateManager with the specified game board and wave manager.
+     *
+     * @param board the game board
+     * @param waveManager the wave manager
+     */
     public GameStateManager(Board board, WaveManager waveManager) {
         this.board = board;
         this.waveManager = waveManager;
-        this.gameOverListeners = new ArrayList<>();
+        gameOverListeners = new ArrayList<>();
     }
 
     /**

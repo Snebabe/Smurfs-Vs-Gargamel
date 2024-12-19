@@ -12,8 +12,8 @@ public class DefenceEntity extends Character {
 
     // Constructor to set up the defender
     public DefenceEntity(String name, float maxHealth, float attackDamage, int range, float attackDelay, AttackStrategy attackStrategy) {
-        super(name, maxHealth, attackDamage, range, attackDelay, attackStrategy);  // Initialize using Character constructor
-        this.setCurrentState(EntityState.IDLE);  // Set initial state to IDLE
+        super(name, maxHealth, attackDamage, range, attackDelay, attackStrategy);
+        setCurrentEntityState(EntityState.IDLE);
 
     }
 

@@ -22,26 +22,30 @@ public class WaveManager implements Observer {
     private int waveReward;
     private int attackersToSpawn;
     private int spawnIntervalInTicks;
-    private int defaultSpawnIntervalInTicks;
+    private final int defaultSpawnIntervalInTicks;
     private int ticksSinceLastSpawn;
-    private int TICKS_PER_SECONDS;
-    private AttackEntityFactory factory;
-    private List<WaveCompleteListener> listeners;
+    private final int TICKS_PER_SECONDS;
+    private final List<WaveCompleteListener> listeners;
     private boolean waveCompleted;
-    private Board board;
+    private final Board board;
 
-    public WaveManager(AttackEntityFactory factory, Board board , int TICKS_PER_SECONDS) {
-        this.waveNumber = 0;
-        this.waveSize = 0;
-        this.waveReward = 0;
-        this.factory = factory;
+    /**
+     * Constructs a WaveManager with the specified game board, and ticks per second.
+     *
+     * @param board the game board
+     * @param TICKS_PER_SECONDS the number of ticks per second
+     */
+    public WaveManager(Board board , int TICKS_PER_SECONDS) {
+        waveNumber = 0;
+        waveSize = 0;
+        waveReward = 0;
         this.board = board;
         this.TICKS_PER_SECONDS = TICKS_PER_SECONDS;
-        this.spawnIntervalInTicks = TICKS_PER_SECONDS*5; // Set the interval to spawn attackers
-        this.defaultSpawnIntervalInTicks = spawnIntervalInTicks;
-        this.ticksSinceLastSpawn = 0;
-        this.listeners = new ArrayList<>();
-        this.waveCompleted = false;
+        spawnIntervalInTicks = TICKS_PER_SECONDS*5; // Set the interval to spawn attackers
+        defaultSpawnIntervalInTicks = spawnIntervalInTicks;
+        ticksSinceLastSpawn = 0;
+        listeners = new ArrayList<>();
+        waveCompleted = false;
     }
 
     /**
@@ -69,7 +73,7 @@ public class WaveManager implements Observer {
         attackersToSpawn = 0;
         ticksSinceLastSpawn = 0;
         spawnIntervalInTicks = defaultSpawnIntervalInTicks;
-        this.waveCompleted = false;
+        waveCompleted = false;
     }
 
     /**

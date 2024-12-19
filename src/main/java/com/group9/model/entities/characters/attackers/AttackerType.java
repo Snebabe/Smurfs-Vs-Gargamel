@@ -7,10 +7,22 @@ import com.group9.model.entities.characters.CharacterType;
  * It extends the CharacterType class and includes additional attributes specific to attackers.
  */
 public class AttackerType extends CharacterType {
-    // Fields specific to the attacker type
-    private int resourceReward;  // Resource rewarded when the attacker is defeated
-    private int speed; // Speed of the attacker
 
+    private final int resourceReward;
+    private final int speed;
+
+    /**
+     * Constructs a unique AttackerType with the specified attributes.
+     *
+     * @param name the name of the attacker type
+     * @param maxHealth the maximum health of the attacker type
+     * @param attackDamage the attack damage of the attacker type
+     * @param range the attack range of the attacker type
+     * @param attackDelay the delay between attacks
+     * @param speed the speed of the attacker type
+     * @param resourceReward the resource reward given when the attacker is defeated
+     * @throws IllegalArgumentException if speed or resourceReward are negative
+     */
     public AttackerType(String name, float maxHealth, float attackDamage, int range, float attackDelay, int speed, int resourceReward) {
         super(name, maxHealth, attackDamage, range, attackDelay);
 

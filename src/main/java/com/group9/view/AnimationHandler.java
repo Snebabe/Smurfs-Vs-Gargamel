@@ -29,7 +29,7 @@ public class AnimationHandler implements Observer {
     private final int TICKS_PER_SECOND;
 
     public AnimationHandler(int TICKS_PER_SECOND) {
-        this.entityFrameTickrate = new HashMap<>();
+        entityFrameTickrate = new HashMap<>();
         this.TICKS_PER_SECOND = TICKS_PER_SECOND;
     }
 
@@ -45,7 +45,7 @@ public class AnimationHandler implements Observer {
             File folder = new File(getClass().getResource(folderPath).toURI());
             File[] files = folder.listFiles((dir, name) -> name.endsWith(".png") || name.endsWith(".jpg") || name.endsWith(".jpeg"));
 
-            if (files != null && files.length > 0) {
+            if (files != null) {
                 for (File file : files) {
                     frames.add(ImageIO.read(file));
                 }
@@ -83,7 +83,7 @@ public class AnimationHandler implements Observer {
         List<Image> frames = loadImagesFromFolder(folderPath);
         setUpStateAnimations(characterType, state, frames);
 
-        int ticksPerFrame = (int) (characterType.getAttackSpeed() * this.TICKS_PER_SECOND / frames.size());
+        int ticksPerFrame = (int) (characterType.getAttackDelay() * TICKS_PER_SECOND / frames.size());
         entityFrameTickrate.put(characterType.getName(), ticksPerFrame == 0 ? 10 : ticksPerFrame); // Default to 10 ticks per frame if attackspeed is instant
     }
 
@@ -98,7 +98,7 @@ public class AnimationHandler implements Observer {
         List<Image> frames = loadImagesFromFolder(folderPath);
         setUpStateAnimations(projectileType, state, frames);
 
-        int ticksPerFrame = this.TICKS_PER_SECOND / frames.size();
+        int ticksPerFrame = TICKS_PER_SECOND / frames.size();
         entityFrameTickrate.put(projectileType.getName(), ticksPerFrame);
     }
 

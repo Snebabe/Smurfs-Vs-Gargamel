@@ -10,11 +10,11 @@ import com.group9.model.entities.characters.attackers.AttackEntity;
  * and reset resources.
  */
 public class ResourceManager implements AttackDeathObserver, WaveCompleteListener {
-    private int startResources = 4500;
+    private final int startResources = 4500;
     private int resources;
 
     public ResourceManager(){
-        this.resources = startResources;
+        resources = startResources;
     }
 
     public int getResources() {
@@ -23,11 +23,10 @@ public class ResourceManager implements AttackDeathObserver, WaveCompleteListene
 
     // Reset resources to starting value
     public void resetResources() {
-        this.resources = startResources;
+        resources = startResources;
     }
 
-    public int changeResources(int resources) {
-        return this.resources += resources;
+    public void changeResources(int resources) {this.resources += resources;
     }
 
     @Override

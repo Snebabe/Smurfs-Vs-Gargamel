@@ -2,15 +2,12 @@ package com.group9.view.panels;
 
 import com.group9.view.services.ImageButtonFactory;
 import com.group9.view.services.ImageLoader;
-
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionListener;
 
 public class StartPanel extends JPanel {
-    private JButton startButton; // Button to start the game
-    private JButton helpButton;  // Button to navigate to the help screen
-    private Image backgroundImage; // Background image for the start panel
+    private final Image backgroundImage; // Background image for the start panel
 
     public StartPanel(ActionListener startButtonListener, ActionListener helpButtonListener) {
 
@@ -26,13 +23,15 @@ public class StartPanel extends JPanel {
         buttonPanel.setLayout(new FlowLayout(FlowLayout.CENTER, 10, 10));
         buttonPanel.setOpaque(false);
 
+        // Button to start the game
         // Create and configure the start button
-        startButton = ImageButtonFactory.createImageButton("/images/buttons/playBtn.png", 200, 80);
+        JButton startButton = ImageButtonFactory.createImageButton("/images/buttons/playBtn.png", 200, 80);
         startButton.addActionListener(startButtonListener);
         buttonPanel.add(startButton);
 
+        // Button to navigate to the help screen
         // Create and configure the help button
-        helpButton = ImageButtonFactory.createImageButton("/images/buttons/helpBtn.png", 200, 80);
+        JButton helpButton = ImageButtonFactory.createImageButton("/images/buttons/helpBtn.png", 200, 80);
         helpButton.addActionListener(helpButtonListener);
         buttonPanel.add(helpButton);
 

@@ -13,14 +13,12 @@ import java.util.Set;
 public class Clock{
     private final int TICKS_PER_SECOND;
     private final long MS_PER_TICK;
-    private boolean paused;  // Flag to control the clock's state (paused or running)
     private final Map<Observer,TickCounter> observers; // Map of observers and their associated tick intervals
 
     public Clock(int TICKS_PER_SECOND) {
         this.TICKS_PER_SECOND = TICKS_PER_SECOND;
-        this.MS_PER_TICK = 1000 / TICKS_PER_SECOND;
-        this.paused = false; // Initially not paused
-        this.observers = new HashMap<>();
+        MS_PER_TICK = 1000 / TICKS_PER_SECOND;
+        observers = new HashMap<>();
     }
 
     // Add an observer that will update after a specified number of seconds
@@ -33,7 +31,7 @@ public class Clock{
         Thread gameLoop = new Thread(() -> {
 
             // Main loop running until the clock is paused
-            while (!paused) {
+            while (true) {
                 long startTime = System.currentTimeMillis(); // Track the start time for tick timing
                 for (Observer observer : observers.keySet()) {
                     TickCounter tickCounter = observers.get(observer); // Get the observer's tick counter

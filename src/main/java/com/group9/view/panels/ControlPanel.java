@@ -3,15 +3,11 @@ package com.group9.view.panels;
 import com.group9.controller.InputObserver;
 import com.group9.model.Model;
 import com.group9.model.WaveCompleteListener;
+import com.group9.model.entities.characters.defenders.DefenderType;
 import com.group9.view.services.ImageButtonFactory;
 import com.group9.view.services.ImageLoader;
-
-import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
-import java.io.File;
-import java.io.IOException;
-import java.net.URISyntaxException;
 import java.util.List;
 import java.util.Map;
 
@@ -28,6 +24,7 @@ public class ControlPanel extends JPanel implements WaveCompleteListener {
     private JButton startWaveButton;
     private JButton resetGameButton;
     private JLabel resourcesLabel;  // Label to display the player's current resource amount
+    private DefenderPanel defenderPanel;
     private JLabel waveLabel;  // Label to display the current wave number
     private JLabel attackersLeftLabel; // Label to display amount of remaining attackers
     private JPanel wavePanel;  // Panel for wave-related information
@@ -42,7 +39,7 @@ public class ControlPanel extends JPanel implements WaveCompleteListener {
     public ControlPanel(Model model, List<InputObserver> inputObservers, String backgroundImagePath) {
         this.model = model;
         this.inputObservers = inputObservers;
-        this.setBackground(Color.getHSBColor(0.33f, 1.0f, 0.2f)); // Default greenish background
+        setBackground(Color.getHSBColor(0.33f, 1.0f, 0.2f)); // Default greenish background
         System.out.println(backgroundImagePath);
 
         // Load the background image
@@ -90,7 +87,8 @@ public class ControlPanel extends JPanel implements WaveCompleteListener {
         add(resourcePanel);
 
         // Add a panel for defender selection
-        add(new DefenderPanel(inputObservers));
+        defenderPanel = new DefenderPanel(inputObservers);
+        add(defenderPanel);
 
         // Add buttons to the control panel
         add(startWaveButton);
@@ -168,7 +166,19 @@ public class ControlPanel extends JPanel implements WaveCompleteListener {
         waveLabel.setText("Wave: " + model.getWaveManager().getWaveNumber());
         attackersLeftLabel.setText("Attackers Left: " + model.getWaveManager().getAttackersToSpawn());
         resourcesLabel.setText(String.valueOf(model.getResourceManager().getResources()));
+        updateDefenderPanelButtons();
     }
+
+
+    private void updateDefenderPanelButtons() {
+        int resources = model.getResourceManager().getResources(); // get the current resources from the model
+        for (Map.Entry<JButton, DefenderType> entry : defenderPanel.getButtonMap().entrySet()) {
+            JButton button = entry.getKey();
+            DefenderType type = entry.getValue();
+            button.setEnabled(resources >= type.getCost());
+        }
+    }
+
 
     // Enable the Start Wave button when a wave is completed
     @Override

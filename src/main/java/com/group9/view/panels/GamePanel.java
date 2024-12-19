@@ -18,17 +18,17 @@ import java.util.List;
 public class GamePanel extends JPanel implements Observer {
 
     private final List<EntityRenderer> entityRenderers; // List of renderers for different entities (attackers, defenders, etc.)
-    private int columnCount; // Number of columns
-    private int rowCount;   // Number of rows
-    private Model model;
-    private AnimationHandler animationHandler;
+    private final int columnCount; // Number of columns
+    private final int rowCount;   // Number of rows
+    private final Model model;
+    private final AnimationHandler animationHandler;
 
     public GamePanel(Model model, AnimationHandler animationHandler, List<InputObserver> inputObservers) {
         this.model = model;
-        this.rowCount = model.getLaneAmount();
-        this.columnCount = model.getLaneSize();
+        rowCount = model.getLaneAmount();
+        columnCount = model.getLaneSize();
         this.animationHandler = animationHandler;
-        this.setBackground(Color.getHSBColor(0.33f, 1.0f, 0.2f)); // Set background color for the panel
+        setBackground(Color.getHSBColor(0.33f, 1.0f, 0.2f)); // Set background color for the panel
 
         // Initialize the list of entity renderers with direct access to the model
         entityRenderers = new ArrayList<>();
@@ -55,14 +55,6 @@ public class GamePanel extends JPanel implements Observer {
 
                 int row = cell.x;
                 int column = cell.y;
-
-                /*Point point = e.getPoint();
-                int cellWidth = getWidth() / columnCount;
-                int cellHeight = getHeight() / rowCount;
-
-                // Calculate clicked cell
-                int column = point.x / cellWidth;
-                int row = point.y / cellHeight;*/
 
                 // Check if the clicked cell is within bounds
                 if (row >= 0 && row < rowCount && column >= 0 && column < columnCount) {
@@ -116,10 +108,7 @@ public class GamePanel extends JPanel implements Observer {
                 // Alternate between gridImage and gridImage2
                 Image currentImage = ((row + col) % 2 == 0) ? gridImage : gridImage2;
 
-                //g2d.drawImage(currentImage, (int) (x * 0.99), (int) (y * 0.99), (int) (cellWidth * 1.4), (int) (cellHeight * 1.4), null);
                 g2d.drawImage(currentImage,x, y, cellWidth, cellHeight, null);
-
-                //g2d.drawRect(x, y, cellWidth, cellHeight);
             }
         }
     }
@@ -130,9 +119,4 @@ public class GamePanel extends JPanel implements Observer {
         repaint();
     } // Repaint the panel to reflect updates
 
-    /*@Override
-    public void invalidate() {
-        cells.clear();
-        super.invalidate();
-    }*/
 }

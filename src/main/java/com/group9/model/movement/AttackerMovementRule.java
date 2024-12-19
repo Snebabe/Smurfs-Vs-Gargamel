@@ -8,6 +8,7 @@ import com.group9.model.board.Lane;
  * Defines the movement rule for attackers.
  */
 public class AttackerMovementRule implements MovementRule {
+
     @Override
     public boolean canMove(Movable movable, Lane lane) {
         // Calculate the attacker's cell index

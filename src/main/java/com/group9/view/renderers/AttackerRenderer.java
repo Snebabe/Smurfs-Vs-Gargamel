@@ -5,7 +5,6 @@ import com.group9.model.entities.characters.attackers.AttackEntity;
 import com.group9.model.Position;
 import com.group9.model.Model;
 import com.group9.view.AnimationHandler;
-
 import java.awt.*;
 import java.util.Map;
 

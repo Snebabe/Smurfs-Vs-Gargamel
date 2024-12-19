@@ -2,22 +2,20 @@ package com.group9.view.panels;
 
 import com.group9.view.services.ImageButtonFactory;
 import com.group9.view.services.ImageLoader;
-
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionListener;
 
 public class HelpPanel extends JPanel {
-    private JButton backButton;  // Button to go back to the previous screen
-    private Image backgroundImage; // Background image for the help panel
+    private final Image backgroundImage; // Background image for the help panel
 
     public HelpPanel(ActionListener backButtonListener) {
 
         // Load the background image for the panel
         backgroundImage = ImageLoader.loadImage("/images/backgrounds/controlPanelBg.jpg");
 
-        // Back button creation
-        backButton = ImageButtonFactory.createImageButton("/images/buttons/backBtn.png", 200, 80);
+        // Button to go back to the previous screen
+        JButton backButton = ImageButtonFactory.createImageButton("/images/buttons/backBtn.png", 200, 80);
         backButton.addActionListener(backButtonListener);
 
         // Layout for the main panel
