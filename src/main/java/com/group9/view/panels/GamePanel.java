@@ -8,16 +8,20 @@ import com.group9.view.AnimationHandler;
 import com.group9.view.renderers.*;
 import com.group9.view.services.ImageLoader;
 
+import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.io.File;
+import java.io.IOException;
+import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.List;
 
 public class GamePanel extends JPanel implements Observer {
 
-    private final List<EntityRenderer> entityRenderers;
+    private final List<EntityRenderer> entityRenderers; // List of renderers for different entities (attackers, defenders, etc.)
     private int columnCount; // Number of columns
     private int rowCount;   // Number of rows
     private Model model;
@@ -28,30 +32,41 @@ public class GamePanel extends JPanel implements Observer {
         this.rowCount = model.getLaneAmount();
         this.columnCount = model.getLaneSize();
         this.animationHandler = animationHandler;
-        this.setBackground(Color.getHSBColor(0.33f, 1.0f, 0.2f));
+        this.setBackground(Color.getHSBColor(0.33f, 1.0f, 0.2f)); // Set background color for the panel
 
         // Initialize the list of entity renderers with direct access to the model
         entityRenderers = new ArrayList<>();
 
+        // Initialize health bar utilities for renderers
         HealthBarUtils healthBarUtils = new HealthBarUtils();
 
+        // Add renderers to the list
         entityRenderers.add(new AttackerRenderer(healthBarUtils));
         entityRenderers.add(new DefenderRenderer(healthBarUtils));
         entityRenderers.add(new ProjectileRenderer());
 
+        // Add mouse listener for handling grid cell clicks
         addMouseListener(createMouseHandler(inputObservers));
     }
 
-    // Create Mouse Input Handler
+    // Create Mouse Input Handler for grid cell clicks
     private MouseAdapter createMouseHandler(List<InputObserver> inputObservers) {
         return new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
+                // Map mouse click coordinates to the grid cell
                 Point cell = PositionConverter.mapToGrid(e.getPoint(), getWidth(), getHeight(), rowCount, columnCount);
 
                 int row = cell.x;
                 int column = cell.y;
 
+                /*Point point = e.getPoint();
+                int cellWidth = getWidth() / columnCount;
+                int cellHeight = getHeight() / rowCount;
+
+                // Calculate clicked cell
+                int column = point.x / cellWidth;
+                int row = point.y / cellHeight;*/
 
                 // Check if the clicked cell is within bounds
                 if (row >= 0 && row < rowCount && column >= 0 && column < columnCount) {
@@ -66,6 +81,7 @@ public class GamePanel extends JPanel implements Observer {
         };
     }
 
+    // Paint the panel by drawing the grid and entities
     @Override
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
@@ -85,15 +101,17 @@ public class GamePanel extends JPanel implements Observer {
             renderer.draw(g2d, model, animationHandler, cellWidth, cellHeight, width);
         }
 
-        g2d.dispose();
+        g2d.dispose();// Dispose of the Graphics2D object to free up resources
     }
 
 
-
+    // Draw the grid with alternating images for each cell
     private void drawGrid(Graphics2D g2d, int cellWidth, int cellHeight) {
+        // Load the alternating cell images
         Image gridImage = ImageLoader.loadImage("/images/backgrounds/gridcell2.png");
         Image gridImage2 = ImageLoader.loadImage("/images/backgrounds/gridcell.png");
 
+        // Loop through all the rows and columns to draw each grid cell
         for (int row = 0; row < rowCount; row++) {
             for (int col = 0; col < columnCount; col++) {
                 int x = col * cellWidth;
@@ -110,8 +128,15 @@ public class GamePanel extends JPanel implements Observer {
         }
     }
 
+    // Observer method to handle updates and repaint the panel
     @Override
     public void update() {
         repaint();
-    }
+    } // Repaint the panel to reflect updates
+
+    /*@Override
+    public void invalidate() {
+        cells.clear();
+        super.invalidate();
+    }*/
 }

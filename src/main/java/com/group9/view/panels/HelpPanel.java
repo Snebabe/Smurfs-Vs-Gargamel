@@ -8,12 +8,12 @@ import java.awt.*;
 import java.awt.event.ActionListener;
 
 public class HelpPanel extends JPanel {
-    private JButton backButton;
-    private Image backgroundImage;
+    private JButton backButton;  // Button to go back to the previous screen
+    private Image backgroundImage; // Background image for the help panel
 
     public HelpPanel(ActionListener backButtonListener) {
 
-
+        // Load the background image for the panel
         backgroundImage = ImageLoader.loadImage("/images/backgrounds/controlPanelBg.jpg");
 
         // Back button creation
@@ -44,28 +44,31 @@ public class HelpPanel extends JPanel {
                 Good luck!
                 """);
 
-        instructions.setEditable(false);
-        instructions.setForeground(Color.WHITE);
-        instructions.setLineWrap(true);
-        instructions.setOpaque(false);
-        instructions.setWrapStyleWord(true);
+        instructions.setEditable(false); // Prevent editing the instructions
+        instructions.setForeground(Color.WHITE); // Set text color to white
+        instructions.setLineWrap(true); // Enable text wrapping
+        instructions.setOpaque(false); // Make the text area transparent
+        instructions.setWrapStyleWord(true);  // Ensure text wraps properly at word boundaries
 
+        // Place the instructions in a scrollable area
         JScrollPane scrollPane = new JScrollPane(instructions);
         scrollPane.setOpaque(false);
         scrollPane.getViewport().setOpaque(false); // Make the viewport transparent
         scrollPane.setBorder(null); // Remove borders for cleaner appearance
-        add(scrollPane, BorderLayout.CENTER);
+        add(scrollPane, BorderLayout.CENTER);  // Add the scroll pane to the center of the panel
 
-
+        // Panel for the back button at the bottom
         JPanel buttonPanel = new JPanel();
         buttonPanel.add(backButton);
-        buttonPanel.setOpaque(false);
-        add(buttonPanel, BorderLayout.SOUTH);
+        buttonPanel.setOpaque(false); // Make button panel transparent
+        add(buttonPanel, BorderLayout.SOUTH); // Add the button panel to the south region of the layout
     }
 
+    // Override paintComponent to render the background image
     @Override
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
+        // Draw the background image (if available)
         if (backgroundImage != null) {
             g.drawImage(backgroundImage, 0, 0, getWidth(), getHeight(), this);
         }

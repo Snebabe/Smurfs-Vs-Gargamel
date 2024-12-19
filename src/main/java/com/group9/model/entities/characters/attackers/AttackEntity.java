@@ -1,6 +1,7 @@
 package com.group9.model.entities.characters.attackers;
 
 import com.group9.model.attacks.MeleeAttack;
+import com.group9.model.board.Lane;
 import com.group9.model.entities.characters.Character;
 import com.group9.model.entities.EntityState;
 import com.group9.model.movement.AttackerMovementRule;

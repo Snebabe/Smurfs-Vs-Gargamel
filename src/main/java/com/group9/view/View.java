@@ -162,7 +162,6 @@ public class View extends JFrame implements Observer, GameOverListener {
         villagePanel.update();
     }
 
-
     public void addInputObserver(InputObserver observer) {
         inputObservers.add(observer);
     }

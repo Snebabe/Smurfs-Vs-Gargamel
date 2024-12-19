@@ -3,36 +3,48 @@ package com.group9.view.panels;
 import com.group9.controller.InputObserver;
 import com.group9.model.Model;
 import com.group9.model.WaveCompleteListener;
-import com.group9.model.entities.characters.defenders.DefenderType;
 import com.group9.view.services.ImageButtonFactory;
 import com.group9.view.services.ImageLoader;
 
+import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
+import java.io.File;
+import java.io.IOException;
+import java.net.URISyntaxException;
 import java.util.List;
-import java.util.Map;
+
+
+/**
+ * The ControlPanel class represents the main control interface for the game.
+ * It includes buttons for starting waves and resetting the game,
+ * displays current wave and resource information, and manages updates when waves are completed.
+ * The panel also visually integrates a defender selection interface and handles user interactions
+ * with observers for game events. The panel also supports a customizable background image.
+ */
 
 public class ControlPanel extends JPanel implements WaveCompleteListener {
     private JButton startWaveButton;
     private JButton resetGameButton;
-    private JLabel resourcesLabel;
-    private DefenderPanel defenderPanel;
-    private JLabel waveLabel;
-    private JLabel attackersLeftLabel;
-    private JPanel wavePanel;
-    private JPanel resourcePanel;
-    private final List<InputObserver> inputObservers;
+    private JLabel resourcesLabel;  // Label to display the player's current resource amount
+    private JLabel waveLabel;  // Label to display the current wave number
+    private JLabel attackersLeftLabel; // Label to display amount of remaining attackers
+    private JPanel wavePanel;  // Panel for wave-related information
+    private JPanel resourcePanel;  // Panel for resource display
+    private final List<InputObserver> inputObservers;   // Observers for user inputs
     private final Model model;
 
-    private final Image backgroundImage;
+    private final Image backgroundImage;  // Background image for the control panel
+
 
 
     public ControlPanel(Model model, List<InputObserver> inputObservers, String backgroundImagePath) {
         this.model = model;
         this.inputObservers = inputObservers;
-        this.setBackground(Color.getHSBColor(0.33f, 1.0f, 0.2f));
+        this.setBackground(Color.getHSBColor(0.33f, 1.0f, 0.2f)); // Default greenish background
         System.out.println(backgroundImagePath);
 
+        // Load the background image
         backgroundImage = ImageLoader.loadImage(backgroundImagePath);
 
         // Register this panel as a WaveCompleteListener
@@ -59,16 +71,14 @@ public class ControlPanel extends JPanel implements WaveCompleteListener {
         }
     }
 
-    /**
-     * Sets up the layout and basic properties of the panel.
-     */
+
+    // Sets up the layout and basic properties of the panel.
     private void setupLayout() {
         setLayout(new FlowLayout(FlowLayout.CENTER, 10, 10));
     }
 
-    /**
-     * Initializes components for the control panel.
-     */
+
+    // Initializes components for the control panel.
     private void initializeComponents() {
 
         initializeWaveLabels();
@@ -78,10 +88,8 @@ public class ControlPanel extends JPanel implements WaveCompleteListener {
         // Add resource panel
         add(resourcePanel);
 
-
         // Add a panel for defender selection
-        defenderPanel = new DefenderPanel(inputObservers);
-        add(defenderPanel);
+        add(new DefenderPanel(inputObservers));
 
         // Add buttons to the control panel
         add(startWaveButton);
@@ -95,6 +103,8 @@ public class ControlPanel extends JPanel implements WaveCompleteListener {
         startWaveButton = ImageButtonFactory.createImageButton("/images/buttons/startBtn.png", 100, 50);
         resetGameButton = ImageButtonFactory.createImageButton("/images/buttons/resetBtn.png", 100, 50);
     }
+
+    // Create and configure Start Wave and Reset Game buttons
     private void initializeWaveLabels(){
         waveLabel = new JLabel("Wave: 0");
         attackersLeftLabel = new JLabel("Attackers Left: 0");
@@ -107,6 +117,7 @@ public class ControlPanel extends JPanel implements WaveCompleteListener {
         wavePanel.add(attackersLeftLabel, BorderLayout.SOUTH);
     }
 
+    // Set up labels for wave number and attackers left
     private void initializeResourcePanel(){
         resourcePanel = new JPanel();
         resourcePanel.setOpaque(false);
@@ -118,16 +129,15 @@ public class ControlPanel extends JPanel implements WaveCompleteListener {
         JLabel imageLabel = new JLabel(icon);
         resourcePanel.add(imageLabel);
 
-        // Add the resources label to the panel
+        // Add the resource count label to the panel
         resourcesLabel = new JLabel(String.valueOf(model.getResourceManager().getResources()));
         resourcesLabel.setForeground(Color.WHITE);
         resourcesLabel.setPreferredSize(new Dimension(90, 50));
         resourcePanel.add(resourcesLabel);
 
     }
-    /**
-     * Initializes listeners for the buttons.
-     */
+
+    //Initializes listeners for the buttons.
     private void initializeListeners() {
         // Listener for the Start Wave button
         startWaveButton.addActionListener(e -> {
@@ -145,32 +155,21 @@ public class ControlPanel extends JPanel implements WaveCompleteListener {
         });
     }
 
-    /**
-     * Enables or disables the Start Wave button.
-     */
+
+    // Enables or disables the Start Wave button.
     public void setStartWaveButtonEnabled(boolean enabled) {
         startWaveButton.setEnabled(enabled);
     }
 
-    /**
-     * Callback method invoked when a wave is completed.
-     */
+
+    // Callback method invoked when a wave is completed.
     public void update() {
         waveLabel.setText("Wave: " + model.getWaveManager().getWaveNumber());
         attackersLeftLabel.setText("Attackers Left: " + model.getWaveManager().getAttackersToSpawn());
         resourcesLabel.setText(String.valueOf(model.getResourceManager().getResources()));
-        updateDefenderPanelButtons();
     }
 
-    private void updateDefenderPanelButtons() {
-        int resources = model.getResourceManager().getResources(); // get the current resources from the model
-        for (Map.Entry<JButton, DefenderType> entry : defenderPanel.getButtonMap().entrySet()) {
-            JButton button = entry.getKey();
-            DefenderType type = entry.getValue();
-            button.setEnabled(resources >= type.getCost());
-        }
-    }
-
+    // Enable the Start Wave button when a wave is completed
     @Override
     public void onWaveComplete(int waveReward) {
         setStartWaveButtonEnabled(true);

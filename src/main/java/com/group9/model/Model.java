@@ -32,6 +32,7 @@ public class Model implements Observer {
     private final int laneSize;
 
     private Board board;
+    private PositionManager positionManager;
     private WaveManager waveManager;
     private AttackManager attackManager;
     private DefenderManager defenderManager;
@@ -57,6 +58,7 @@ public class Model implements Observer {
         this.attackManager = new AttackManager(board, TICKS_PER_SECONDS);
         this.gameStateManager = new GameStateManager(board, waveManager);
         this.resourceManager = new ResourceManager();
+        this.positionManager = new PositionManager(board);
         this.defenderManager = new DefenderManager(board, resourceManager);
         this.moveManager = new MoveManager(board, TICKS_PER_SECONDS);
         this.projectileManager = new ProjectileManager(board);
@@ -123,15 +125,15 @@ public class Model implements Observer {
     }
 
     public Map<AttackEntity, Position> getAllAttackersPosition() {
-        return GetAllPositionsService.getAllAttackersPosition(board);
+        return positionManager.getAllAttackersPosition();
     }
 
     public Map<DefenceEntity, Position> getAllDefendersPosition() {
-        return GetAllPositionsService.getAllDefendersPosition(board);
+        return positionManager.getAllDefendersPosition();
     }
 
     public Map<Projectile, Position> getAllProjectilesPosition() {
-        return GetAllPositionsService.getAllProjectilesPosition(board);
+        return positionManager.getAllProjectilesPosition();
     }
 
     // Place a defender at a given position on the board
