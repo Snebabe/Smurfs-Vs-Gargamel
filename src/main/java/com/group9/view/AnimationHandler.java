@@ -13,9 +13,17 @@ import java.io.IOException;
 import java.net.URISyntaxException;
 import java.util.*;
 
+/**
+ * The AnimationHandler class is responsible for managing and retrieving animation frames
+ * for various entities in the game. It implements the Observer interface to
+ * update the current frame on each clock tick.
+ */
 public class AnimationHandler implements Observer {
 
+    /** A map storing animations for each entity type and state. */
     private final Map<String, Map<EntityState, List<Image>>> animations = new HashMap<>();
+
+    /** A map storing the frame tick rate that should pass before switching frame, for each entity type. */
     private final Map<String, Integer> entityFrameTickrate;
     private int currentFrame = 0;
     private final int TICKS_PER_SECOND;
@@ -25,7 +33,12 @@ public class AnimationHandler implements Observer {
         this.TICKS_PER_SECOND = TICKS_PER_SECOND;
     }
 
-    // Load images from a folder
+    /**
+     * Retrieves all images from a specified folder.
+     *
+     * @param folderPath the path to the folder containing the images
+     * @return a list of images loaded from the folder
+     */
     private List<Image> loadImagesFromFolder(String folderPath) {
         List<Image> frames = new ArrayList<>();
         try {
@@ -46,13 +59,26 @@ public class AnimationHandler implements Observer {
         return frames;
     }
 
+    /**
+     * Sets up animations for a specific entity type and state.
+     *
+     * @param entityType the type of the entity
+     * @param state the state of the entity
+     * @param frames the list of frames for the animation
+     */
     private void setUpStateAnimations(EntityType entityType, EntityState state, List<Image> frames) {
         animations.putIfAbsent(entityType.getName(), new HashMap<>());
         Map<EntityState, List<Image>> stateAnimations = animations.get(entityType.getName());
         stateAnimations.put(state, frames);
     }
 
-    // Register animations for a CharacterType
+    /**
+     * Registers animations for a character type.
+     *
+     * @param characterType the type of the character
+     * @param state the state of the character
+     * @param folderPath the path to the folder containing the animation frames
+     */
     public void registerCharacterAnimations(CharacterType characterType, EntityState state, String folderPath) {
         List<Image> frames = loadImagesFromFolder(folderPath);
         setUpStateAnimations(characterType, state, frames);
@@ -61,7 +87,13 @@ public class AnimationHandler implements Observer {
         entityFrameTickrate.put(characterType.getName(), ticksPerFrame == 0 ? 10 : ticksPerFrame); // Default to 10 ticks per frame if attackspeed is instant
     }
 
-    // Register animations for a ProjectileType
+    /**
+     * Registers animations for a projectile type.
+     *
+     * @param projectileType the type of the projectile
+     * @param state the state of the projectile
+     * @param folderPath the path to the folder containing the animation frames
+     */
     public void registerProjectileAnimations(ProjectileType projectileType, EntityState state, String folderPath) {
         List<Image> frames = loadImagesFromFolder(folderPath);
         setUpStateAnimations(projectileType, state, frames);
@@ -70,7 +102,13 @@ public class AnimationHandler implements Observer {
         entityFrameTickrate.put(projectileType.getName(), ticksPerFrame);
     }
 
-    // Get the current frame for an entity in a given state
+    /**
+     * Gets the current frame for an entity in a given state.
+     *
+     * @param entityName the name of the entity
+     * @param state the state of the entity
+     * @return the current frame image
+     */
     public Image getFrame(String entityName, EntityState state) {
         Map<EntityState, List<Image>> stateAnimations = animations.get(entityName);
 
@@ -86,7 +124,6 @@ public class AnimationHandler implements Observer {
         return frames.get(frameIndex);
     }
 
-    // Update current frame on each clock tick
     @Override
     public void update() {
         currentFrame++;

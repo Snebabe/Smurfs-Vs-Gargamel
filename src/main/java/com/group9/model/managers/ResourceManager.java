@@ -31,7 +31,6 @@ public class ResourceManager implements AttackDeathObserver, WaveCompleteListene
         return this.resources += resources;
     }
 
-
     @Override
     public void onWaveComplete(int waveReward) {
         changeResources(waveReward);
