@@ -8,14 +8,10 @@ import com.group9.view.AnimationHandler;
 import com.group9.view.renderers.*;
 import com.group9.view.services.ImageLoader;
 
-import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.io.File;
-import java.io.IOException;
-import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -56,13 +52,6 @@ public class GamePanel extends JPanel implements Observer {
                 int row = cell.x;
                 int column = cell.y;
 
-                /*Point point = e.getPoint();
-                int cellWidth = getWidth() / columnCount;
-                int cellHeight = getHeight() / rowCount;
-
-                // Calculate clicked cell
-                int column = point.x / cellWidth;
-                int row = point.y / cellHeight;*/
 
                 // Check if the clicked cell is within bounds
                 if (row >= 0 && row < rowCount && column >= 0 && column < columnCount) {
@@ -125,10 +114,4 @@ public class GamePanel extends JPanel implements Observer {
     public void update() {
         repaint();
     }
-
-    /*@Override
-    public void invalidate() {
-        cells.clear();
-        super.invalidate();
-    }*/
 }

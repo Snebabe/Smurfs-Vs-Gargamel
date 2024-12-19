@@ -18,9 +18,7 @@ public class GridCell {
     }
 
     public void setDefender(DefenceEntity defender) {
-        if (defender == null) {
-            throw new IllegalArgumentException("Defender cannot be null.");
-        }
+
         this.defender = defender;
     }
 

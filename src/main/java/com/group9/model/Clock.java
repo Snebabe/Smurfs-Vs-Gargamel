@@ -1,9 +1,7 @@
 package com.group9.model;
 
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.Map;
-import java.util.Set;
 
 /*
  * Controls the passage of time in the game, managing the tick rate and scheduling

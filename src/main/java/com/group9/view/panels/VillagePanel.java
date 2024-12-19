@@ -1,6 +1,5 @@
 package com.group9.view.panels;
 
-import com.group9.model.Model;
 import com.group9.view.services.ImageLoader;
 
 import javax.swing.*;

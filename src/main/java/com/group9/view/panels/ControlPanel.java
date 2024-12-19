@@ -6,12 +6,8 @@ import com.group9.model.WaveCompleteListener;
 import com.group9.view.services.ImageButtonFactory;
 import com.group9.view.services.ImageLoader;
 
-import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
-import java.io.File;
-import java.io.IOException;
-import java.net.URISyntaxException;
 import java.util.List;
 
 public class ControlPanel extends JPanel implements WaveCompleteListener {

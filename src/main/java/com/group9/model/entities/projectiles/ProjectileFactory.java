@@ -8,13 +8,5 @@ public class ProjectileFactory {
             throw new IllegalArgumentException("Invalid projectile type");
         }
         return new Projectile(type.getName(), projectileLaneProgress, range, type.getSpeed(), damage);
-        /*switch (projectileType) {
-            case ARROW:
-                return new Projectile(ProjectileType.ARROW, projectileLaneProgress, range, projectileType.getSpeed(), damage);
-            case BULLET:
-                return new Projectile(ProjectileType.BULLET, projectileLaneProgress, range, projectileType.getSpeed(), damage);
-            default:
-                throw new IllegalArgumentException("Invalid projectile type: " + projectileType);
-        }*/
     }
 }
