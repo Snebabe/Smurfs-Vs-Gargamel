@@ -10,12 +10,13 @@ import javax.swing.border.CompoundBorder;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.LineBorder;
 import java.awt.*;
-import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class DefenderPanel extends JPanel {
 
-    private final List<JButton> buttons = new ArrayList<>(); // To track all buttons
+    private final Map<JButton, DefenderType> buttonMap = new HashMap<>(); // Map to track buttons and their types
     private JButton selectedButton = null; // To track the selected button
 
     public DefenderPanel(List<InputObserver> observers) {
@@ -24,23 +25,42 @@ public class DefenderPanel extends JPanel {
 
         int ImageButtonWidth = 50;
         int ImageButtonHeight = 50;
+        int minButtonWidth = 100; // Minimum width for the buttons
+        int minButtonHeight = 95; // Minimum height for the buttons
 
         for (DefenderType type : EntityConfiguration.getDefenderTypes()) {
             // Load the image
             Image defenderIcon = ImageLoader.loadResizedImage("/images/defenders/" + type.getName().toLowerCase() + "/idle/0.png", ImageButtonWidth, ImageButtonHeight);
 
             // Create a button that acts as the entire panel
-            JButton button = new JButton();
+            JButton button = new JButton() {
+                @Override
+                public void updateUI() {
+                    super.updateUI();
+                    setModel(new DefaultButtonModel() {
+                        @Override
+                        public void setEnabled(boolean b) {
+                            super.setEnabled(b);
+                            if (!b) {
+                                setBackground(Color.GRAY); // Set a faded background color when disabled
+                            } else {
+                                setBackground(Color.LIGHT_GRAY); // Reset to default background color
+                            }
+                        }
+                    });
+                }
+            };
             button.setLayout(new BoxLayout(button, BoxLayout.Y_AXIS));
             button.setFocusPainted(false);
-            button.setOpaque(false);
+            button.setOpaque(true);
             button.setToolTipText("Health: " + type.getMaxHealth() + "; " +
                     "Damage: " + type.getAttackDamage() + "; " +
                     "Range: " + type.getRange() + "; " +
                     "Attack Speed: " + type.getAttackSpeed());
+            button.setPreferredSize(new Dimension(minButtonWidth, minButtonHeight)); // Set minimum width
 
-            // Add button to tracking list
-            buttons.add(button);
+            // Add button to tracking map
+            buttonMap.put(button, type);
             button.addActionListener(e -> {
                 selectedButton = button; // Mark this button as selected
                 for (InputObserver observer : observers) {
@@ -50,10 +70,26 @@ public class DefenderPanel extends JPanel {
             });
 
             Font smallerLabelFont = button.getFont().deriveFont(Font.BOLD, 14);
-            // Cost label (above the image)
-            JLabel costLabel = new JLabel("Cost: " + type.getCost());
+
+            // Cost panel (above the image)
+            JPanel costPanel = new JPanel();
+            costPanel.setLayout(new BoxLayout(costPanel, BoxLayout.X_AXIS));
+            costPanel.setOpaque(false);
+
+            // Smurf coin image
+            Image smurfCoinImage = ImageLoader.loadResizedImage("/images/smurfCoin.png", 20, 20);
+            JLabel smurfCoinLabel = new JLabel(new ImageIcon(smurfCoinImage));
+            smurfCoinLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
+
+            // Cost label
+            JLabel costLabel = new JLabel(String.valueOf(type.getCost()));
             costLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
             costLabel.setFont(smallerLabelFont);
+
+            // Add components to the cost panel
+            costPanel.add(smurfCoinLabel);
+            costPanel.add(Box.createRigidArea(new Dimension(5, 0))); // Add space between image and cost
+            costPanel.add(costLabel);
 
             // Image icon
             JLabel imageLabel = new JLabel(new ImageIcon(defenderIcon));
@@ -65,34 +101,34 @@ public class DefenderPanel extends JPanel {
             nameLabel.setFont(smallerLabelFont);
 
             // Add components to the button
-            button.add(costLabel);
+            button.add(costPanel);
             button.add(imageLabel);
             button.add(nameLabel);
 
             // Add the button to the panel
             add(button);
-
         }
     }
+
     @Override
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
 
         // Define borders
-        LineBorder yellowThickBorder = new LineBorder(Color.darkGray, 5, false);
+        LineBorder darkGrayThickBorder = new LineBorder(Color.darkGray, 5, false);
         EmptyBorder paddingBorder = new EmptyBorder(0, 5, 0, 5);
-        CompoundBorder selectedBorder = new CompoundBorder(yellowThickBorder, paddingBorder);
+        CompoundBorder selectedBorder = new CompoundBorder(darkGrayThickBorder, paddingBorder);
 
-        for (JButton button : buttons) {
+        for (JButton button : buttonMap.keySet()) {
             if (button == selectedButton) {
-                button.setBorder(selectedBorder); // Apply yellow border to selected button
+                button.setBorder(selectedBorder); // Apply darkGrey border to selected button
             } else {
                 button.setBorder(new EmptyBorder(5, 10, 5, 10)); // Default padding border
             }
         }
     }
 
-
-
-
+    public Map<JButton, DefenderType> getButtonMap() {
+        return buttonMap;
+    }
 }

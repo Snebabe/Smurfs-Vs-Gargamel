@@ -18,7 +18,6 @@ public class GridCell {
     }
 
     public void setDefender(DefenceEntity defender) {
-
         this.defender = defender;
     }
 
