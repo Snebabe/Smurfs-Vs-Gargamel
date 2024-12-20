@@ -1,4 +1,5 @@
 #set page("a4")
+#show link: underline
 
 #align(center, text(17pt)[
 	*TDA367 Requirements Analysis Document*
@@ -23,6 +24,8 @@ Here follows some of our epic user stories:
 #align(center)[
     _As a Player, I want to enjoy an interactive UI with engaging graphics and sounds, so I feel immersed in the Smurf universe._
 ]
+
+The link to all user stories, together with the iterative workflow and how they were tasked can be found here: #link("https://github.com/users/Snebabe/projects/1")[User Stories Board]
 
 The mockups should emphasize the core mechanics of the game. The board should be visible, together with the controls for purchasing smurfs. Here is an early GUI mockup of the game:
 
@@ -194,10 +197,10 @@ Below is the domain model for Smurfs vs. Gargamel:
 
 #figure(
     caption: [Domain model for Smurfs vs. Gargamel],
-    image("res/domain_model2.svg", width: 90%)
+    image("res/domain_model.png", width: 90%)
 )
 
-The early rendering mockups should prioritize rendering a board, and the ability to place smurfs. After that, the existance of attackers should be added. Here follows an early rendering, together with an as of now, current rendering:
+The early rendering mockups should prioritize rendering a board, and the ability to place smurfs. After that, the existance of attackers should be added. Here follows three different renderings from: Early in the porject, in the middle, and the final rendering:
 
 #figure(
     caption: [Early rendering of the game],
@@ -207,4 +210,9 @@ The early rendering mockups should prioritize rendering a board, and the ability
 #figure(
     caption: [Week 6 rendering of the game],
     image("res/current_rendering.png", width: 100%)
+)
+
+#figure(
+    caption: [Final rendering of the game],
+    image("res/final_rendering.png", width: 100%)
 )
