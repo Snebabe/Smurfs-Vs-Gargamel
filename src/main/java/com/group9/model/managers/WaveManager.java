@@ -4,8 +4,10 @@ import com.group9.model.board.Board;
 import com.group9.model.board.Lane;
 import com.group9.model.Observer;
 import com.group9.model.WaveCompleteListener;
+import com.group9.model.entities.EntityConfiguration;
 import com.group9.model.entities.characters.attackers.AttackEntity;
 import com.group9.model.entities.characters.attackers.AttackEntityFactory;
+import com.group9.model.entities.characters.attackers.AttackerType;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -108,8 +110,23 @@ public class WaveManager implements Observer {
             notifyWaveComplete();
         }
     }
+    private void spawnAttackerRandomly() {
+        Random random = new Random();
+        int randomLaneIndex = random.nextInt(board.getLanes().size());
+        Lane selectedLane = board.getLanes().get(randomLaneIndex);
 
+        List<AttackerType> availableTypes = EntityConfiguration.getAttackerTypes();
+        if (waveNumber < 10) {
+            availableTypes.removeIf(type -> type.getName().equals("KNIGHTGARGAMEL"));
+        }
 
+        int randomIndex = random.nextInt(availableTypes.size());
+        AttackerType randomType = availableTypes.get(randomIndex);
+
+        AttackEntity attacker = AttackEntityFactory.createAttacker(randomType);
+        selectedLane.addAttacker(attacker);
+    }
+/*
     private void spawnAttackerRandomly() {
         Random random = new Random();
         int randomLaneIndex = random.nextInt(board.getLanes().size());
@@ -117,6 +134,8 @@ public class WaveManager implements Observer {
         AttackEntity attacker = AttackEntityFactory.createRandomAttacker();
         selectedLane.addAttacker(attacker);
     }
+
+ */
 
     public void addWaveCompleteListener(WaveCompleteListener listener) {
         listeners.add(listener);

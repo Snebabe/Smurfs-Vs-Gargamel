@@ -10,7 +10,7 @@ import com.group9.model.entities.characters.attackers.AttackEntity;
  * and reset resources.
  */
 public class ResourceManager implements AttackDeathObserver, WaveCompleteListener {
-    private final int startResources = 4500;
+    private final int startResources = 500;
     private int resources;
 
     public ResourceManager(){

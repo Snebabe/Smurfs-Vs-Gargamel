@@ -21,8 +21,8 @@ public class EntityConfiguration {
 
     static {
         // Register ProjectileTypes
-        ProjectileType ARROW = new ProjectileType("ARROW", 4);
-        ProjectileType BULLET = new ProjectileType("BULLET", 6);
+        ProjectileType ARROW = new ProjectileType("ARROW", 8);
+        ProjectileType BULLET = new ProjectileType("BULLET", 12);
 
         PROJECTILE_TYPE_LIST.add(ARROW);
         PROJECTILE_TYPE_LIST.add(BULLET);
@@ -41,11 +41,13 @@ public class EntityConfiguration {
         DEFENDER_TYPE_LIST.add(ARSONIST);
 
         // Register AttackerTypes
-        AttackerType GARGAMEL = new AttackerType("GARGAMEL",  100, 10, 0, 1f, 1, 25);
-        AttackerType FASTGARGAMEL = new AttackerType("FASTGARGAMEL", 100, 6, 1, 0.5f, 2, 25);
+        AttackerType GARGAMEL = new AttackerType("GARGAMEL",  100, 10, 0, 1f, 2, 25);
+        AttackerType FASTGARGAMEL = new AttackerType("FASTGARGAMEL", 100, 6, 0, 0.5f, 4, 25);
+        AttackerType KNIGHTGARGAMEL = new AttackerType("KNIGHTGARGAMEL", 500, 50, 0, 1f, 1, 250);
 
         ATTACKER_TYPE_LIST.add(GARGAMEL);
         ATTACKER_TYPE_LIST.add(FASTGARGAMEL);
+        ATTACKER_TYPE_LIST.add(KNIGHTGARGAMEL);
 
     }
 
