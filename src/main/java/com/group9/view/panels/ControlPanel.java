@@ -108,6 +108,7 @@ public class ControlPanel extends JPanel implements WaveCompleteObserver {
         wavePanel.setLayout(new BorderLayout());
         wavePanel.add(waveLabel, BorderLayout.NORTH);
         wavePanel.add(attackersLeftLabel, BorderLayout.SOUTH);
+        wavePanel.setPreferredSize(new Dimension(260, 50));
     }
 
     private void initializeResourcePanel(){
