@@ -5,9 +5,15 @@ import com.group9.model.entities.characters.attackers.AttackEntity;
 import com.group9.model.Position;
 import com.group9.model.Model;
 import com.group9.view.AnimationHandler;
+import com.group9.view.services.HealthBarUtils;
+
 import java.awt.*;
 import java.util.Map;
 
+/**
+ * The AttackerRenderer class is responsible for rendering attacker entities on the game panel.
+ * It uses the provided HealthBarUtils to draw health bars for the attackers.
+ */
 public class AttackerRenderer implements EntityRenderer {
 
     private final HealthBarUtils healthBarUtils;
@@ -19,7 +25,6 @@ public class AttackerRenderer implements EntityRenderer {
 
     @Override
     public void draw(Graphics2D g2d, Model model, AnimationHandler animationHandler, int cellWidth, int cellHeight, int panelWidth) {
-        // Loop through all attackers and their positions
         for (Map.Entry<AttackEntity, Position> entry : model.getAllAttackersPosition().entrySet()) {
             AttackEntity attacker = entry.getKey();
             Position position = entry.getValue();

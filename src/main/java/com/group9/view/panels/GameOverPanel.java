@@ -7,6 +7,10 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionListener;
 
+/**
+ * The GameOverPanel class represents the panel displayed when the game is over.
+ * It shows the number of waves completed and provides buttons to start a new game or quit.
+ */
 public class GameOverPanel extends JPanel {
     private JLabel gameOverLabel;
     private JLabel wavesCompletedLabel;
@@ -14,39 +18,48 @@ public class GameOverPanel extends JPanel {
     private JButton quitButton;
     private Image backgroundImage;
 
-    public GameOverPanel(int wavesCompleted, ActionListener newGameListener, ActionListener quitListener, Font font) {
+    /**
+     * Constructs a GameOverPanel with the specified number of waves completed.
+     *
+     * @param wavesCompleted the number of waves completed
+     * @param newGameListener the action listener for the new game button
+     */
+    public GameOverPanel(int wavesCompleted, List<InputObserver> inputObservers, ActionListener newGameListener) {
         backgroundImage = ImageLoader.loadImage("/images/backgrounds/gameOverBg.png");
 
         setLayout(new GridBagLayout());
         GridBagConstraints gbc = new GridBagConstraints();
 
-        // Add "Game Over!" label
+        addWavesCompletedLabel(wavesCompleted, gbc);
+
+        // Add start game button and quit button, and set their action listeners
+        addButtons(newGameListener, inputObservers, gbc);
+    }
+
+    private void addWavesCompletedLabel(int wavesCompleted, GridBagConstraints gbc) {
         gbc.gridx = 0;
         gbc.anchor = GridBagConstraints.CENTER;
-
-        // Add waves completed label
         gbc.gridy = 0;
+
         wavesCompletedLabel = new JLabel("Waves survived: " + wavesCompleted);
         wavesCompletedLabel.setFont(getFont().deriveFont(Font.BOLD, 36));
         wavesCompletedLabel.setForeground(Color.CYAN);
         add(wavesCompletedLabel, gbc);
+    }
 
-        // Create a panel for the buttons that is transparent to make background visible
+    private void addButtons(ActionListener newGameListener, List<InputObserver> inputObservers, GridBagConstraints gbc) {
         JPanel buttonPanel = new JPanel();
         buttonPanel.setOpaque(false);
 
-        // Add new game button
         newGameButton = ImageButtonFactory.createImageButton("/images/buttons/restartBtn.png", 100, 50);
         newGameButton.addActionListener(newGameListener);
 
-        // Add quit button
         quitButton = ImageButtonFactory.createImageButton("/images/buttons/exitBtn.png", 100, 50);
         quitButton.addActionListener(quitListener);
 
         buttonPanel.add(newGameButton);
         buttonPanel.add(quitButton);
 
-        // Position the button panel below the wave completion label
         gbc.gridy = 1;
         add(buttonPanel, gbc);
     }

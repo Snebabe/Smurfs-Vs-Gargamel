@@ -31,6 +31,14 @@ public class View extends JFrame implements Observer, GameOverListener {
     private final List<InputObserver> inputObservers = new ArrayList<>();
     private boolean isFullscreen = false;
 
+    /**
+     * Constructs a new View with the specified dimensions, model, and clock.
+     *
+     * @param WIDTH the width of the window
+     * @param HEIGHT the height of the window
+     * @param model the game model
+     * @param clock the game clock
+     */
     public View(int WIDTH, int HEIGHT, Model model, Clock clock) {
 
         // Set up the JFrame

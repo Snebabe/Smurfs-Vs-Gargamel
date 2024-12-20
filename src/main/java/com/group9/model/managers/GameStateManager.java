@@ -42,11 +42,11 @@ public class GameStateManager {
                     for (GameOverListener listener : gameOverListeners) {
                         listener.onGameOver(waveManager.getWaveNumber()-1);
                     }
-                    return true; // Return true as the game is over
+                    return true;
                 }
             }
         }
-        return false;  // Return false if no attacker has reached the end
+        return false;
     }
 
     public void addGameOverListener(GameOverListener listener) {

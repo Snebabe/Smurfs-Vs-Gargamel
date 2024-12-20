@@ -1,11 +1,11 @@
 package com.group9.model;
 
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Map;
-import java.util.Set;
+import com.group9.model.observers.ClockObserver;
 
-/*
+import java.util.HashMap;
+import java.util.Map;
+
+/**
  * Controls the passage of time in the game, managing the tick rate and scheduling
  * periodic updates for observers. Ensures the game loop runs at a consistent pace.
  */
@@ -13,7 +13,7 @@ import java.util.Set;
 public class Clock{
     private final int TICKS_PER_SECOND;
     private final long MS_PER_TICK;
-    private final Map<Observer,TickCounter> observers; // Map of observers and their associated tick intervals
+    private final Map<ClockObserver,TickCounter> observers;
 
     public Clock(int TICKS_PER_SECOND) {
         this.TICKS_PER_SECOND = TICKS_PER_SECOND;
@@ -21,20 +21,17 @@ public class Clock{
         observers = new HashMap<>();
     }
 
-    // Add an observer that will update after a specified number of seconds
-    public void addObserver(Observer observer, float seconds) {
-        observers.put(observer, new TickCounter(seconds, TICKS_PER_SECOND));
-    }
-
-    // Start the game loop that runs every tick
+    /**
+     * Starts the game loop that runs every tick.
+     * The loop will continue running until the game is stopped
+     */
     public void start() {
         Thread gameLoop = new Thread(() -> {
 
-            // Main loop running until the clock is paused
             while (true) {
-                long startTime = System.currentTimeMillis(); // Track the start time for tick timing
-                for (Observer observer : observers.keySet()) {
-                    TickCounter tickCounter = observers.get(observer); // Get the observer's tick counter
+                long startTime = System.currentTimeMillis();
+                for (ClockObserver observer : observers.keySet()) {
+                    TickCounter tickCounter = observers.get(observer);
 
                     // Check if the observer's tick counter has reached its interval
                     if (tickCounter.getTicks() == tickCounter.getTickInterval()) {
@@ -59,7 +56,11 @@ public class Clock{
                 }
             }
         });
-        gameLoop.start(); // Start the game loop thread
+        gameLoop.start();
+    }
+
+    public void addObserver(ClockObserver observer, float seconds) {
+        observers.put(observer, new TickCounter(seconds, TICKS_PER_SECOND));
     }
 
 }

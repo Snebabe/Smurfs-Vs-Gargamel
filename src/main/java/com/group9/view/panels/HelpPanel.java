@@ -6,15 +6,24 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionListener;
 
+/**
+ * The HelpPanel class represents a panel that displays the help instructions for the game.
+ * It includes a back button to return to the previous screen, and a text area
+ * with game instructions.
+ */
 public class HelpPanel extends JPanel {
-    private final Image backgroundImage; // Background image for the help panel
+    private final Image backgroundImage;
 
+    /**
+     * Constructs a HelpPanel to display instructions.
+     *
+     * @param backButtonListener the action listener for the back button
+     */
     public HelpPanel(ActionListener backButtonListener) {
 
         // Load the background image for the panel
         backgroundImage = ImageLoader.loadImage("/images/backgrounds/controlPanelBg.jpg");
 
-        // Button to go back to the previous screen
         JButton backButton = ImageButtonFactory.createImageButton("/images/buttons/backBtn.png", 200, 80);
         backButton.addActionListener(backButtonListener);
 

@@ -8,7 +8,9 @@ import com.group9.view.AnimationHandler;
 
 import java.awt.*;
 import java.util.Map;
-
+/**
+ * The ProjectileRenderer class is responsible for rendering projectile entities on the game panel.
+ */
 public class ProjectileRenderer implements EntityRenderer {
 
     @Override

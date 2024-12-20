@@ -7,11 +7,15 @@ import java.awt.*;
 import java.awt.event.ActionListener;
 
 public class StartPanel extends JPanel {
-    private final Image backgroundImage; // Background image for the start panel
+    private final Image backgroundImage;
 
+    /**
+     * Constructs a StartPanel as an entrypoint to the game.
+     *
+     * @param startButtonListener the action listener for the start button
+     * @param helpButtonListener the action listener for the help button
+     */
     public StartPanel(ActionListener startButtonListener, ActionListener helpButtonListener) {
-
-        // Load the background image for the start panel
         this.backgroundImage = ImageLoader.loadImage("/images/backgrounds/startPanelBg.png");
 
         // Set the layout for the panel to GridBagLayout

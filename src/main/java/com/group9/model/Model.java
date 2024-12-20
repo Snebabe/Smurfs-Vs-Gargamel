@@ -15,19 +15,19 @@ import com.group9.model.entities.characters.defenders.DefenceEntity;
 import com.group9.model.entities.characters.defenders.DefenderType;
 import com.group9.model.managers.*;
 import com.group9.model.managers.MoveManager;
+import com.group9.model.observers.ClockObserver;
+import com.group9.model.observers.GameOverObserver;
 import com.group9.model.services.GetAllPositionsService;
-
 import java.util.*;
 
 
 
-/*
- * Central class that manages the overall game logic. Coordinates various managers
- * such as WaveManager, AttackManager, ResourceManager, etc., and handles game state.
- * Responsible for updating the game entities and maintaining the flow of the game.
+/**
+ * Central facade class that manages the overall game logic. Initializes and coordinates various managers
+ * such as WaveManager, AttackManager, ResourceManager, etc.
+ * Responsible for executing game cycles.
  */
-
-public class Model implements Observer {
+public class Model implements ClockObserver {
 
     private final int laneAmount;
     private final int laneSize;
@@ -43,16 +43,36 @@ public class Model implements Observer {
     private final int TICKS_PER_SECONDS;
     private ProjectileManager projectileManager;
 
+    /**
+     * Constructs a Model with the specified ticks per second, lane amount, and lane size.
+     *
+     * @param TICKS_PER_SECONDS the number of ticks per second
+     * @param laneAmount the number of lanes in the game
+     * @param laneSize the size of each lane
+     */
     public Model(int TICKS_PER_SECONDS, int laneAmount, int laneSize) {
         this.TICKS_PER_SECONDS = TICKS_PER_SECONDS;
         this.laneAmount = laneAmount;
         this.laneSize = laneSize;
         board = new Board(laneAmount, laneSize);
         initializeManagers();
-        registerObservers(); // Register observers for relevant events
+        registerObservers();
     }
 
-    // Initialize the different game managers
+    /**
+     * Runs a game cycle each tick
+     */
+    public void update() {
+        if (gameStateManager.isGameOver()) {
+            resetGame();
+        }
+
+        waveManager.update();
+        moveManager.update();
+        attackManager.update();
+        projectileManager.handleProjectilesCollision();
+    }
+
     private void initializeManagers() {
         waveManager = new WaveManager(board, TICKS_PER_SECONDS);
         attackManager = new AttackManager(board, TICKS_PER_SECONDS);
@@ -63,56 +83,40 @@ public class Model implements Observer {
         projectileManager = new ProjectileManager(board);
     }
 
-    // Register observers for the managers that need to listen for events
     private void registerObservers() {
-        waveManager.addWaveCompleteListener(resourceManager);
+        waveManager.addWaveCompleteObserver(resourceManager);
         attackManager.addAttackDeathObserver(resourceManager);
         projectileManager.addAttackDeathObserver(resourceManager);
     }
 
-    public Board getBoard() {
-        return board;
-    }
-
-    public void addGameOverListener(GameOverListener listener) {
-        gameStateManager.addGameOverListener(listener);
-    }
-
-    // Reset the game state and resources
     public void resetGame() {
         board.resetBoard();
         waveManager.resetWaveManager();
         resourceManager.resetResources();
     }
 
-    // Update the game logic, called every game loop tick
-
-    public void update() {
-        if (gameStateManager.isGameOver()) {
-            resetGame();
-        } // Reset game
-
-        // Update all managers
-        waveManager.update();
-        moveManager.update();
-        attackManager.update();
-        projectileManager.handleProjectilesCollision();  // Check for projectile collisions
+    public void addGameOverObserver(GameOverObserver observer) {
+        gameStateManager.addGameOverObserver(observer);
     }
 
-    public WaveManager getWaveManager() {
-        return waveManager;
+    public void startWave() {
+        waveManager.startWave();
+    }
+
+    public void placeDefender(DefenderType defenderType, Position position) {
+        defenderManager.placeDefender(defenderType, position);
     }
 
     public ResourceManager getResourceManager() {
         return resourceManager;
     }
-    public AttackManager getAttackManager() {
-        return attackManager;
+
+    public Board getBoard() {
+        return board;
     }
 
-    // Start the next wave of attackers
-    public void startWave() {
-        waveManager.startWave();
+    public WaveManager getWaveManager() {
+        return waveManager;
     }
 
     public int getLaneAmount() {
@@ -135,8 +139,4 @@ public class Model implements Observer {
         return GetAllPositionsService.getAllProjectilesPosition(board);
     }
 
-    // Place a defender at a given position on the board
-    public void placeDefender(DefenderType defenderType, Position position) {
-        defenderManager.placeDefender(defenderType, position);
-    }
 }

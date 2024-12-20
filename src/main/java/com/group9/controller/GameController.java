@@ -49,4 +49,10 @@ public class GameController implements InputObserver {
         System.out.println("Resetting game...");
         model.resetGame();
     }
+
+    @Override
+    public void onGameQuitClicked() {
+        System.out.println("Quitting game...");
+        System.exit(0);
+    }
 }

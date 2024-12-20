@@ -4,13 +4,19 @@ import com.group9.view.services.ImageLoader;
 import javax.swing.*;
 import java.awt.*;
 
+/**
+ * The VillagePanel class represents a panel that displays the village to protect.
+ */
 public class VillagePanel extends JPanel {
-
-    //The two different village images
     Image villageImage1;
     Image villageImage2;
     private final int rowCount;
 
+    /**
+     * Constructs a VillagePanel based on the number of rows.
+     *
+     * @param rowCount the number of rows to display
+     */
     public VillagePanel(int rowCount) {
         // Load the two village images
         villageImage1 = ImageLoader.loadImage("/images/backgrounds/village1.png");

@@ -5,8 +5,6 @@ package com.group9.model;
  * Any class that wants to handle actions when a wave is completed
  * should implement this interface and define the onWaveComplete method.
  */
-
-public interface WaveCompleteListener {
-    // Could add parameters later (e.g. wave number, wave reward?, etc.)
+public interface WaveCompleteObserver {
     void onWaveComplete(int waveReward);
 }

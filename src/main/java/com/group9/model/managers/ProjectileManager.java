@@ -1,6 +1,6 @@
 package com.group9.model.managers;
 
-import com.group9.model.AttackDeathObserver;
+import com.group9.model.observers.AttackDeathObserver;
 import com.group9.model.board.Board;
 import com.group9.model.board.Lane;
 import com.group9.model.entities.characters.attackers.AttackEntity;

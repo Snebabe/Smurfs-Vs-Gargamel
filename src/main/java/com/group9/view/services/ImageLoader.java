@@ -4,6 +4,9 @@ import javax.imageio.ImageIO;
 import java.awt.*;
 import java.io.IOException;
 
+/**
+ * The ImageLoader class provides methods to load and resize images from specified filepaths.
+ */
 public class ImageLoader {
     public static Image loadImage(String path) {
         try {

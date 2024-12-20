@@ -16,7 +16,7 @@ public class Lane {
     private final List<AttackEntity> attackEntities;
     private final List<GridCell> gridCells;
     private final List<Projectile> projectiles;
-    private final List<Movable> movables; // List of all movable entities (attackers and projectiles)
+    private final List<Movable> movables;
 
     /**
      * Initializes the lane with a specified number of cells.
@@ -128,7 +128,7 @@ public class Lane {
     public DefenceEntity getDefenderAtIndex(int index) {
         GridCell gridcell = gridCells.get(index);
         if (gridcell != null) {
-            return gridCells.get(index).getDefender(); // Return the defender, if present
+            return gridCells.get(index).getDefender();
         }
         return null;
     }

@@ -1,7 +1,7 @@
 package com.group9.model.managers;
 
-import com.group9.model.AttackDeathObserver;
-import com.group9.model.WaveCompleteListener;
+import com.group9.model.observers.AttackDeathObserver;
+import com.group9.model.observers.WaveCompleteObserver;
 import com.group9.model.entities.characters.attackers.AttackEntity;
 
 /**
@@ -9,7 +9,7 @@ import com.group9.model.entities.characters.attackers.AttackEntity;
  * them when attackers die or waves are completed. Provides methods to change
  * and reset resources.
  */
-public class ResourceManager implements AttackDeathObserver, WaveCompleteListener {
+public class ResourceManager implements AttackDeathObserver, WaveCompleteObserver {
     private final int startResources = 500;
     private int resources;
 
@@ -21,7 +21,6 @@ public class ResourceManager implements AttackDeathObserver, WaveCompleteListene
         return resources;
     }
 
-    // Reset resources to starting value
     public void resetResources() {
         resources = startResources;
     }

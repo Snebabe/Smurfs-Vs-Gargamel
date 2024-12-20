@@ -26,7 +26,7 @@ public class WaveManager implements Observer {
     private final int defaultSpawnIntervalInTicks;
     private int ticksSinceLastSpawn;
     private final int TICKS_PER_SECONDS;
-    private final List<WaveCompleteListener> listeners;
+    private final List<WaveCompleteObserver> observers;
     private boolean waveCompleted;
     private final Board board;
     private final ProbabilityManager probabilityManager;
@@ -47,7 +47,7 @@ public class WaveManager implements Observer {
         spawnIntervalInTicks = TICKS_PER_SECONDS*5; // Set the interval to spawn attackers
         defaultSpawnIntervalInTicks = spawnIntervalInTicks;
         ticksSinceLastSpawn = 0;
-        listeners = new ArrayList<>();
+        observers = new ArrayList<>();
         waveCompleted = false;
         probabilityManager = new ProbabilityManager();
     }
@@ -133,19 +133,19 @@ public class WaveManager implements Observer {
         selectedLane.addAttacker(attacker);
     }
 
-    public void addWaveCompleteListener(WaveCompleteListener listener) {
-        listeners.add(listener);
+    public void addWaveCompleteObserver(WaveCompleteObserver observer) {
+        observers.add(observer);
     }
 
-    public void removeWaveCompleteListener(WaveCompleteListener listener) {
-        listeners.remove(listener);
+    public void removeWaveCompleteObserver(WaveCompleteObserver observer) {
+        observers.remove(observer);
     }
 
     private void notifyWaveComplete() {
         if (!waveCompleted) {
             waveCompleted = true;
-            for (WaveCompleteListener listener : listeners) {
-                listener.onWaveComplete(getWaveReward());
+            for (WaveCompleteObserver observer : observers) {
+                observer.onWaveComplete(getWaveReward());
             }
         }
 

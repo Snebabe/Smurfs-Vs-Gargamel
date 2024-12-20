@@ -4,19 +4,17 @@ import com.group9.model.entities.characters.defenders.DefenceEntity;
 import com.group9.model.Position;
 import com.group9.model.Model;
 import com.group9.view.AnimationHandler;
+import com.group9.view.services.HealthBarUtils;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.util.Map;
 
+/**
+ * The DefenderRenderer class is responsible for rendering defender entities on the game panel.
+ * It uses the provided HealthBarUtils to draw health bars for the defenders.
+ */
 public class DefenderRenderer implements EntityRenderer {
-
-    private final HealthBarUtils healthBarUtils;
-
-    // Pass the HealthBarUtils instance to the renderer
-    public DefenderRenderer(HealthBarUtils healthBarUtils) {
-        this.healthBarUtils = healthBarUtils;
-    }
 
     @Override
     public void draw(Graphics2D g2d, Model model, AnimationHandler animationHandler, int cellWidth, int cellHeight, int panelWidth) {

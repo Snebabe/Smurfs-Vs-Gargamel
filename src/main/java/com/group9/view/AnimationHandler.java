@@ -1,6 +1,6 @@
 package com.group9.view;
 
-import com.group9.model.Observer;
+import com.group9.model.observers.ClockObserver;
 import com.group9.model.entities.EntityState;
 import com.group9.model.entities.EntityType;
 import com.group9.model.entities.characters.CharacterType;

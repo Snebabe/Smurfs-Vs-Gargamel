@@ -15,55 +15,67 @@ import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 import java.util.List;
 
-public class GamePanel extends JPanel implements Observer {
+/**
+ * The GamePanel class represents the main game area where the game entities are rendered.
+ * It handles the rendering of the game grid and entities.
+ */
+public class GamePanel extends JPanel implements ClockObserver {
 
-    private final List<EntityRenderer> entityRenderers; // List of renderers for different entities (attackers, defenders, etc.)
-    private final int columnCount; // Number of columns
-    private final int rowCount;   // Number of rows
+    private final List<EntityRenderer> entityRenderers;
+    private final int columnCount;
+    private final int rowCount;
     private final Model model;
     private final AnimationHandler animationHandler;
+
+    /**
+     * Constructs a GamePanel with the specified model, animation handler, and input observers.
+     *
+     * @param model the game model
+     * @param animationHandler the handler for animations
+     * @param inputObservers the list of input observers
+     */
 
     public GamePanel(Model model, AnimationHandler animationHandler, List<InputObserver> inputObservers) {
         this.model = model;
         rowCount = model.getLaneAmount();
         columnCount = model.getLaneSize();
         this.animationHandler = animationHandler;
-        setBackground(Color.getHSBColor(0.33f, 1.0f, 0.2f)); // Set background color for the panel
+        setBackground(Color.getHSBColor(0.33f, 1.0f, 0.2f)); // Set background color to dark green
 
-        // Initialize the list of entity renderers with direct access to the model
         entityRenderers = new ArrayList<>();
 
-        // Initialize health bar utilities for renderers
-        HealthBarUtils healthBarUtils = new HealthBarUtils();
-
-        // Add renderers to the list
-        entityRenderers.add(new AttackerRenderer(healthBarUtils));
-        entityRenderers.add(new DefenderRenderer(healthBarUtils));
+        entityRenderers.add(new AttackerRenderer());
+        entityRenderers.add(new DefenderRenderer());
         entityRenderers.add(new ProjectileRenderer());
 
-        // Add mouse listener for handling grid cell clicks
         addMouseListener(createMouseHandler(inputObservers));
     }
 
-    // Create Mouse Input Handler for grid cell clicks
+    /**
+     * Creates a MouseAdapter to see mouse position in the grid
+     *
+     * @param inputObservers the list of input observers
+     * @return the MouseAdapter for handling grid cell clicks
+     */
     private MouseAdapter createMouseHandler(List<InputObserver> inputObservers) {
         return new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
-                // Map mouse click coordinates to the grid cell
-                Point cell = PositionConverter.mapToGrid(e.getPoint(), getWidth(), getHeight(), rowCount, columnCount);
+                // Calculate clicked cell
+                int cellWidth = getWidth() / columnCount;
+                int cellHeight = getHeight() / rowCount;
 
-                int row = cell.x;
-                int column = cell.y;
+                int column = e.getPoint().x / cellWidth;
+                int row = e.getPoint().y / cellHeight;
+
 
                 // Check if the clicked cell is within bounds
                 if (row >= 0 && row < rowCount && column >= 0 && column < columnCount) {
-                    // Notify observers
                     for (InputObserver observer : inputObservers) {
                         observer.onGridCellClicked(row, column);
                     }
 
-                    repaint(); // Update the grid with the selected cell
+                    repaint();
                 }
             }
         };
@@ -81,21 +93,16 @@ public class GamePanel extends JPanel implements Observer {
         int cellWidth = width / columnCount;
         int cellHeight = height / rowCount;
 
-        // Initialize grid cells if empty
         drawGrid(g2d, cellWidth, cellHeight);
 
-        // Call draw() for each renderer
         for (EntityRenderer renderer : entityRenderers) {
             renderer.draw(g2d, model, animationHandler, cellWidth, cellHeight, width);
         }
 
-        g2d.dispose();// Dispose of the Graphics2D object to free up resources
+        g2d.dispose();
     }
 
-
-    // Draw the grid with alternating images for each cell
     private void drawGrid(Graphics2D g2d, int cellWidth, int cellHeight) {
-        // Load the alternating cell images
         Image gridImage = ImageLoader.loadImage("/images/backgrounds/gridcell2.png");
         Image gridImage2 = ImageLoader.loadImage("/images/backgrounds/gridcell.png");
 

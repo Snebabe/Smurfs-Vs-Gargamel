@@ -2,7 +2,6 @@ package com.group9.model.entities;
 import com.group9.model.attacks.MaxHealthAOEAttack;
 import com.group9.model.attacks.MeleeAttack;
 import com.group9.model.attacks.RangedAttack;
-import com.group9.model.entities.characters.CharacterType;
 import com.group9.model.entities.characters.attackers.AttackerType;
 import com.group9.model.entities.characters.defenders.DefenderType;
 import com.group9.model.entities.projectiles.ProjectileType;

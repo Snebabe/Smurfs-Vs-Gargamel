@@ -5,10 +5,13 @@ import com.group9.model.Clock;
 import com.group9.model.Model;
 import com.group9.view.View;
 
+/**
+ * The App class serves as the entry point for the application, initializing the MVC components
+ * and starting the game clock.
+ */
 public class App {
     public static void main(String[] args) {
 
-        // Initialize the MVC components
         int TICKS_PER_SECONDS = 120;
         Clock clock = new Clock(TICKS_PER_SECONDS);
         Model model = new Model(TICKS_PER_SECONDS,5,9);
