@@ -21,7 +21,7 @@ public class App {
 
         view.addInputObserver(controller);
 
-        clock.addObserver(model,0);
+        clock.addObserver(model);
         clock.start();
     }
 }

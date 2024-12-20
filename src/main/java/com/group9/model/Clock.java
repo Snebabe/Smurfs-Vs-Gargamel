@@ -2,22 +2,21 @@ package com.group9.model;
 
 import com.group9.model.observers.ClockObserver;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
- * Controls the passage of time in the game, managing the tick rate and scheduling
- * periodic updates for observers. Ensures the game loop runs at a consistent pace.
+ * Controls the passage of time in the game, managing the tick rate and send update signals
+ * each tick for its observers. Ensures the game loop runs at a consistent pace.
  */
 public class Clock{
-    private final int TICKS_PER_SECOND;
     private final long MS_PER_TICK;
-    private final Map<ClockObserver,TickCounter> observers;
+    private final List<ClockObserver> observers = new ArrayList<>();;
 
     public Clock(int TICKS_PER_SECOND) {
-        this.TICKS_PER_SECOND = TICKS_PER_SECOND;
         MS_PER_TICK = 1000 / TICKS_PER_SECOND;
-        observers = new HashMap<>();
     }
 
     /**
@@ -29,16 +28,8 @@ public class Clock{
 
             while (true) {
                 long startTime = System.currentTimeMillis();
-                for (ClockObserver observer : observers.keySet()) {
-                    TickCounter tickCounter = observers.get(observer);
-
-                    // Check if the observer's tick counter has reached its interval
-                    if (tickCounter.getTicks() == tickCounter.getTickInterval()) {
-                        observer.update();
-                        tickCounter.reset();
-                    } else {
-                        tickCounter.increment();
-                    }
+                for (ClockObserver observer : observers) {
+                    observer.update();
                 }
 
                 // Wait to maintain consistent update rate
@@ -58,8 +49,8 @@ public class Clock{
         gameLoop.start();
     }
 
-    public void addObserver(ClockObserver observer, float seconds) {
-        observers.put(observer, new TickCounter(seconds, TICKS_PER_SECOND));
+    public void addObserver(ClockObserver observer) {
+        observers.add(observer);
     }
 
 }

@@ -179,8 +179,8 @@ public class View extends JFrame implements ClockObserver, GameOverObserver {
     }
 
     private void addObservers(Clock clock, Model model, AnimationHandler animationHandler){
-        clock.addObserver(this,0);
-        clock.addObserver(animationHandler, 0);
+        clock.addObserver(this);
+        clock.addObserver(animationHandler);
         model.addGameOverObserver(this);
     }
 
