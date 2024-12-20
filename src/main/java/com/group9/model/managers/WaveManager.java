@@ -31,7 +31,7 @@ public class WaveManager implements Observer {
     private final Board board;
     private final ProbabilityManager probabilityManager;
 
-
+    
     /**
      * Constructs a WaveManager with the specified game board, and ticks per second.
      *

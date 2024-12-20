@@ -63,17 +63,18 @@ public class AttackManager implements Observer {
             }
 
             // Attack if the defender is ready
-            if (attackCounters.get(defender).getTicks() == 0) {
-                if (defender.useAttack(lane, cellIndex)){
+            TickCounter counter = attackCounters.get(defender);
+            if (counter.getTicks() == 0) {
+                if (defender.useAttack(lane, cellIndex)) { // Use attack and check if it's successful
                     removeDeadAttackers(lane);
-                    if (attackCounters.get(defender).getTickInterval()!=0) {
-                        attackCounters.get(defender).increment();
+                    if (counter.getTickInterval()!=0) {
+                        counter.increment();
                     }
                 }
-            } else if (attackCounters.get(defender).getTicks() >= attackCounters.get(defender).getTickInterval()) {
-                attackCounters.get(defender).reset();
+            } else if (counter.getTicks() >= counter.getTickInterval()) {
+                counter.reset();
             } else {
-                attackCounters.get(defender).increment();
+                counter.increment();
             }
 
         }
