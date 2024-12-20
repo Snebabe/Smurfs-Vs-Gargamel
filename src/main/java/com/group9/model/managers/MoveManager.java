@@ -36,7 +36,7 @@ public class MoveManager implements Observer {
         MovementRule rule = movableEntity.getMovementRule();
         if (rule.canMove(movableEntity, lane)) {
             float laneProgress = movableEntity.getLaneProgress();
-            laneProgress += (float) movableEntity.getSpeed() / (TICKS_PER_SECONDS*20);
+            laneProgress += (float) (movableEntity.getSpeed() / (TICKS_PER_SECONDS*2.5*lane.getNumberOfCells()));
             movableEntity.setLaneProgress(laneProgress);
         }
     }
