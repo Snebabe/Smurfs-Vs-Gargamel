@@ -30,7 +30,7 @@ public class EntityConfiguration {
         DefenderType SHROOM = new DefenderType("SHROOM","Health: 250",  250, 0, 0, 0f, 100, new MeleeAttack());
         DefenderType BOXER = new DefenderType("BOXER", "Health: 150; Damage: 10; Range: 1; Attack Speed: 2/s", 150, 10, 1, 0.5f, 150, new MeleeAttack());
         DefenderType ARCHER = new DefenderType("ARCHER", "Health: 50; Damage: 20; Range: 3; Attack Speed: 1/s", 50, 20, 3, 1f, 150, new RangedAttack(ARROW));
-        DefenderType SHOOTER = new DefenderType("SHOOTER", "Health: 50; Damage: 10; Range: 5; Attack Speed: 2/s", 50, 20, 5, 0.5f, 500, new RangedAttack(BULLET));
+        DefenderType SHOOTER = new DefenderType("SHOOTER", "Health: 50; Damage: 20; Range: 5; Attack Speed: 2/s", 50, 20, 5, 0.5f, 500, new RangedAttack(BULLET));
         DefenderType ARSONIST = new DefenderType("ARSONIST", "Health: 100; Damage: 10% Max Health/s; Range: 2", 100, 10, 2, 0f, 1000, new MaxHealthAOEAttack());
 
         DEFENDER_TYPE_LIST.add(SHROOM);
