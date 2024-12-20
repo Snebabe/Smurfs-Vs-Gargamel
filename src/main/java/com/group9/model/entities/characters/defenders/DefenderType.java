@@ -9,6 +9,7 @@ import com.group9.model.entities.characters.CharacterType;
 public class DefenderType extends CharacterType {
     private final int cost;
     private final AttackStrategy attackStrategy;
+    private final String info;
 
     /**
      * Constructs a DefenderType with the specified attributes.
@@ -21,10 +22,11 @@ public class DefenderType extends CharacterType {
      * @param cost the cost of the defender type
      * @param attackStrategy the attack strategy of the defender type
      */
-    public DefenderType(String name, float maxHealth, float attackDamage, int range, float attackDelay, int cost, AttackStrategy attackStrategy) {
+    public DefenderType(String name, String info, float maxHealth, float attackDamage, int range, float attackDelay, int cost, AttackStrategy attackStrategy) {
         super(name, maxHealth, attackDamage, range, attackDelay);
         this.cost = cost;
         this.attackStrategy = attackStrategy;
+        this.info = info;
     }
 
     public int getCost() {
@@ -33,6 +35,10 @@ public class DefenderType extends CharacterType {
 
     public AttackStrategy getAttackStrategy() {
         return attackStrategy;
+    }
+
+    public String getInfo() {
+        return info;
     }
 
 }

@@ -52,10 +52,7 @@ public class DefenderPanel extends JPanel {
             button.setLayout(new BoxLayout(button, BoxLayout.Y_AXIS)); // Arrange components vertically
             button.setFocusPainted(false); // Remove focus effect
             button.setOpaque(true);
-            button.setToolTipText("Health: " + type.getMaxHealth() + "; " +
-                    "Damage: " + type.getAttackDamage() + "; " +
-                    "Range: " + type.getRange() + "; " +
-                    "Attack Speed: " + type.getAttackDelay());  // Display defender stats on hover
+            button.setToolTipText(type.getInfo());  // Display defender stats on hover
             button.setPreferredSize(new Dimension(minButtonWidth, minButtonHeight)); // Set minimum width
 
 

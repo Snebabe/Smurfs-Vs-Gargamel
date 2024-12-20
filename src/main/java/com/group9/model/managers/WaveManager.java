@@ -4,7 +4,6 @@ import com.group9.model.board.Board;
 import com.group9.model.board.Lane;
 import com.group9.model.Observer;
 import com.group9.model.WaveCompleteListener;
-import com.group9.model.entities.EntityConfiguration;
 import com.group9.model.entities.characters.attackers.AttackEntity;
 import com.group9.model.entities.characters.attackers.AttackEntityFactory;
 import com.group9.model.entities.characters.attackers.AttackerType;
@@ -30,6 +29,8 @@ public class WaveManager implements Observer {
     private final List<WaveCompleteListener> listeners;
     private boolean waveCompleted;
     private final Board board;
+    private final ProbabilityManager probabilityManager;
+
 
     /**
      * Constructs a WaveManager with the specified game board, and ticks per second.
@@ -48,6 +49,7 @@ public class WaveManager implements Observer {
         ticksSinceLastSpawn = 0;
         listeners = new ArrayList<>();
         waveCompleted = false;
+        probabilityManager = new ProbabilityManager();
     }
 
     /**
@@ -56,13 +58,19 @@ public class WaveManager implements Observer {
      */
     public void startWave() {
         waveNumber++;
-        waveSize += 3;
+        waveSize += 2;
         waveReward = 300 + (waveNumber -1) * 50; // Start at 300 and increment by 50 each wave
         if(spawnIntervalInTicks > TICKS_PER_SECONDS/2) { // Minimum spawn rate 0.5 seconds
             spawnIntervalInTicks -= TICKS_PER_SECONDS/2; // Decrease the spawn interval by 0.5 seconds each wave;
         }
         attackersToSpawn = waveSize;
         waveCompleted = false;
+
+        // Quick probabilities fix for KNIGHTGARGAMEL, could use improvements.
+        // Could specify probabilities (and which wave to spawn from) in a config file or in the AttackerType.
+        if (waveNumber == 10) {
+            probabilityManager.setProbability("KNIGHTGARGAMEL", 0.05);
+        }
     }
 
     /**
@@ -76,6 +84,7 @@ public class WaveManager implements Observer {
         ticksSinceLastSpawn = 0;
         spawnIntervalInTicks = defaultSpawnIntervalInTicks;
         waveCompleted = false;
+        probabilityManager.resetProbabilities();
     }
 
     /**
@@ -110,32 +119,19 @@ public class WaveManager implements Observer {
             notifyWaveComplete();
         }
     }
+
+    /**
+     * Spawns an attacker randomly in one of the lanes.
+     */
     private void spawnAttackerRandomly() {
         Random random = new Random();
         int randomLaneIndex = random.nextInt(board.getLanes().size());
         Lane selectedLane = board.getLanes().get(randomLaneIndex);
 
-        List<AttackerType> availableTypes = EntityConfiguration.getAttackerTypes();
-        if (waveNumber < 10) {
-            availableTypes.removeIf(type -> type.getName().equals("KNIGHTGARGAMEL"));
-        }
-
-        int randomIndex = random.nextInt(availableTypes.size());
-        AttackerType randomType = availableTypes.get(randomIndex);
-
+        AttackerType randomType = probabilityManager.getRandomAttackerType();
         AttackEntity attacker = AttackEntityFactory.createAttacker(randomType);
         selectedLane.addAttacker(attacker);
     }
-/*
-    private void spawnAttackerRandomly() {
-        Random random = new Random();
-        int randomLaneIndex = random.nextInt(board.getLanes().size());
-        Lane selectedLane = board.getLanes().get(randomLaneIndex);
-        AttackEntity attacker = AttackEntityFactory.createRandomAttacker();
-        selectedLane.addAttacker(attacker);
-    }
-
- */
 
     public void addWaveCompleteListener(WaveCompleteListener listener) {
         listeners.add(listener);
@@ -157,10 +153,6 @@ public class WaveManager implements Observer {
 
     public int getWaveNumber() {
         return waveNumber;
-    }
-
-    public int getWaveSize() {
-        return waveSize;
     }
 
     public int getAttackersToSpawn() {
