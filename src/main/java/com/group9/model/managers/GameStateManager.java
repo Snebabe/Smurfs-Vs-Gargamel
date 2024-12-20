@@ -1,6 +1,6 @@
 package com.group9.model.managers;
 
-import com.group9.model.GameOverListener;
+import com.group9.model.observers.GameOverObserver;
 import com.group9.model.board.Board;
 import com.group9.model.board.Lane;
 import com.group9.model.entities.characters.attackers.AttackEntity;
@@ -14,7 +14,7 @@ import java.util.List;
 public class GameStateManager {
     private final Board board;
     private final WaveManager waveManager;
-    private final List<GameOverListener> gameOverListeners;
+    private final List<GameOverObserver> gameOverObservers;
 
     /**
      * Constructs a GameStateManager with the specified game board and wave manager.
@@ -25,7 +25,7 @@ public class GameStateManager {
     public GameStateManager(Board board, WaveManager waveManager) {
         this.board = board;
         this.waveManager = waveManager;
-        gameOverListeners = new ArrayList<>();
+        gameOverObservers = new ArrayList<>();
     }
 
     /**
@@ -39,8 +39,8 @@ public class GameStateManager {
             for (AttackEntity attacker : lane.getAttackers()) {
                 if (attacker.getLaneProgress() >= 1.0) {
                     // Notify all listeners that the game is over
-                    for (GameOverListener listener : gameOverListeners) {
-                        listener.onGameOver(waveManager.getWaveNumber()-1);
+                    for (GameOverObserver observer : gameOverObservers) {
+                        observer.onGameOver(waveManager.getWaveNumber()-1);
                     }
                     return true;
                 }
@@ -49,8 +49,8 @@ public class GameStateManager {
         return false;
     }
 
-    public void addGameOverListener(GameOverListener listener) {
-        gameOverListeners.add(listener);
+    public void addGameOverObserver(GameOverObserver observer) {
+        gameOverObservers.add(observer);
     }
 
 }

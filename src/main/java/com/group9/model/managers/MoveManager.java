@@ -10,7 +10,7 @@ import com.group9.model.movement.MovementRule;
  * Manages the movement of entities on the game board.
  * Implements the Observer interface to listen for when to update the positions of movable entities.
  */
-public class MoveManager implements Observer {
+public class MoveManager implements ClockObserver {
     private final int TICKS_PER_SECONDS;
 
     private final Board board;

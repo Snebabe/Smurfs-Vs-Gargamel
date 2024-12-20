@@ -18,7 +18,7 @@ import java.util.*;
  * for various entities in the game. It implements the Observer interface to
  * update the current frame on each clock tick.
  */
-public class AnimationHandler implements Observer {
+public class AnimationHandler implements ClockObserver {
 
     /** A map storing animations for each entity type and state. */
     private final Map<String, Map<EntityState, List<Image>>> animations = new HashMap<>();
@@ -60,7 +60,7 @@ public class AnimationHandler implements Observer {
     }
 
     /**
-     * Sets up animations for a specific entity type and state.
+     * Stores animations for a specific entity type and state.
      *
      * @param entityType the type of the entity
      * @param state the state of the entity
@@ -84,7 +84,7 @@ public class AnimationHandler implements Observer {
         setUpStateAnimations(characterType, state, frames);
 
         int ticksPerFrame = (int) (characterType.getAttackDelay() * TICKS_PER_SECOND / frames.size());
-        entityFrameTickrate.put(characterType.getName(), ticksPerFrame == 0 ? 10 : ticksPerFrame); // Default to 10 ticks per frame if attackspeed is instant
+        entityFrameTickrate.put(characterType.getName(), ticksPerFrame == 0 ? 10 : ticksPerFrame); // Default to 10 ticks per frame if attack speed is instant
     }
 
     /**

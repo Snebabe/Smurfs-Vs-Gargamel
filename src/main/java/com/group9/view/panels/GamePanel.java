@@ -2,8 +2,7 @@ package com.group9.view.panels;
 
 import com.group9.controller.InputObserver;
 import com.group9.model.Model;
-import com.group9.model.Observer;
-import com.group9.model.services.PositionConverter;
+import com.group9.model.observers.ClockObserver;
 import com.group9.view.AnimationHandler;
 import com.group9.view.renderers.*;
 import com.group9.view.services.ImageLoader;
@@ -81,7 +80,6 @@ public class GamePanel extends JPanel implements ClockObserver {
         };
     }
 
-    // Paint the panel by drawing the grid and entities
     @Override
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
@@ -120,10 +118,8 @@ public class GamePanel extends JPanel implements ClockObserver {
         }
     }
 
-    // Observer method to handle updates and repaint the panel
     @Override
     public void update() {
         repaint();
-    } // Repaint the panel to reflect updates
-
+    }
 }

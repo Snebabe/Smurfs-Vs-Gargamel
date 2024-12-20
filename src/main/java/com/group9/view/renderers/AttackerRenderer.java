@@ -16,13 +16,6 @@ import java.util.Map;
  */
 public class AttackerRenderer implements EntityRenderer {
 
-    private final HealthBarUtils healthBarUtils;
-
-    // Pass the HealthBarUtils instance to the renderer
-    public AttackerRenderer(HealthBarUtils healthBarUtils) {
-        this.healthBarUtils = healthBarUtils;
-    }
-
     @Override
     public void draw(Graphics2D g2d, Model model, AnimationHandler animationHandler, int cellWidth, int cellHeight, int panelWidth) {
         for (Map.Entry<AttackEntity, Position> entry : model.getAllAttackersPosition().entrySet()) {
@@ -30,9 +23,7 @@ public class AttackerRenderer implements EntityRenderer {
             Position position = entry.getValue();
 
             // Calculate the attacker's progress along the lane and position
-            double progress = attacker.getLaneProgress();
             int x = (int) (cellWidth * PositionConverter.attackerToCellIndex(attacker.getLaneProgress(), model.getLaneSize()));
-
             int y = position.getRow() * cellHeight; // Vertical position based on row
 
             int xOffset = (int) (cellWidth * 0.1);
@@ -42,13 +33,11 @@ public class AttackerRenderer implements EntityRenderer {
             g2d.drawImage(animationHandler.getFrame(attacker.getName(), attacker.getCurrentEntityState()),
                     x + xOffset, y + yOffset, cellWidth - xOffset, cellHeight - yOffset, null);
 
-            // Use HealthBarUtils to draw the health bar
-            healthBarUtils.drawHealthBar(g2d,Color.RED, attacker.getHealth(), attacker.getMaxHealth(),
-                    x,  // Slight padding for the health bar
-                    y, // Position near the bottom of the cell
-                    cellWidth,   // Health bar width as a fraction of the cell
-                    cellHeight);    // Health bar height as a fraction of the cell
+            HealthBarUtils.drawHealthBar(g2d,Color.RED, attacker.getHealth(), attacker.getMaxHealth(),
+                    x,
+                    y,
+                    cellWidth,
+                    cellHeight);
         }
-
     }
 }

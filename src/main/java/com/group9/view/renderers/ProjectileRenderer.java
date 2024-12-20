@@ -15,7 +15,6 @@ public class ProjectileRenderer implements EntityRenderer {
 
     @Override
     public void draw(Graphics2D g2d, Model model, AnimationHandler animationHandler, int cellWidth, int cellHeight, int panelWidth) {
-        // Loop through all projectiles and their positions in the model
         for (Map.Entry<Projectile, Position> entry : model.getAllProjectilesPosition().entrySet()) {
             Projectile projectile = entry.getKey();
             Position position = entry.getValue();

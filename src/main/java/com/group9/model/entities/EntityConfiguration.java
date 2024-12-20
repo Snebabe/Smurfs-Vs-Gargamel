@@ -58,13 +58,6 @@ public class EntityConfiguration {
         return new ArrayList<>(ATTACKER_TYPE_LIST);
     }
 
-    public static List<CharacterType> getCharacterTypes() {
-        List<CharacterType> characterTypes = new ArrayList<>();
-        characterTypes.addAll(DEFENDER_TYPE_LIST);
-        characterTypes.addAll(ATTACKER_TYPE_LIST);
-        return characterTypes;
-    }
-
     public static List<ProjectileType> getProjectileTypes() {
         return new ArrayList<>(PROJECTILE_TYPE_LIST);
     }

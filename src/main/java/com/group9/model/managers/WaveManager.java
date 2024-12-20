@@ -2,8 +2,8 @@ package com.group9.model.managers;
 
 import com.group9.model.board.Board;
 import com.group9.model.board.Lane;
-import com.group9.model.Observer;
-import com.group9.model.WaveCompleteListener;
+import com.group9.model.observers.ClockObserver;
+import com.group9.model.observers.WaveCompleteObserver;
 import com.group9.model.entities.characters.attackers.AttackEntity;
 import com.group9.model.entities.characters.attackers.AttackEntityFactory;
 import com.group9.model.entities.characters.attackers.AttackerType;
@@ -17,7 +17,7 @@ import java.util.Random;
  * Manages the spawning of attackers in waves. Controls the timing of each wave
  * and its size. Also tracks wave rewards and notifies listeners when a wave is complete.
  */
-public class WaveManager implements Observer {
+public class WaveManager implements ClockObserver {
     private int waveNumber;
     private int waveSize;
     private int waveReward;

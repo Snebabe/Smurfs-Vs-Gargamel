@@ -1,18 +1,19 @@
 package com.group9.view.panels;
 
+import com.group9.controller.InputObserver;
 import com.group9.view.services.ImageButtonFactory;
 import com.group9.view.services.ImageLoader;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionListener;
+import java.util.List;
 
 /**
  * The GameOverPanel class represents the panel displayed when the game is over.
  * It shows the number of waves completed and provides buttons to start a new game or quit.
  */
 public class GameOverPanel extends JPanel {
-    private JLabel gameOverLabel;
     private JLabel wavesCompletedLabel;
     private JButton newGameButton;
     private JButton quitButton;
@@ -55,7 +56,11 @@ public class GameOverPanel extends JPanel {
         newGameButton.addActionListener(newGameListener);
 
         quitButton = ImageButtonFactory.createImageButton("/images/buttons/exitBtn.png", 100, 50);
-        quitButton.addActionListener(quitListener);
+        quitButton.addActionListener(e -> {
+            for (InputObserver observer : inputObservers) {
+                observer.onGameQuitClicked();
+            }
+        });
 
         buttonPanel.add(newGameButton);
         buttonPanel.add(quitButton);
@@ -64,12 +69,9 @@ public class GameOverPanel extends JPanel {
         add(buttonPanel, gbc);
     }
 
-    // Custom painting of the background image for the Game Over panel
-    // This is made through paintComponent so that the background is rendered first and under everything else
     @Override
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
-        // Draw the background image, stretched to fill the entire panel
         if (backgroundImage != null) {
             g.drawImage(backgroundImage, 0, 0, getWidth(), getHeight(), this);
         }

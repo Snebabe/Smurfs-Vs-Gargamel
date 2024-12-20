@@ -31,7 +31,13 @@ public class ControlPanel extends JPanel implements WaveCompleteObserver {
     private final Image backgroundImage;
 
 
-
+    /**
+     * Constructs a ControlPanel with the specified game model, input observers, and background image path.
+     *
+     * @param model the game model
+     * @param inputObservers the list of input observers
+     * @param backgroundImagePath the path to the background image
+     */
     public ControlPanel(Model model, List<InputObserver> inputObservers, String backgroundImagePath) {
         this.model = model;
         this.inputObservers = inputObservers;
@@ -47,11 +53,21 @@ public class ControlPanel extends JPanel implements WaveCompleteObserver {
         initializeListeners();
 
         // Initially disable the Start Wave button
-        setStartWaveButtonEnabled(false);
+        startWaveButton.setEnabled(false);
     }
 
+    public void updateControlPanelState() {
+        waveLabel.setText("Wave: " + model.getWaveManager().getWaveNumber());
+        attackersLeftLabel.setText("Attackers Left: " + model.getWaveManager().getAttackersToSpawn());
+        resourcesLabel.setText(String.valueOf(model.getResourceManager().getResources()));
+        updateDefenderPanelButtons();
+    }
 
-    //Paints the background image on the panel.
+    @Override
+    public void onWaveComplete(int waveReward) {
+        startWaveButton.setEnabled(true);
+    }
+
     @Override
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
@@ -82,7 +98,6 @@ public class ControlPanel extends JPanel implements WaveCompleteObserver {
         resetGameButton = ImageButtonFactory.createImageButton("/images/buttons/resetBtn.png", 100, 50);
     }
 
-    // Create and configure Start Wave and Reset Game buttons
     private void initializeWaveLabels(){
         waveLabel = new JLabel("Wave: 0");
         attackersLeftLabel = new JLabel("Attackers Left: 0");
@@ -95,13 +110,12 @@ public class ControlPanel extends JPanel implements WaveCompleteObserver {
         wavePanel.add(attackersLeftLabel, BorderLayout.SOUTH);
     }
 
-    // Set up labels for wave number and attackers left
     private void initializeResourcePanel(){
         resourcePanel = new JPanel();
         resourcePanel.setOpaque(false);
         resourcePanel.setLayout(new FlowLayout(FlowLayout.CENTER, 10, 10));
 
-        // Load the image and add it to the panel
+        // Load the resource coin image and add it to the panel
         Image image = ImageLoader.loadResizedImage("/images/smurfCoin.png", 60, 60);
         ImageIcon icon = new ImageIcon(image);
         JLabel imageLabel = new JLabel(icon);
@@ -115,15 +129,13 @@ public class ControlPanel extends JPanel implements WaveCompleteObserver {
     }
 
     private void initializeListeners() {
-        // Listener for the Start Wave button
         startWaveButton.addActionListener(e -> {
-            setStartWaveButtonEnabled(false); // Disable the button after starting the wave
+            startWaveButton.setEnabled(false); // Disable the button after starting the wave
             for (InputObserver observer : inputObservers) {
                 observer.onStartWaveClicked();
             }
         });
 
-        // Listener for the Reset Game button
         resetGameButton.addActionListener(e -> {
             for (InputObserver observer : inputObservers) {
                 observer.onResetGameClicked();
@@ -138,12 +150,5 @@ public class ControlPanel extends JPanel implements WaveCompleteObserver {
             DefenderType type = entry.getValue();
             button.setEnabled(resources >= type.getCost());
         }
-    }
-
-
-    // Enable the Start Wave button when a wave is completed
-    @Override
-    public void onWaveComplete(int waveReward) {
-        setStartWaveButtonEnabled(true);
     }
 }

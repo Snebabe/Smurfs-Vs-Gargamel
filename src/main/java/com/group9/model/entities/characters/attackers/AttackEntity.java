@@ -44,7 +44,6 @@ public class AttackEntity extends Character implements Movable {
         return speed;
     }
 
-    // Implementation of Movable interface. It returns the movement rule for the attacker
     @Override
     public MovementRule getMovementRule() {
         return new AttackerMovementRule();

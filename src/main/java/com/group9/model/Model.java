@@ -1,16 +1,9 @@
 package com.group9.model;
 
-/*
- * Interface för vad en model måste ha
- * Om det är något varje model måste ha
- * idk
- */
-
 import com.group9.model.managers.AttackManager;
 import com.group9.model.board.Board;
 import com.group9.model.entities.projectiles.Projectile;
 import com.group9.model.entities.characters.attackers.AttackEntity;
-import com.group9.model.entities.characters.attackers.AttackEntityFactory;
 import com.group9.model.entities.characters.defenders.DefenceEntity;
 import com.group9.model.entities.characters.defenders.DefenderType;
 import com.group9.model.managers.*;

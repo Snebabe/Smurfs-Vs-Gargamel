@@ -25,13 +25,15 @@ public class ResourceManager implements AttackDeathObserver, WaveCompleteObserve
         resources = startResources;
     }
 
-    public void changeResources(int resources) {this.resources += resources;
+    public void changeResources(int resources) {
+        this.resources += resources;
     }
 
     @Override
     public void onWaveComplete(int waveReward) {
         changeResources(waveReward);
     }
+
     @Override
     public void onAttackerDeath(AttackEntity attackEntity) {
         changeResources(attackEntity.getResourceReward());

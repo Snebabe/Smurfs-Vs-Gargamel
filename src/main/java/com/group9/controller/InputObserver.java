@@ -33,4 +33,9 @@ public interface InputObserver {
      * Handles the event when the reset game button is clicked.
      */
     void onResetGameClicked();
+
+    /**
+     * Handles the event when the quit game button is clicked.
+     */
+    void onGameQuitClicked();
 }

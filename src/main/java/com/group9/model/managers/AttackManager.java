@@ -1,7 +1,8 @@
 package com.group9.model.managers;
 
 import com.group9.model.*;
-import com.group9.model.Observer;
+import com.group9.model.observers.ClockObserver;
+import com.group9.model.observers.AttackDeathObserver;
 import com.group9.model.services.GameContext;
 import com.group9.model.board.Board;
 import com.group9.model.board.Lane;
@@ -17,7 +18,7 @@ import java.util.*;
  * Manages the attack logic for the game, including handling attacks from both defenders and attackers.
  * Implements the Observer interface to update the state of the game.
  */
-public class AttackManager implements Observer {
+public class AttackManager implements ClockObserver {
     private final Board board;
     private final List<AttackDeathObserver> attackDeathObservers;
     private final Map<Character, TickCounter> attackCounters;  // Map to track attack timing for characters

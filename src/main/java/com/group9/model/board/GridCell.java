@@ -7,7 +7,7 @@ import com.group9.model.entities.characters.defenders.DefenceEntity;
  */
 public class GridCell {
 
-    private DefenceEntity defender;  // Reference to the defence entity placed in the grid cell
+    private DefenceEntity defender;
 
     public void setDefender(DefenceEntity defender) {
         this.defender = defender;

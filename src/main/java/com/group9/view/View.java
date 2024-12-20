@@ -2,9 +2,9 @@ package com.group9.view;
 
 import com.group9.controller.InputObserver;
 import com.group9.model.Clock;
-import com.group9.model.GameOverListener;
+import com.group9.model.observers.GameOverObserver;
 import com.group9.model.Model;
-import com.group9.model.Observer;
+import com.group9.model.observers.ClockObserver;
 import com.group9.model.services.GameContext;
 import com.group9.model.entities.EntityState;
 import com.group9.model.entities.characters.attackers.AttackerType;
@@ -20,7 +20,11 @@ import java.awt.event.KeyEvent;
 import java.util.ArrayList;
 import java.util.List;
 
-public class View extends JFrame implements Observer, GameOverListener {
+/**
+ * The View class represents the main window of the game, handling the display of various panels
+ * and managing the game's fullscreen mode. Updates by observing the game clock and game over events.
+ */
+public class View extends JFrame implements ClockObserver, GameOverObserver {
     private GamePanel gamePanel;
     private ControlPanel controlPanel;
     private StartPanel startPanel;
@@ -51,7 +55,7 @@ public class View extends JFrame implements Observer, GameOverListener {
         AnimationHandler animationHandler = new AnimationHandler(GameContext.getTicksPerSecond());
 
         loadCustomFont();
-        initializeAnimationHandlers(animationHandler);
+        initializeAnimations(animationHandler);
         initializePanels(model, animationHandler);
         addObservers(clock, model, animationHandler);
         initializeKeyListener();
@@ -59,110 +63,12 @@ public class View extends JFrame implements Observer, GameOverListener {
         setVisible(true);
     }
 
-    // Add KeyListener for F11 and Escape to toggle fullscreen
-    private void initializeKeyListener() {
-        addKeyListener(new KeyAdapter() {
-            @Override
-            public void keyPressed(KeyEvent e) {
-                if (e.getKeyCode() == KeyEvent.VK_F11) {
-                    toggleFullscreen();
-                } else if (e.getKeyCode() == KeyEvent.VK_ESCAPE && isFullscreen) {
-                    toggleFullscreen();
-                }
-            }
-        });
-        // Request focus for the JFrame to ensure it receives key events
-        setFocusable(true);
-        requestFocusInWindow();
-    }
-
-    private void toggleFullscreen() {
-        isFullscreen = !isFullscreen;
-        dispose();
-        setUndecorated(isFullscreen);
-        if (isFullscreen) {
-            setExtendedState(JFrame.MAXIMIZED_BOTH);
-        } else {
-            setExtendedState(JFrame.NORMAL);
-        }
-        setVisible(true);
-    }
-
-    private void addObservers(Clock clock, Model model, AnimationHandler animationHandler){
-        clock.addObserver(this,0);
-        clock.addObserver(animationHandler, 0);
-        model.addGameOverListener(this);
-    }
-
-    private void initializePanels(Model model, AnimationHandler animationHandler){
-        villagePanel = new VillagePanel(model.getLaneAmount());
-        villagePanel.setPreferredSize(new Dimension(getWidth()/(model.getLaneSize()+1), getHeight()));
-        gamePanel = new GamePanel(model, animationHandler, inputObservers);
-        controlPanel = new ControlPanel(model, inputObservers, "/images/backgrounds/controlPanelBg.jpg");
-        startPanel = new StartPanel(e -> switchToNormalView(), e -> switchToHelpView());
-        helpPanel = new HelpPanel(e -> switchToStartView());
-        add(startPanel, BorderLayout.CENTER);
-    }
-
-    private void loadCustomFont(){
-        // Load custom font using FontLoader
-        font = FontLoader.loadFont("/GROBOLD.ttf");
-        UIManager.put("Label.font", font.deriveFont(Font.BOLD, 26));
-        UIManager.put("Button.font", font.deriveFont(Font.BOLD, 16));
-        UIManager.put("TextField.font", font.deriveFont(Font.BOLD, 26));
-        UIManager.put("TextArea.font", font.deriveFont(Font.BOLD, 26));
-    }
-
-    private void switchToNormalView() {
-        remove(startPanel);
-        add(controlPanel, BorderLayout.SOUTH);
-        add(villagePanel, BorderLayout.WEST);
-        add(gamePanel, BorderLayout.CENTER);
-
-        revalidate();
-        repaint();
-    }
-
-    public void switchToEndView(int wavesCompleted) {
-        gameOverPanel = new GameOverPanel(wavesCompleted, e -> startNewGame(), e -> quitGame(), this.font);
-
-        remove(controlPanel);
-        remove(gamePanel);
-        remove(villagePanel);
-
-        add(gameOverPanel, BorderLayout.CENTER);
-        revalidate();
-        repaint();
-    }
-
-    public void switchToHelpView() {
-        remove(startPanel);
-        add(helpPanel, BorderLayout.CENTER);
-
-        revalidate();
-        repaint();
-    }
-
-    public void switchToStartView() {
-        getContentPane().removeAll();
-        add(startPanel, BorderLayout.CENTER);
-
-        revalidate();
-        repaint();
-    }
-
-    // Closes the Game Over panel and switches back to the normal view
-    // The game will be reset by the model automatically after loss
-    private void startNewGame() {
-        remove(gameOverPanel);
-        switchToNormalView();
-    }
-
-    private void quitGame() {
-        System.exit(0);
-    }
-
-    public void initializeAnimationHandlers(AnimationHandler animationHandler) {
+    /**
+     * Initializes the animation handlers for various entity types.
+     *
+     * @param animationHandler the animation handler
+     */
+    private void initializeAnimations(AnimationHandler animationHandler) {
         for(DefenderType defenderType : EntityConfiguration.getDefenderTypes()) {
             animationHandler.registerAnimations(
                     defenderType,
@@ -197,13 +103,40 @@ public class View extends JFrame implements Observer, GameOverListener {
                     "/images/projectiles/" + projectileType.getName().toLowerCase() + "/"
             );
         }
+    }
 
+    public void switchToEndView(int wavesCompleted) {
+        gameOverPanel = new GameOverPanel(wavesCompleted, inputObservers, e -> switchToGameView());
+
+        remove(controlPanel);
+        remove(gamePanel);
+        remove(villagePanel);
+
+        add(gameOverPanel, BorderLayout.CENTER);
+        revalidate();
+        repaint();
+    }
+
+    public void switchToHelpView() {
+        remove(startPanel);
+        add(helpPanel, BorderLayout.CENTER);
+
+        revalidate();
+        repaint();
+    }
+
+    public void switchToStartView() {
+        getContentPane().removeAll();
+        add(startPanel, BorderLayout.CENTER);
+
+        revalidate();
+        repaint();
     }
 
     @Override
     public void update() {
         gamePanel.update();
-        controlPanel.update();
+        controlPanel.updateControlPanelState();
         villagePanel.update();
     }
 
@@ -214,5 +147,69 @@ public class View extends JFrame implements Observer, GameOverListener {
     @Override
     public void onGameOver(int wavesSurvived) {
         switchToEndView(wavesSurvived);
+    }
+
+    private void initializeKeyListener() {
+        // Add KeyListener for F11 and Escape to toggle fullscreen
+        addKeyListener(new KeyAdapter() {
+            @Override
+            public void keyPressed(KeyEvent e) {
+                if (e.getKeyCode() == KeyEvent.VK_F11) {
+                    toggleFullscreen();
+                } else if (e.getKeyCode() == KeyEvent.VK_ESCAPE && isFullscreen) {
+                    toggleFullscreen();
+                }
+            }
+        });
+        // Request focus for the JFrame to ensure it receives key events
+        setFocusable(true);
+        requestFocusInWindow();
+    }
+
+    private void toggleFullscreen() {
+        isFullscreen = !isFullscreen;
+        dispose();
+        setUndecorated(isFullscreen);
+        if (isFullscreen) {
+            setExtendedState(JFrame.MAXIMIZED_BOTH);
+        } else {
+            setExtendedState(JFrame.NORMAL);
+        }
+        setVisible(true);
+    }
+
+    private void addObservers(Clock clock, Model model, AnimationHandler animationHandler){
+        clock.addObserver(this,0);
+        clock.addObserver(animationHandler, 0);
+        model.addGameOverObserver(this);
+    }
+
+    private void initializePanels(Model model, AnimationHandler animationHandler){
+        villagePanel = new VillagePanel(model.getLaneAmount());
+        villagePanel.setPreferredSize(new Dimension(getWidth()/(model.getLaneSize()+1), getHeight()));
+        gamePanel = new GamePanel(model, animationHandler, inputObservers);
+        controlPanel = new ControlPanel(model, inputObservers, "/images/backgrounds/controlPanelBg.jpg");
+        startPanel = new StartPanel(e -> switchToGameView(), e -> switchToHelpView());
+        helpPanel = new HelpPanel(e -> switchToStartView());
+        add(startPanel, BorderLayout.CENTER);
+    }
+
+    private void loadCustomFont(){
+        // Load custom font using FontLoader
+        font = FontLoader.loadFont("/GROBOLD.ttf");
+        UIManager.put("Label.font", font.deriveFont(Font.BOLD, 26));
+        UIManager.put("Button.font", font.deriveFont(Font.BOLD, 16));
+        UIManager.put("TextField.font", font.deriveFont(Font.BOLD, 26));
+        UIManager.put("TextArea.font", font.deriveFont(Font.BOLD, 26));
+    }
+
+    private void switchToGameView() {
+        getContentPane().removeAll();
+        add(controlPanel, BorderLayout.SOUTH);
+        add(villagePanel, BorderLayout.WEST);
+        add(gamePanel, BorderLayout.CENTER);
+
+        revalidate();
+        repaint();
     }
 }

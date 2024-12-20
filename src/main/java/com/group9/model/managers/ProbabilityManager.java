@@ -48,7 +48,8 @@ public class ProbabilityManager {
      *
      * @param typeName      The name of the attacker type.
      * @param newProbability The new probability to set for the attacker type.
-     */    public void setProbability(String typeName, double newProbability) {
+     */
+    public void setProbability(String typeName, double newProbability) {
         AttackerType type = getAttackerTypeByName(typeName);
         if (type != null) {
             double totalOtherProbability = 1.0 - newProbability;

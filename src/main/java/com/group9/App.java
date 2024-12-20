@@ -13,6 +13,7 @@ public class App {
     public static void main(String[] args) {
 
         int TICKS_PER_SECONDS = 120;
+
         Clock clock = new Clock(TICKS_PER_SECONDS);
         Model model = new Model(TICKS_PER_SECONDS,5,9);
         View view = new View(980, 560, model, clock);

@@ -6,6 +6,10 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionListener;
 
+/**
+ * The StartPanel class represents the initial panel displayed when the game starts.
+ * It includes buttons to start the game or navigate to the help screen.
+ */
 public class StartPanel extends JPanel {
     private final Image backgroundImage;
 
@@ -18,7 +22,6 @@ public class StartPanel extends JPanel {
     public StartPanel(ActionListener startButtonListener, ActionListener helpButtonListener) {
         this.backgroundImage = ImageLoader.loadImage("/images/backgrounds/startPanelBg.png");
 
-        // Set the layout for the panel to GridBagLayout
         setLayout(new GridBagLayout());
         GridBagConstraints gbc = new GridBagConstraints();
 
@@ -28,27 +31,22 @@ public class StartPanel extends JPanel {
         buttonPanel.setOpaque(false);
 
         // Button to start the game
-        // Create and configure the start button
         JButton startButton = ImageButtonFactory.createImageButton("/images/buttons/playBtn.png", 200, 80);
         startButton.addActionListener(startButtonListener);
         buttonPanel.add(startButton);
 
         // Button to navigate to the help screen
-        // Create and configure the help button
         JButton helpButton = ImageButtonFactory.createImageButton("/images/buttons/helpBtn.png", 200, 80);
         helpButton.addActionListener(helpButtonListener);
         buttonPanel.add(helpButton);
 
-        // Add the button panel to the grid at row 1
         gbc.gridy = 1;
         add(buttonPanel, gbc);
     }
 
-    // Override paintComponent to render the background image
     @Override
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
-        // Draw the background image (if available)
         if (backgroundImage != null) {
             g.drawImage(backgroundImage, 0, 0, getWidth(), getHeight(), this);
         }

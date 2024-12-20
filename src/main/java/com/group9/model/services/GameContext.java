@@ -11,7 +11,6 @@ import java.util.List;
  * The GameContext class provides methods to retrieve targets for attacks
  * within a game, based on their position and range.
  */
-
 public class GameContext {
 
     private static int TICKS_PER_SECOND;

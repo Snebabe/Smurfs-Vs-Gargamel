@@ -9,7 +9,6 @@ import java.util.Map;
  * Controls the passage of time in the game, managing the tick rate and scheduling
  * periodic updates for observers. Ensures the game loop runs at a consistent pace.
  */
-
 public class Clock{
     private final int TICKS_PER_SECOND;
     private final long MS_PER_TICK;
